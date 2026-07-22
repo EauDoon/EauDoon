@@ -15,7 +15,7 @@ This is my public build record: reproducible artifacts, honest evaluations, docu
 
 ## How I build
 
-**Business problem → specification → AI-assisted implementation → adversarial evaluation → human acceptance**
+**Business problem → specification → implementation → adversarial evaluation → acceptance**
 
 ## Current focus
 
