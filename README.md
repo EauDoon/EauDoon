@@ -4,7 +4,7 @@
 
 I turn real operational problems into tested agents, decision tools, and reusable workflows.
 
-This is my public build record: reproducible artifacts, honest evaluations, documented failure cases, and clear boundaries around what AI did and what required human judgment.
+This is my public build record: reproducible artifacts, honest evaluations, documented failure cases, and clear boundaries.
 
 ## What I build
 
