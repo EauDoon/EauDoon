@@ -13,8 +13,8 @@ documented failure cases, and explicit boundaries.
 ### [Consequence Rail](https://github.com/oonyl/consequence-rail)
 
 A reference protocol and zero-dependency runtime for recourse-gated autonomous
-actions. It binds each action to connector-backed recourse, verifies the
-resulting world state, and produces a signed settlement receipt.
+actions. It can require signed recovery-preflight evidence before execution,
+then verifies world state and produces a signed settlement receipt.
 
 ## Open-source projects
 
@@ -25,17 +25,17 @@ resulting world state, and produces a signed settlement receipt.
 
 ### Agent infrastructure
 
-- [Agent Team](https://github.com/oonyl/agent-team-os): A Codex skill for
+- [Agent Team](https://github.com/oonyl/agent-team-os): A reusable skill for
   coordinating bounded specialist-agent workflows with independent auditing.
 - [Constitutional Agent Testbench](https://github.com/oonyl/constitutional-agent-testbench):
-  A deterministic Python testbench for evaluating structured responses against
-  declared JSON rules.
+  A deterministic Python testbench with PrecedenceTrace for detecting outcome,
+  evidence, and participation changes across peer-rule permutations.
 
 ### Decision methods
 
 - [Unconventional Moves](https://github.com/oonyl/unconventional-moves): A
-  Codex skill for practical, non-obvious approaches with reversible 48-hour
-  tests.
+  reusable decision skill for practical, non-obvious approaches with
+  reversible 48-hour tests.
 
 ## How I build
 
