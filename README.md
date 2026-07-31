@@ -2,40 +2,46 @@
 
 ## AI systems builder from the business side
 
-I turn operational problems into tested agent systems, decision tools, and
-reusable workflows.
+I turn operational problems into tested agent systems, decision tools, and reusable workflows.
 
-This is my public build record: working artifacts, adversarial evaluations,
-documented failure cases, and explicit boundaries.
+This is my public build record: working artifacts, adversarial evaluations, documented failure cases, and explicit boundaries.
 
-## Featured open-source project
+## Featured: Agent Action Stack
 
-### [Consequence Rail](https://github.com/oonyl/consequence-rail)
+### [Agent Action Stack](https://github.com/oonyl/agent-action-stack)
 
-A reference protocol and zero-dependency runtime for recourse-gated autonomous
-actions. It can require signed recovery-preflight evidence before execution,
-then verifies world state and produces a signed settlement receipt.
+One reference path across three libraries:
+
+```text
+Decide  →  Act              →  Prove
+testbench  Consequence Rail    MandateBound
+```
+
+1. **Decide** — [Constitutional Agent Testbench](https://github.com/oonyl/constitutional-agent-testbench) evaluates structured agent JSON against a declared policy.
+2. **On pass → Act** — [Consequence Rail](https://github.com/oonyl/consequence-rail) reserves recourse, executes, and settles or compensates.
+3. **On dispute → Prove** — [MandateBound](https://github.com/oonyl/mandatebound) runs evidence-readiness simulation for review.
+
+```bash
+npm run bootstrap
+npm run demo          # decide → act (settled)
+npm run demo:dispute  # decide → act → prove (compensated)
+```
 
 ## Open-source projects
 
-### Flagship systems
+### Stack libraries
 
-- [MandateBound](https://github.com/oonyl/mandatebound): Evidence readiness and
-  deterministic dispute replay for UCP/AP2 agentic commerce.
+- [Constitutional Agent Testbench](https://github.com/oonyl/constitutional-agent-testbench): Deterministic Python policy evaluation and PrecedenceTrace for structured agent responses.
+- [Consequence Rail](https://github.com/oonyl/consequence-rail): Recourse-gated execution, recovery preflight, and signed settlement receipts.
+- [MandateBound](https://github.com/oonyl/mandatebound): Evidence readiness and deterministic dispute replay for UCP/AP2 agentic commerce.
 
 ### Agent infrastructure
 
-- [Agent Team](https://github.com/oonyl/agent-team-os): A reusable skill for
-  coordinating bounded specialist-agent workflows with independent auditing.
-- [Constitutional Agent Testbench](https://github.com/oonyl/constitutional-agent-testbench):
-  A deterministic Python testbench with PrecedenceTrace for detecting outcome,
-  evidence, and participation changes across peer-rule permutations.
+- [Agent Team OS](https://github.com/oonyl/agent-team-os): Bounded specialist-agent workflows with independent auditing.
 
 ### Decision methods
 
-- [Unconventional Moves](https://github.com/oonyl/unconventional-moves): A
-  reusable decision skill for practical, non-obvious approaches with
-  reversible 48-hour tests.
+- [Unconventional Moves](https://github.com/oonyl/unconventional-moves): Practical, non-obvious approaches with reversible 48-hour tests.
 
 ## How I build
 
@@ -43,6 +49,4 @@ then verifies world state and produces a signed settlement receipt.
 
 ## Authorship
 
-I direct problem selection, product direction, requirements, business judgment,
-evaluation, rights review, and final acceptance for the projects published
-here.
+I direct problem selection, product direction, requirements, business judgment, evaluation, rights review, and final acceptance for the projects published here.
