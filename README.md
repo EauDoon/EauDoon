@@ -17,9 +17,9 @@ Decide  →  Act              →  Prove
 testbench  Consequence Rail    MandateBound
 ```
 
-1. **Decide** — [Constitutional Agent Testbench](https://github.com/oonyl/constitutional-agent-testbench) evaluates structured agent JSON against a declared policy.
-2. **On pass → Act** — [Consequence Rail](https://github.com/oonyl/consequence-rail) reserves recourse, executes, and settles or compensates.
-3. **On dispute → Prove** — [MandateBound](https://github.com/oonyl/mandatebound) runs evidence-readiness simulation for review.
+1. **Decide:** [Constitutional Agent Testbench](https://github.com/oonyl/constitutional-agent-testbench) evaluates structured agent JSON against a declared policy.
+2. **On pass → Act:** [Consequence Rail](https://github.com/oonyl/consequence-rail) reserves recourse, executes, and settles or compensates.
+3. **On dispute → Prove:** [MandateBound](https://github.com/oonyl/mandatebound) runs evidence-readiness simulation for review.
 
 ```bash
 npm run bootstrap
@@ -37,10 +37,12 @@ npm run demo:dispute  # decide → act → prove (compensated)
 
 ### Agent infrastructure
 
-- [Agent Team OS](https://github.com/oonyl/agent-team-os): Bounded specialist-agent workflows with independent auditing.
+- [TraceCanary](https://github.com/oonyl/tracecanary): Desktop GUI and CLI for detecting privacy regressions in OpenTelemetry GenAI exports with synthetic canaries.
+- [Agent Team](https://github.com/oonyl/agent-team-os): Bounded specialist-agent workflows with independent auditing.
 
 ### Decision methods
 
+- [Corridor Lab](https://github.com/oonyl/corridor-lab): Desktop GUI and CLI for comparing fictional cross-border payment routes across cost, speed, liquidity, and failure assumptions.
 - [Unconventional Moves](https://github.com/oonyl/unconventional-moves): Practical, non-obvious approaches with reversible 48-hour tests.
 
 ## How I build
