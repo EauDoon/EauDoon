@@ -6,7 +6,7 @@ I turn operational problems into tested agent systems, decision tools, and reusa
 
 This is my public build record: working artifacts, adversarial evaluations, documented failure cases, and explicit boundaries.
 
-## Featured: Agent Action Stack
+## Featured open-source project
 
 ### [Agent Action Stack](https://github.com/oonyl/agent-action-stack)
 
@@ -29,13 +29,11 @@ npm run demo:dispute  # decide → act → prove (compensated)
 
 ## Open-source projects
 
-### Stack libraries
+### Agent infrastructure
 
 - [Constitutional Agent Testbench](https://github.com/oonyl/constitutional-agent-testbench): Deterministic Python policy evaluation and PrecedenceTrace for structured agent responses.
 - [Consequence Rail](https://github.com/oonyl/consequence-rail): Recourse-gated execution, recovery preflight, and signed settlement receipts.
 - [MandateBound](https://github.com/oonyl/mandatebound): Evidence readiness and deterministic dispute replay for UCP/AP2 agentic commerce.
-
-### Agent infrastructure
 
 - [TraceCanary](https://github.com/oonyl/tracecanary): Desktop GUI and CLI for detecting privacy regressions in OpenTelemetry GenAI exports with synthetic canaries.
 - [Agent Team](https://github.com/oonyl/agent-team-os): Bounded specialist-agent workflows with independent auditing.
