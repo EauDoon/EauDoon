@@ -1,6 +1,6 @@
 # Oonyl
 
-## AI systems builder from the business side
+## AI systems builder from a business perspective
 
 I turn operational problems into tested agent systems, decision tools, and reusable workflows.
 
