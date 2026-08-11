@@ -42,10 +42,15 @@ npm run demo:dispute  # decide → act → prove (compensated)
 
 - [Corridor Lab](https://github.com/EauDoon/corridor-lab): Desktop GUI and CLI for comparing fictional cross-border payment routes across cost, speed, liquidity, and failure assumptions.
 - [Unconventional Moves](https://github.com/EauDoon/unconventional-moves): Practical, non-obvious approaches with reversible 48-hour tests.
+- [Partnership Breakpoint](https://github.com/EauDoon/partnership-breakpoint): Browser workbench for finding participant exit thresholds in shared commercial deals.
+- [The Smallest Agreement](https://github.com/EauDoon/smallest-agreement): Local exhaustive search for the lowest-cost structured agreement that crosses a weighted approval threshold.
+- [Weekend Gap](https://github.com/EauDoon/weekend-gap): AUD stablecoin weekend liquidity simulator with explicit operational bottlenecks, queues, and settlement timing.
 
 ### Experiments and examples
 
+- [Common Cart](https://github.com/EauDoon/common-cart): Local-first pooled-purchase simulator that matches aggregate buyer constraints to synthetic merchant offers without exposing buyer records.
 - [Hermes Parallel Follow-ups](https://github.com/EauDoon/hermes-parallel-followups): Drop-in patches and regression tests that preserve message boundaries and route independent follow-ups while Hermes is busy.
+- [LLMs.txt Personal Site](https://github.com/EauDoon/llms-txt-personal-site): Forkable personal-site template with Markdown pages, `llms.txt`, JSON-LD, and a quality gate.
 
 ## How I build
 
