@@ -34,7 +34,6 @@ npm run demo:dispute  # decide → act → prove (compensated)
 - [Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench): Deterministic Python policy evaluation and PrecedenceTrace for structured agent responses.
 - [Consequence Rail](https://github.com/EauDoon/consequence-rail): Recourse-gated execution, recovery preflight, and signed settlement receipts.
 - [MandateBound](https://github.com/EauDoon/mandatebound): Evidence readiness and deterministic dispute replay for UCP/AP2 agentic commerce.
-
 - [TraceCanary](https://github.com/EauDoon/tracecanary): Desktop GUI and CLI for detecting privacy regressions in OpenTelemetry GenAI exports with synthetic canaries.
 - [Agent Team](https://github.com/EauDoon/agent-team-os): Bounded specialist-agent workflows with independent auditing.
 
