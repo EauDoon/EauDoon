@@ -38,6 +38,7 @@ npm run demo:dispute  # decide → act → prove (compensated)
 
 ### Decision methods
 
+- [Crypto Research Desk](https://github.com/EauDoon/crypto-research-desk): Research-only five-function workflow with fixed four-horizon forecasts and independent risk review.
 - [Corridor Lab](https://github.com/EauDoon/corridor-lab): Desktop GUI and CLI for comparing fictional cross-border payment routes across cost, speed, liquidity, and failure assumptions.
 - [Unconventional Moves](https://github.com/EauDoon/unconventional-moves): Practical, non-obvious approaches with reversible 48-hour tests.
 - [Partnership Breakpoint](https://github.com/EauDoon/partnership-breakpoint): Browser workbench for finding participant exit thresholds in shared commercial deals.
