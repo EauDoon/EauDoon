@@ -1,7 +1,5 @@
 # EauDoon
 
-## AI systems builder from a business perspective
-
 I turn operational problems into tested agent systems, decision tools, and reusable workflows.
 
 This is my public build record: working artifacts, adversarial evaluations, documented failure cases, and explicit boundaries.
