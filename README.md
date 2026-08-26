@@ -31,6 +31,7 @@ npm run demo:dispute  # decide → act → prove (compensated)
 
 ### Agent infrastructure
 
+- [Connect.md](https://github.com/EauDoon/connect.md): Pre-launch Markdown-first network for people and agents, with public profiles, recruiting, and agent-native interfaces.
 - [Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench): Deterministic Python policy evaluation and PrecedenceTrace for structured agent responses.
 - [Consequence Rail](https://github.com/EauDoon/consequence-rail): Recourse-gated execution, recovery preflight, and signed settlement receipts.
 - [MandateBound](https://github.com/EauDoon/mandatebound): Evidence readiness and deterministic dispute replay for UCP/AP2 agentic commerce.
