@@ -1,60 +1,72 @@
 # EauDoon
 
-I turn operational problems into tested agent systems, decision tools, and reusable workflows.
+<p align="center">
+  <strong>Decision infrastructure for agent systems and operators.</strong><br>
+  Policy evaluation · recoverable execution · evidence-bound workflows
+</p>
 
-This is my public build record: working artifacts, adversarial evaluations, documented failure cases, and explicit boundaries.
+I turn operational problems into inspectable systems. Each project states its authority boundary, tests its failure paths, and separates what the evidence proves from what it does not.
 
-## Featured open-source project
+<p align="center">
+  <a href="#featured-project">Featured project</a> ·
+  <a href="#agent-infrastructure">Agent infrastructure</a> ·
+  <a href="#decision-methods">Decision methods</a> ·
+  <a href="#experiments-and-examples">Experiments</a>
+</p>
 
-### [Agent Action Stack](https://github.com/EauDoon/agent-action-stack)
+## Featured project
 
-One reference path across three libraries:
+### [connect.md](https://github.com/EauDoon/connect.md)
 
-```text
-Decide  →  Act              →  Prove
-testbench  Consequence Rail    MandateBound
-```
+**One professional identity, readable by people and operable by agents.**
 
-1. **Decide:** [Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench) evaluates structured agent JSON against a declared policy.
-2. **On pass → Act:** [Consequence Rail](https://github.com/EauDoon/consequence-rail) reserves recourse, executes, and settles or compensates.
-3. **On dispute → Prove:** [MandateBound](https://github.com/EauDoon/mandatebound) runs evidence-readiness simulation for review.
+`connect.md` is a pre-launch, Markdown-first professional network. People can create profiles and resumes in guided or direct Markdown modes. Organizations can model membership and recruiting authority. Agents can discover public capabilities through OpenAPI, `llms.txt`, MCP, A2A, and machine-readable manifests.
 
-```bash
-npm run bootstrap
-npm run demo          # decide → act (settled)
-npm run demo:dispute  # decide → act → prove (compensated)
-```
+| Canonical content | Private workflows | Agent access |
+| --- | --- | --- |
+| Versioned Markdown for profiles and resumes | Consent-gated relationships, applications, and review | Scoped keys and grants with mandate, idempotency, and version checks |
+
+> **Status:** The repository contains an integrated product foundation and local verification assets. It does not claim a live service or production readiness.
 
 ## Open-source projects
 
 ### Agent infrastructure
 
-- [Connect.md](https://github.com/EauDoon/connect.md): Pre-launch Markdown-first network for people and agents, with public profiles, recruiting, and agent-native interfaces.
-- [Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench): Deterministic Python policy evaluation and PrecedenceTrace for structured agent responses.
-- [Consequence Rail](https://github.com/EauDoon/consequence-rail): Recourse-gated execution, recovery preflight, and signed settlement receipts.
-- [MandateBound](https://github.com/EauDoon/mandatebound): Evidence readiness and deterministic dispute replay for UCP/AP2 agentic commerce.
-- [TraceCanary](https://github.com/EauDoon/tracecanary): Desktop GUI and CLI for detecting privacy regressions in OpenTelemetry GenAI exports with synthetic canaries.
-- [Agent Team](https://github.com/EauDoon/agent-team-os): Bounded specialist-agent workflows with independent auditing.
+| Project | What it provides |
+| --- | --- |
+| [Agent Action Stack](https://github.com/EauDoon/agent-action-stack) | Runnable Node.js reference path across policy evaluation, recourse-gated execution, and dispute evidence replay. |
+| [Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench) | Deterministic Python policy evaluation with precedence tracing for structured agent responses. |
+| [Consequence Rail](https://github.com/EauDoon/consequence-rail) | JavaScript execution rail that reserves a remedy, checks the postcondition, and emits signed settlement receipts. |
+| [MandateBound](https://github.com/EauDoon/mandatebound) | TypeScript evidence-readiness simulation and deterministic dispute replay for UCP/AP2 agentic commerce. |
+| [TraceCanary](https://github.com/EauDoon/tracecanary) | Offline Python CLI and desktop GUI for detecting privacy regressions in OTLP GenAI trace exports. |
+| [Agent Team](https://github.com/EauDoon/agent-team-os) | Reusable Python skill for bounded specialist workflows with independent audit and schema-backed evaluation. |
 
 ### Decision methods
 
-- [Crypto Research Desk](https://github.com/EauDoon/crypto-research-desk): Research-only five-function workflow with fixed four-horizon forecasts and independent risk review.
-- [Corridor Lab](https://github.com/EauDoon/corridor-lab): Desktop GUI and CLI for comparing fictional cross-border payment routes across cost, speed, liquidity, and failure assumptions.
-- [Unconventional Moves](https://github.com/EauDoon/unconventional-moves): Practical, non-obvious approaches with reversible 48-hour tests.
-- [Partnership Breakpoint](https://github.com/EauDoon/partnership-breakpoint): Browser workbench for finding participant exit thresholds in shared commercial deals.
-- [The Smallest Agreement](https://github.com/EauDoon/smallest-agreement): Local exhaustive search for the lowest-cost structured agreement that crosses a weighted approval threshold.
-- [Weekend Gap](https://github.com/EauDoon/weekend-gap): AUD stablecoin weekend liquidity simulator with explicit operational bottlenecks, queues, and settlement timing.
+| Project | What it provides |
+| --- | --- |
+| [Crypto Research Desk](https://github.com/EauDoon/crypto-research-desk) | Research-only workflow with four specialist lanes, independent risk review, and a fixed four-horizon forecast contract. |
+| [Corridor Lab](https://github.com/EauDoon/corridor-lab) | Desktop GUI and CLI for comparing fictional cross-border payment routes across cost, speed, liquidity, and failure assumptions. |
+| [Unconventional Moves](https://github.com/EauDoon/unconventional-moves) | Reusable decision skill for practical, non-obvious approaches with reversible 48-hour tests. |
+| [Partnership Breakpoint](https://github.com/EauDoon/partnership-breakpoint) | Browser workbench for finding participant exit thresholds through transparent sensitivity analysis. |
+| [The Smallest Agreement](https://github.com/EauDoon/smallest-agreement) | Local browser workshop that exhaustively searches for the lowest-cost structured agreement above a weighted approval threshold. |
+| [Weekend Gap](https://github.com/EauDoon/weekend-gap) | Educational browser simulator for synthetic AUD stablecoin liquidity across weekend payout gaps. |
 
 ### Experiments and examples
 
-- [Common Cart](https://github.com/EauDoon/common-cart): Local-first pooled-purchase simulator that matches aggregate buyer constraints to synthetic merchant offers without exposing buyer records.
-- [Hermes Parallel Follow-ups](https://github.com/EauDoon/hermes-parallel-followups): Drop-in patches and regression tests that preserve message boundaries and route independent follow-ups while Hermes is busy.
-- [LLMs.txt Personal Site](https://github.com/EauDoon/llms-txt-personal-site): Forkable personal-site template with Markdown pages, `llms.txt`, JSON-LD, and a quality gate.
+| Project | What it provides |
+| --- | --- |
+| [Common Cart](https://github.com/EauDoon/common-cart) | Local-first pooled-purchase simulator that matches aggregate buyer constraints to synthetic offers without exposing buyer records. |
+| [Hermes Parallel Follow-ups](https://github.com/EauDoon/hermes-parallel-followups) | Two drop-in Python patches with regression tests for busy-queue message boundaries and parallel self-contained follow-ups. |
+| [LLMs.txt Personal Site](https://github.com/EauDoon/llms-txt-personal-site) | Forkable personal-site template with Markdown pages, `llms.txt`, JSON-LD, and a quality gate. |
 
 ## How I build
 
-**Business problem → specification → implementation → adversarial evaluation → acceptance**
+1. Define the user, decision, and authority boundary.
+2. Build the smallest inspectable system that can refuse invalid inputs.
+3. Test the normal path, failure path, and recovery path.
+4. Publish only claims that the artifacts can reproduce.
 
 ## Authorship
 
-I direct problem selection, product direction, requirements, business judgment, evaluation, rights review, and final acceptance for the projects published here.
+I direct problem selection, product direction, requirements, business judgment, evaluation, rights review, and final acceptance for every project published here.
