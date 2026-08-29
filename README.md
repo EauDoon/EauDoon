@@ -2,7 +2,6 @@
 
 <p align="center">
   <strong>Decision infrastructure for agent systems and operators.</strong><br>
-  Policy evaluation · recoverable execution · evidence-bound workflows
 </p>
 
 I turn operational problems into inspectable systems. Each project states its authority boundary, tests its failure paths, and separates what the evidence proves from what it does not.
@@ -47,14 +46,3 @@ I turn operational problems into inspectable systems. Each project states its au
 | Project | What it provides |
 | --- | --- |
 | [Common Cart](https://github.com/EauDoon/common-cart) | Local-first pooled-purchase simulator that matches aggregate buyer constraints to synthetic offers without exposing buyer records. |
-
-## How I build
-
-1. Define the user, decision, and authority boundary.
-2. Build the smallest inspectable system that can refuse invalid inputs.
-3. Test the normal path, failure path, and recovery path.
-4. Publish only claims that the artifacts can reproduce.
-
-## Authorship
-
-I direct problem selection, product direction, requirements, business judgment, evaluation, rights review, and final acceptance for every project published here.
