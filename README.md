@@ -30,6 +30,7 @@ I turn operational problems into inspectable systems. Each project states its au
 | [Agent Action Stack](https://github.com/EauDoon/agent-action-stack) | Runnable Node.js reference path across policy evaluation, recourse-gated execution, and dispute evidence replay. |
 | [Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench) | Deterministic Python policy evaluation with precedence tracing for structured agent responses. |
 | [Consequence Rail](https://github.com/EauDoon/consequence-rail) | JavaScript execution rail that reserves a remedy, checks the postcondition, and emits signed settlement receipts. |
+| [Hermes Parallel Follow-ups](https://github.com/EauDoon/hermes-parallel-followups) | Drop-in patches that preserve queued message boundaries and safely route independent overflow follow-ups in parallel. |
 | [MandateBound](https://github.com/EauDoon/mandatebound) | TypeScript evidence-readiness simulation and deterministic dispute replay for UCP/AP2 agentic commerce. |
 | [TraceCanary](https://github.com/EauDoon/tracecanary) | Offline Python CLI and desktop GUI for detecting privacy regressions in OTLP GenAI trace exports. |
 
