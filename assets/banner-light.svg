@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 250" role="img" aria-label="Daniel Oon. Decision infrastructure for agent systems and operators.">
+  <defs>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.2" fill="#EDEFF2"/>
+    </pattern>
+    <linearGradient id="sweep" gradientUnits="userSpaceOnUse" x1="-360" y1="0" x2="-40" y2="0">
+      <stop offset="0" stop-color="#059669" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#059669" stop-opacity="1"/>
+      <stop offset="1" stop-color="#059669" stop-opacity="0"/>
+      <animate attributeName="x1" values="-360;1240" dur="5.5s" repeatCount="indefinite"/>
+      <animate attributeName="x2" values="-40;1560" dur="5.5s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="250" fill="#FFFFFF"/>
+  <rect width="1200" height="250" fill="url(#dots)"/>
+
+  <g stroke="#E3E7EC" stroke-width="1.5">
+    <line x1="950" y1="78" x2="1058" y2="132"/>
+    <line x1="1058" y1="132" x2="988" y2="196"/>
+    <line x1="1058" y1="132" x2="1122" y2="66"/>
+  </g>
+  <circle cx="950" cy="78" r="5" fill="#FFFFFF" stroke="#CBD3DD" stroke-width="1.5"/>
+  <circle cx="988" cy="196" r="5" fill="#FFFFFF" stroke="#CBD3DD" stroke-width="1.5"/>
+  <circle cx="1122" cy="66" r="5" fill="#FFFFFF" stroke="#CBD3DD" stroke-width="1.5"/>
+  <circle cx="1058" cy="132" r="14" fill="none" stroke="#059669" stroke-width="1">
+    <animate attributeName="r" values="6;18" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.7;0" dur="3s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1058" cy="132" r="5.5" fill="#059669">
+    <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
+  </circle>
+
+  <text x="64" y="118" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="74" letter-spacing="-1" fill="#101828">Daniel Oon</text>
+
+  <rect x="66" y="140" width="336" height="3" rx="1.5" fill="#E5E9EE"/>
+  <rect x="66" y="140" width="336" height="3" rx="1.5" fill="url(#sweep)"/>
+
+  <text x="66" y="181" font-family="'SFMono-Regular', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace" font-size="21" fill="#3F4854">Decision infrastructure for agent systems and operators.</text>
+  <text x="66" y="212" font-family="'SFMono-Regular', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace" font-size="15" fill="#98A2B3">VP of Ecosystem, StraitsX&#160;&#160;&#183;&#160;&#160;Singapore&#160;&#160;&#183;&#160;&#160;danieloon.ai</text>
+</svg>
