@@ -7,7 +7,7 @@
 <p align="center">
   <a href="https://danieloon.ai">danieloon.ai</a> ·
   <a href="https://x.com/EauDoon">@EauDoon</a> ·
-  <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a> ·
+  <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a>
 </p>
 
 I turn operational problems into inspectable systems. Each project states its authority boundary, tests its failure paths, and separates what the evidence proves from what it does not.
