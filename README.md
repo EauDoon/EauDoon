@@ -41,7 +41,7 @@ An agent that spends money needs three things: a policy it can be tested against
 | [Decision Labs](https://github.com/EauDoon/decision-labs) | Four local-first browser workbenches: partnership thresholds, pooled buying, structured agreements, weekend liquidity. |
 | [Crypto Research Desk](https://github.com/EauDoon/crypto-research-desk) | Research-only workflow with five specialist functions, independent risk review, and fixed four-horizon forecasts. |
 | [Unconventional Moves](https://github.com/EauDoon/unconventional-moves) | Reusable decision skill for practical, non-obvious approaches with reversible 48-hour tests. |
-| [Reflection Engine](https://github.com/EauDoon/reflection-engine) | A downloadable prompt that turns your AI assistant's memory of you into a candid, evidence-grounded portrait. |
+| [Reflection Engine](https://github.com/EauDoon/reflection-engine) (fork of [kropdx/reflection-engine](https://github.com/kropdx/reflection-engine) by Kevin Rose) | A downloadable prompt that turns your AI assistant's memory of you into a candid, evidence-grounded portrait. |
 
 ## The agent-readable web
 
