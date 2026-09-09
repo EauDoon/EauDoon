@@ -28,6 +28,8 @@ node cli.mjs shortlist replay-evidence gate-actions
 
 The [offline discovery guide](docs/DISCOVERY.md) covers filters, source-linked setup guidance and JSON output. No package installation or accounts are required. [Machine-readable catalog](catalog.json).
 
+For a repeatable decision, [save a discovery brief](docs/WORKFLOWS.md), inspect filter counts, compare its results across catalog revisions, or prepare a digest-bound review packet. The workflows keep missing requirements and project limits visible.
+
 ## Decide, act, prove
 
 An agent that spends money needs three things: a policy it can be tested against, an execution path with recourse, and evidence that survives a dispute.

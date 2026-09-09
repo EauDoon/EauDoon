@@ -42,3 +42,5 @@ node scripts/diff.mjs previous-catalog.json candidate-catalog.json --json
 Both inputs must pass the same schema and size checks as the published catalog. The diff lists added and removed ids, changed fields, and assessment metadata changes. Project ordering and object-key ordering do not create false changes. Array ordering remains significant. A new source revision requires a fresh read of its content; the tool does not approve new claims automatically.
 
 See [the maintainer workflow](../CONTRIBUTING.md) for source review, regeneration and acceptance checks.
+
+For reusable briefs, contextual filter counts, paged results, complementary project sets, exports, receipts, revision impact and review handoffs, see [repeatable discovery workflows](WORKFLOWS.md). Those commands preserve the same static-assessment boundary.

@@ -49,3 +49,7 @@ The digest ignores object-key and project ordering; other array ordering remains
 `node cli.mjs handoff QUERY.json NEW-PACKET.json` creates a self-contained readable packet with the normalized query, complete matching project records, pinned source links, review steps and an explicit no-execution authority boundary. Keep the reported digest separately. The packet must contain 1 to 100 projects and uses the same exclusive-output rules as exports.
 
 `node cli.mjs verify-handoff PACKET.json EXPECTED-DIGEST` checks that retained digest, the entire packet and the selection reconstructed from this checkout's catalog. It rejects stale catalogs, omitted matches and changed instructions even if an internal digest was recomputed. Verification needs the matching catalog snapshot; reading the packet does not. A digest taken from the same untrusted packet is not an independent trust anchor. No signer identity, factual claim or external action is authenticated.
+
+## Understand an empty result
+
+`node cli.mjs diagnose QUERY.json` reports which constraints each near miss fails and what would match if one text/filter constraint were omitted. It preserves explicit exclusions in every diagnostic and never edits or reruns a broadened request automatically. At most 50 near misses are shown, ordered by failed-constraint count then id, with the total stated. This explains selection mechanics, not project quality or a recommendation to relax your requirements.
