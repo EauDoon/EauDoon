@@ -16,7 +16,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 ## Browse projects
 
 | Project | Purpose | Runtime | Data boundary |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | [agent-action-stack](https://github.com/EauDoon/agent-action-stack) | Reference demo composing policy evaluation, synthetic recourse and dispute review\. | node, python | local-after-setup |
 | [agent-team-os](https://github.com/EauDoon/agent-team-os) | Installable skill for bounded specialist work and independent review\. | assistant | provider-dependent |
 | [connect\.md](https://github.com/EauDoon/connect.md) | Browser Markdown profile/resume builder with optional network functionality in source\. | browser, node | configuration-dependent |
