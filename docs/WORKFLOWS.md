@@ -21,3 +21,9 @@ Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`ye
 ## Read results a page at a time
 
 `node cli.mjs page QUERY.json 5` returns up to five projects in stable id order, total count and `next`/`previous` cursors. Pass the returned cursor as the third argument to move pages. Sizes from 1 to 100 are accepted. A cursor is tied to the exact catalog content, normalized brief and page size; changing any of those requires starting again. Cursors are navigation hints, not signatures or authorization tokens. No result state is stored on disk.
+
+## Find complementary projects
+
+`node cli.mjs plan QUERY.json docs/examples/evidence.tasks.json 3` searches combinations of up to three matching projects for the [requested task set](examples/evidence.tasks.json). It prefers the most declared task coverage, then fewer projects, then stable id order. Missing tasks stay explicit. Unlike `shortlist`, it considers coverage across a group rather than ranking projects individually.
+
+The search is bounded to 25 relevant candidates, 10 known tasks and a maximum of 1 to 4 projects. Narrow the query if too many candidates remain. This is catalog set coverage, not proof that packages integrate, are compatible, or are appropriate to deploy. No code is executed and no task is authorized by a plan.
