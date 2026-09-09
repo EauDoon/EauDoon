@@ -37,3 +37,15 @@ test('comparison preserves requested order and exposes limits', () => {
   assert.match(run('compare', 'agent-team-os', 'operator-labs').stdout, /provider-dependent/);
   for (const ids of [['mandatebound'], ['EauDoon', 'EAUDOON'], ['missing', 'EauDoon']]) assert.equal(run('compare', ...ids).status, 1);
 });
+test('shortlist explains coverage and gaps without implying readiness', () => {
+  const result = run('shortlist', 'replay-evidence', 'gate-actions', '--json');
+  assert.equal(result.status, 0, result.stderr);
+  const output = JSON.parse(result.stdout);
+  assert.equal(output.matches[0].project.id, 'consequence-rail');
+  assert.deepEqual(output.matches[0].missingTasks, []);
+  assert.deepEqual(output.matches.find(m => m.project.id === 'mandatebound').missingTasks, ['gate-actions']);
+  assert.match(output.note, /not a quality score/);
+  assert.equal(run('shortlist', 'trade-money').status, 1);
+  assert.equal(run('shortlist', 'replay-evidence', 'replay-evidence').status, 1);
+  assert.ok(JSON.parse(run('tasks', '--json').stdout).some(x => x.task === 'reflect'));
+});
