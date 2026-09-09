@@ -2,6 +2,8 @@
 
 These offline commands print JSON for inspection or redirection. They never query accounts or run a project. All input files use UTF-8 JSON, reject duplicate object members and share the regular-file 1 MiB limit. Existing discovery commands are unchanged.
 
+Malformed JSON errors do not echo source text. Output artifacts may include the normalized query you supplied, so review them before sharing.
+
 ## Compare a public inventory
 
 `node cli.mjs inventory PUBLIC-INVENTORY.json` compares a supplied public-only snapshot with the assessed catalog. It lists catalog entries absent from that snapshot and public ids that need assessment. It never infers why a name is absent or changes the catalog.
