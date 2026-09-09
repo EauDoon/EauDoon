@@ -1,0 +1,10 @@
+{
+  "name": "eaudoon-project-catalog",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test",
+    "validate": "node cli.mjs validate"
+  }
+}

@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "assessedOn": "2026-09-09",
+  "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Source revisions can predate current main.",
+  "projects": [
+    {
+      "id": "agent-action-stack",
+      "repository": "https://github.com/EauDoon/agent-action-stack",
+      "summary": "Reference demo composing policy evaluation, synthetic recourse and dispute review.",
+      "category": "action-systems",
+      "runtimes": [
+        "node",
+        "python"
+      ],
+      "privacy": "local-after-setup",
+      "tasks": [
+        "compose-agent-actions",
+        "replay-evidence"
+      ],
+      "boundary": "Experimental synthetic workflow; does not prove legal effect or evidence truth.",
+      "fork": false,
+      "source": {
+        "revision": "964f438d4794a387b955c6cc658729f979e8b6ec",
+        "url": "https://github.com/EauDoon/agent-action-stack/blob/964f438d4794a387b955c6cc658729f979e8b6ec/README.md"
+      }
+    },
+    {
+      "id": "agent-team-os",
+      "repository": "https://github.com/EauDoon/agent-team-os",
+      "summary": "Installable skill for bounded specialist work and independent review.",
+      "category": "agent-workflows",
+      "runtimes": [
+        "assistant"
+      ],
+      "privacy": "provider-dependent",
+      "tasks": [
+        "coordinate-agents",
+        "review-evidence"
+      ],
+      "boundary": "Instructions do not grant tools or authority; data handling depends on the assistant.",
+      "fork": false,
+      "source": {
+        "revision": "8099ff0337bd07c81347923229c29ad45833e63f",
+        "url": "https://github.com/EauDoon/agent-team-os/blob/8099ff0337bd07c81347923229c29ad45833e63f/README.md"
+      }
+    },
+    {
+      "id": "connect.md",
+      "repository": "https://github.com/EauDoon/connect.md",
+      "summary": "Browser Markdown profile/resume builder with optional network functionality in source.",
+      "category": "publishing",
+      "runtimes": [
+        "browser",
+        "node"
+      ],
+      "privacy": "configuration-dependent",
+      "tasks": [
+        "write-profile",
+        "export-markdown"
+      ],
+      "boundary": "Guest drafts are local; optional network routes require separate configuration. Deployment state is unverified.",
+      "fork": false,
+      "source": {
+        "revision": "5a49016904fb8c1743aa2db72acbefe0b77ab214",
+        "url": "https://github.com/EauDoon/connect.md/blob/5a49016904fb8c1743aa2db72acbefe0b77ab214/README.md"
+      }
+    },
+    {
+      "id": "consequence-rail",
+      "repository": "https://github.com/EauDoon/consequence-rail",
+      "summary": "Recourse reservation, synthetic action execution and signed settlement receipts.",
+      "category": "action-systems",
+      "runtimes": [
+        "node"
+      ],
+      "privacy": "local-after-setup",
+      "tasks": [
+        "gate-actions",
+        "replay-evidence"
+      ],
+      "boundary": "Experimental reference implementation; no guaranteed recovery, insurance or legal compliance.",
+      "fork": false,
+      "source": {
+        "revision": "6c61e9fdcd1a4701afad1d2371abcb3f13bbab57",
+        "url": "https://github.com/EauDoon/consequence-rail/blob/6c61e9fdcd1a4701afad1d2371abcb3f13bbab57/README.md"
+      }
+    },
+    {
+      "id": "constitutional-agent-testbench",
+      "repository": "https://github.com/EauDoon/constitutional-agent-testbench",
+      "summary": "Deterministic structured-output policy evaluation and precedence tracing.",
+      "category": "action-systems",
+      "runtimes": [
+        "python"
+      ],
+      "privacy": "local-after-setup",
+      "tasks": [
+        "validate-policy",
+        "review-evidence"
+      ],
+      "boundary": "Checks declared structure and rules, not free-form reasoning or safety certification.",
+      "fork": false,
+      "source": {
+        "revision": "16b2faa71b0f92b9afa15b13afad8c48da8132f4",
+        "url": "https://github.com/EauDoon/constitutional-agent-testbench/blob/16b2faa71b0f92b9afa15b13afad8c48da8132f4/README.md"
+      }
+    },
+    {
+      "id": "crypto-research-desk",
+      "repository": "https://github.com/EauDoon/crypto-research-desk",
+      "summary": "Research workflow and browser workbench for structured forecast packets.",
+      "category": "decision-methods",
+      "runtimes": [
+        "browser",
+        "node",
+        "assistant"
+      ],
+      "privacy": "configuration-dependent",
+      "tasks": [
+        "research-crypto",
+        "review-evidence"
+      ],
+      "boundary": "Research only; no trading authority. Browser validation does not authenticate sources or independent review.",
+      "fork": false,
+      "source": {
+        "revision": "4761608a2e782e7791d55dc1c2749280404c1af0",
+        "url": "https://github.com/EauDoon/crypto-research-desk/blob/4761608a2e782e7791d55dc1c2749280404c1af0/README.md"
+      }
+    },
+    {
+      "id": "decision-labs",
+      "repository": "https://github.com/EauDoon/decision-labs",
+      "summary": "Local-first browser workbenches for partnerships, pooled buying, agreements and liquidity.",
+      "category": "decision-methods",
+      "runtimes": [
+        "browser",
+        "node"
+      ],
+      "privacy": "local-after-setup",
+      "tasks": [
+        "compare-decisions",
+        "model-liquidity"
+      ],
+      "boundary": "Models use declared assumptions; scenario outputs are not quotes or execution authority.",
+      "fork": false,
+      "source": {
+        "revision": "cacd654bac5c854ee341698a59d5501f9ad47c6c",
+        "url": "https://github.com/EauDoon/decision-labs/blob/cacd654bac5c854ee341698a59d5501f9ad47c6c/README.md"
+      }
+    },
+    {
+      "id": "EauDoon",
+      "repository": "https://github.com/EauDoon/EauDoon",
+      "summary": "Public profile and project entry points.",
+      "category": "discovery",
+      "runtimes": [
+        "markdown"
+      ],
+      "privacy": "public-content",
+      "tasks": [
+        "find-projects"
+      ],
+      "boundary": "A curated public snapshot, not certification or a live inventory service.",
+      "fork": false,
+      "source": {
+        "revision": "ee8ba9b5acedd2a15d059b64ea616c0d2da7ad71",
+        "url": "https://github.com/EauDoon/EauDoon/blob/ee8ba9b5acedd2a15d059b64ea616c0d2da7ad71/README.md"
+      }
+    },
+    {
+      "id": "hermes-agent",
+      "repository": "https://github.com/EauDoon/hermes-agent",
+      "summary": "Fork of Nous Research Hermes Agent with terminal and gateway workflows.",
+      "category": "agent-workflows",
+      "runtimes": [
+        "python",
+        "node"
+      ],
+      "privacy": "provider-dependent",
+      "tasks": [
+        "run-agent"
+      ],
+      "boundary": "Model providers and enabled integrations define data access and external actions. Fork source is not an endorsed upstream release.",
+      "fork": true,
+      "source": {
+        "revision": "4a7e28483f486c7096e74b06ebc203b643820667",
+        "url": "https://github.com/EauDoon/hermes-agent/blob/4a7e28483f486c7096e74b06ebc203b643820667/README.md"
+      }
+    },
+    {
+      "id": "hermes-parallel-followups",
+      "repository": "https://github.com/EauDoon/hermes-parallel-followups",
+      "summary": "Patches for Hermes message boundaries and optional parallel follow-ups.",
+      "category": "agent-workflows",
+      "runtimes": [
+        "python"
+      ],
+      "privacy": "configuration-dependent",
+      "tasks": [
+        "manage-followups"
+      ],
+      "boundary": "Version-sensitive source patches; inspect compatibility before modifying an installation.",
+      "fork": false,
+      "source": {
+        "revision": "83cac97c1d817e3199c6ccb8d2c7317631418e2a",
+        "url": "https://github.com/EauDoon/hermes-parallel-followups/blob/83cac97c1d817e3199c6ccb8d2c7317631418e2a/README.md"
+      }
+    },
+    {
+      "id": "llms-txt-personal-site",
+      "repository": "https://github.com/EauDoon/llms-txt-personal-site",
+      "summary": "Static personal-site template with Markdown, llms.txt and structured data.",
+      "category": "publishing",
+      "runtimes": [
+        "python"
+      ],
+      "privacy": "public-content",
+      "tasks": [
+        "publish-profile"
+      ],
+      "boundary": "Generated output is public when deployed; local build does not configure hosting or guarantee indexing.",
+      "fork": false,
+      "source": {
+        "revision": "551b4e0413ce0a4ee206cdc76f66e8e74ad4a138",
+        "url": "https://github.com/EauDoon/llms-txt-personal-site/blob/551b4e0413ce0a4ee206cdc76f66e8e74ad4a138/README.md"
+      }
+    },
+    {
+      "id": "mandatebound",
+      "repository": "https://github.com/EauDoon/mandatebound",
+      "summary": "Offline signed commerce evidence readiness and deterministic dispute replay.",
+      "category": "action-systems",
+      "runtimes": [
+        "node"
+      ],
+      "privacy": "local-after-setup",
+      "tasks": [
+        "replay-evidence",
+        "review-evidence"
+      ],
+      "boundary": "Experimental decision support; legal effect stays not determined. Evidence packs can contain sensitive data.",
+      "fork": false,
+      "source": {
+        "revision": "e526c4c32ac61571757a98ca1a69189821c3dce7",
+        "url": "https://github.com/EauDoon/mandatebound/blob/e526c4c32ac61571757a98ca1a69189821c3dce7/README.md"
+      }
+    },
+    {
+      "id": "operator-labs",
+      "repository": "https://github.com/EauDoon/operator-labs",
+      "summary": "Independent offline Python tools for synthetic payment routes and trace privacy checks.",
+      "category": "decision-methods",
+      "runtimes": [
+        "python"
+      ],
+      "privacy": "local-after-setup",
+      "tasks": [
+        "compare-payment-routes",
+        "check-trace-privacy"
+      ],
+      "boundary": "Synthetic research inputs only; no live routing or payment execution.",
+      "fork": false,
+      "source": {
+        "revision": "eac7bffea37230800ba20a0bad2098448746d1df",
+        "url": "https://github.com/EauDoon/operator-labs/blob/eac7bffea37230800ba20a0bad2098448746d1df/README.md"
+      }
+    },
+    {
+      "id": "orbio-starter",
+      "repository": "https://github.com/EauDoon/orbio-starter",
+      "summary": "Forked TypeScript examples for model calls and tool workflows.",
+      "category": "agent-workflows",
+      "runtimes": [
+        "node"
+      ],
+      "privacy": "provider-dependent",
+      "tasks": [
+        "build-model-example"
+      ],
+      "boundary": "Examples can call paid model services and external tools. Review the upstream setup and scope first.",
+      "fork": true,
+      "source": {
+        "revision": "28b87222731ed728fc7b61af1df0705c900e907f",
+        "url": "https://github.com/EauDoon/orbio-starter/blob/28b87222731ed728fc7b61af1df0705c900e907f/README.md"
+      }
+    },
+    {
+      "id": "reflection-engine",
+      "repository": "https://github.com/EauDoon/reflection-engine",
+      "summary": "Fork of Kevin Rose's prompt for evidence-grounded personal reflection.",
+      "category": "decision-methods",
+      "runtimes": [
+        "assistant"
+      ],
+      "privacy": "provider-dependent",
+      "tasks": [
+        "reflect"
+      ],
+      "boundary": "Chosen assistant processes personal context; output is sensitive, not therapy or diagnosis.",
+      "fork": true,
+      "source": {
+        "revision": "f60aa562fbb77a731aa8f7e39312141e111ecea2",
+        "url": "https://github.com/EauDoon/reflection-engine/blob/f60aa562fbb77a731aa8f7e39312141e111ecea2/README.md"
+      }
+    },
+    {
+      "id": "unconventional-moves",
+      "repository": "https://github.com/EauDoon/unconventional-moves",
+      "summary": "Installable decision skill for practical approaches and bounded reversible tests.",
+      "category": "decision-methods",
+      "runtimes": [
+        "assistant"
+      ],
+      "privacy": "provider-dependent",
+      "tasks": [
+        "generate-experiments"
+      ],
+      "boundary": "A planning method; suggested actions still need appropriate user authority.",
+      "fork": false,
+      "source": {
+        "revision": "9b8839db172eb5094bab6fd9276408faf1098760",
+        "url": "https://github.com/EauDoon/unconventional-moves/blob/9b8839db172eb5094bab6fd9276408faf1098760/README.md"
+      }
+    }
+  ]
+}
