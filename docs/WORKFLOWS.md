@@ -33,3 +33,9 @@ The search is bounded to 25 relevant candidates, 10 known tasks and a maximum of
 `node cli.mjs export QUERY.json csv NEW-FILE.csv` writes the selected rows for a spreadsheet. `json` preserves the complete result and normalized query; `markdown` produces a shareable comparison table. Every format retains assessment provenance and project limits. CSV quotes every cell and prefixes formula-like leading characters with an apostrophe; spreadsheet import settings can still affect display.
 
 The destination must not exist, its parent must already exist, and output is limited to 4 MiB. Existing files and symlinks are never replaced. A disk failure can leave an incomplete newly created file; an error never reports successful export. Review the output before sharing, especially query text that may contain your own context.
+
+## Record the assessed catalog
+
+`node cli.mjs receipt` prints a semantic SHA-256 receipt with the assessment date and every pinned source revision. Save its JSON and retain the digest separately if you need a substitution check. `node cli.mjs verify-receipt RECEIPT.json EXPECTED-DIGEST` verifies it against this checkout and the independently retained digest. Omitting the digest checks only consistency with this checkout and explicitly reports `independentlyPinned: false`.
+
+The digest ignores object-key and project ordering; other array ordering remains significant. It binds summaries, limits, classifications and source revisions, not just project names. A matching receipt is not a signature, authentic source, live-availability check or endorsement. Editing both an unanchored catalog and its receipt can produce another internally consistent pair.
