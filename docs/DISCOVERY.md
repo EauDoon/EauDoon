@@ -27,3 +27,14 @@ The 16 entries describe public repositories, including three forks and this prof
 The source revision for this profile describes the profile before the discovery CLI was added. Other repositories can advance independently. Current README links help identify changes before setup. No deployment, availability or current compatibility check is implied.
 
 The profile introduction is curated; the catalog includes the complete assessed public set. Existing upstream attribution stays with each fork. Reflection Engine originates from Kevin Rose's [kropdx/reflection-engine](https://github.com/kropdx/reflection-engine); Hermes Agent originates from [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent).
+
+## Review a catalog update
+
+Keep a copy of the prior JSON, edit a separate candidate, and compare them without applying changes:
+
+```text
+node scripts/diff.mjs previous-catalog.json candidate-catalog.json
+node scripts/diff.mjs previous-catalog.json candidate-catalog.json --json
+```
+
+Both inputs must pass the same schema and size checks as the published catalog. The diff lists added and removed ids, changed fields, and assessment metadata changes. Project ordering and object-key ordering do not create false changes. Array ordering remains significant. A new source revision requires a fresh read of its content; the tool does not approve new claims automatically.
