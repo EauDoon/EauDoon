@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "text": "evidence",
+  "filters": {
+    "runtime": ["node", "python"],
+    "privacy": ["local-after-setup"]
+  },
+  "exclude": []
+}
