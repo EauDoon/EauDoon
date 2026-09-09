@@ -27,3 +27,9 @@ Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`ye
 `node cli.mjs plan QUERY.json docs/examples/evidence.tasks.json 3` searches combinations of up to three matching projects for the [requested task set](examples/evidence.tasks.json). It prefers the most declared task coverage, then fewer projects, then stable id order. Missing tasks stay explicit. Unlike `shortlist`, it considers coverage across a group rather than ranking projects individually.
 
 The search is bounded to 25 relevant candidates, 10 known tasks and a maximum of 1 to 4 projects. Narrow the query if too many candidates remain. This is catalog set coverage, not proof that packages integrate, are compatible, or are appropriate to deploy. No code is executed and no task is authorized by a plan.
+
+## Export a selection
+
+`node cli.mjs export QUERY.json csv NEW-FILE.csv` writes the selected rows for a spreadsheet. `json` preserves the complete result and normalized query; `markdown` produces a shareable comparison table. Every format retains assessment provenance and project limits. CSV quotes every cell and prefixes formula-like leading characters with an apostrophe; spreadsheet import settings can still affect display.
+
+The destination must not exist, its parent must already exist, and output is limited to 4 MiB. Existing files and symlinks are never replaced. A disk failure can leave an incomplete newly created file; an error never reports successful export. Review the output before sharing, especially query text that may contain your own context.
