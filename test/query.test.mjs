@@ -23,3 +23,8 @@ test('facets preserve other constraints and show unavailable replacement choices
   assert.equal(result.facets.runtime.find(x => x.value === 'node').count, 1);
   assert.equal(result.facets.category.find(x => x.value === 'decision-methods').count, runQuery(c, { ...q, filters: { ...q.filters, category: ['decision-methods'] } }).length);
 });
+
+test('explicit null fields cannot silently broaden an authored brief', () => {
+  const c = loadCatalog();
+  for (const field of ['text','filters','exclude']) assert.throws(() => normalizeQuery({ version: 1, [field]: null }, c));
+});

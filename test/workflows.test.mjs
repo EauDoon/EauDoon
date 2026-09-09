@@ -12,4 +12,5 @@ test('public inventory comparison reports only observed differences', () => {
   assert.deepEqual(r.unassessed, ['synthetic-example']);
   snapshot.repositories[0].public = false;
   assert.throws(() => inventoryDiff(c, snapshot), /public/);
+  assert.throws(() => inventoryDiff(c, { owner: 'EauDoon', repositories: [{ id: 123, public: true }] }), /public repository ids/);
 });
