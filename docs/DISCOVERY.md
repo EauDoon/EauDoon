@@ -26,6 +26,8 @@ The 16 entries describe public repositories, including three forks and this prof
 
 The source revision for this profile describes the profile before the discovery CLI was added. Other repositories can advance independently. Current README links help identify changes before setup. No deployment, availability or current compatibility check is implied.
 
+For connect.md, the assessed README describes the guest builder. The [middleware at the same revision](https://github.com/EauDoon/connect.md/blob/5a49016904fb8c1743aa2db72acbefe0b77ab214/apps/web/middleware.ts) explicitly leaves new network routes outside its retired-route block. The catalog therefore distinguishes optional network source from the guest workflow; whether those routes are configured in production remains unverified.
+
 The profile introduction is curated; the catalog includes the complete assessed public set. Existing upstream attribution stays with each fork. Reflection Engine originates from Kevin Rose's [kropdx/reflection-engine](https://github.com/kropdx/reflection-engine); Hermes Agent originates from [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent).
 
 ## Review a catalog update
@@ -38,3 +40,5 @@ node scripts/diff.mjs previous-catalog.json candidate-catalog.json --json
 ```
 
 Both inputs must pass the same schema and size checks as the published catalog. The diff lists added and removed ids, changed fields, and assessment metadata changes. Project ordering and object-key ordering do not create false changes. Array ordering remains significant. A new source revision requires a fresh read of its content; the tool does not approve new claims automatically.
+
+See [the maintainer workflow](../CONTRIBUTING.md) for source review, regeneration and acceptance checks.
