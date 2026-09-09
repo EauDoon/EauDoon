@@ -39,3 +39,7 @@ The destination must not exist, its parent must already exist, and output is lim
 `node cli.mjs receipt` prints a semantic SHA-256 receipt with the assessment date and every pinned source revision. Save its JSON and retain the digest separately if you need a substitution check. `node cli.mjs verify-receipt RECEIPT.json EXPECTED-DIGEST` verifies it against this checkout and the independently retained digest. Omitting the digest checks only consistency with this checkout and explicitly reports `independentlyPinned: false`.
 
 The digest ignores object-key and project ordering; other array ordering remains significant. It binds summaries, limits, classifications and source revisions, not just project names. A matching receipt is not a signature, authentic source, live-availability check or endorsement. Editing both an unanchored catalog and its receipt can produce another internally consistent pair.
+
+## Review how an update affects your brief
+
+`node cli.mjs impact BEFORE.json AFTER.json QUERY.json` applies the same brief to two validated catalog snapshots. It reports entering, leaving and retained matches, changed fields within retained matches, metadata changes and both digests. A task present only in the older snapshot remains a constraint, so its disappearing matches are visible. Unknown task tags absent from both snapshots still fail validation. Nothing is promoted or overwritten.
