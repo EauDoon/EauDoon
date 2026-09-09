@@ -269,25 +269,6 @@
       }
     },
     {
-      "id": "orbio-starter",
-      "repository": "https://github.com/EauDoon/orbio-starter",
-      "summary": "Forked TypeScript model-call examples with deterministic offline fixtures and explicit live mode.",
-      "category": "agent-workflows",
-      "runtimes": [
-        "node"
-      ],
-      "privacy": "configuration-dependent",
-      "tasks": [
-        "build-model-example"
-      ],
-      "boundary": "Offline package commands use synthetic fixtures. Explicit live mode sends inputs to OpenRouter and may consume credits; the starter does not manage funds.",
-      "fork": true,
-      "source": {
-        "revision": "b7319db76b5c57c62e4dd75d058cfa9764b748b5",
-        "url": "https://github.com/EauDoon/orbio-starter/blob/b7319db76b5c57c62e4dd75d058cfa9764b748b5/README.md"
-      }
-    },
-    {
       "id": "reflection-engine",
       "repository": "https://github.com/EauDoon/reflection-engine",
       "summary": "Fork of Kevin Rose's reflection prompt with a bounded edition and offline packet/review tools.",

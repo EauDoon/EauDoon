@@ -22,7 +22,7 @@ Add `--json` to discovery commands for structured output. List, search, show, co
 
 ## Interpret the snapshot
 
-The 16 entries describe public repositories, including three forks and this profile. They point to immutable reviewed README revisions. Classification is editorial and static. A source link is provenance, not proof that every claim in that source is true. Privacy labels describe a documented workflow and are not a security certification. Runtime labels may indicate required combinations or alternative interfaces. Read the source for exact versions.
+The 15 entries describe public repositories, including two forks and this profile. They point to immutable reviewed README revisions. Classification is editorial and static. A source link is provenance, not proof that every claim in that source is true. Privacy labels describe a documented workflow and are not a security certification. Runtime labels may indicate required combinations or alternative interfaces. Read the source for exact versions.
 
 The source revision for this profile is an earlier public snapshot that already includes the discovery CLI and predates this catalog reconciliation. Hermes Agent retains its earlier assessed public source. The catalog does not claim that every pin is current main. Other repositories can advance independently; current README links help identify changes before setup. No deployment, availability or current compatibility check is implied.
 

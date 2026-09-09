@@ -30,7 +30,6 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | [llms-txt-personal-site](https://github.com/EauDoon/llms-txt-personal-site) | Static personal-site template with llms\.txt, article feeds, local search and reproducible build review\. | python | public-content |
 | [mandatebound](https://github.com/EauDoon/mandatebound) | Offline commerce evidence readiness, dispute replay and operator triage with review exports\. | node | local-after-setup |
 | [operator-labs](https://github.com/EauDoon/operator-labs) | Independent offline Python tools for synthetic payment routes and trace privacy checks\. | python | local-after-setup |
-| [orbio-starter](https://github.com/EauDoon/orbio-starter) (fork) | Forked TypeScript model-call examples with deterministic offline fixtures and explicit live mode\. | node | configuration-dependent |
 | [reflection-engine](https://github.com/EauDoon/reflection-engine) (fork) | Fork of Kevin Rose's reflection prompt with a bounded edition and offline packet/review tools\. | assistant, node | configuration-dependent |
 | [unconventional-moves](https://github.com/EauDoon/unconventional-moves) | Decision skill and offline Python workflow for bounded experiment plans, review and reported outcomes\. | assistant, python | configuration-dependent |
 
@@ -38,7 +37,6 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 
 | Task | Projects |
 | --- | --- |
-| build-model-example | [orbio-starter](https://github.com/EauDoon/orbio-starter) |
 | check-trace-privacy | [operator-labs](https://github.com/EauDoon/operator-labs) |
 | compare-decisions | [decision-labs](https://github.com/EauDoon/decision-labs) |
 | compare-payment-routes | [operator-labs](https://github.com/EauDoon/operator-labs) |
@@ -138,12 +136,6 @@ Category: action-systems. [Assessed README](https://github.com/EauDoon/mandatebo
 Synthetic research inputs only; no live routing or payment execution.
 
 Category: decision-methods. [Assessed README](https://github.com/EauDoon/operator-labs/blob/bd153104833d2e4614ee495b80c5fc1fbde72291/README.md) at bd153104833d2e4614ee495b80c5fc1fbde72291. [Current README](https://github.com/EauDoon/operator-labs/blob/main/README.md).
-
-### orbio-starter
-
-Offline package commands use synthetic fixtures. Explicit live mode sends inputs to OpenRouter and may consume credits; the starter does not manage funds.
-
-Category: agent-workflows. [Assessed README](https://github.com/EauDoon/orbio-starter/blob/b7319db76b5c57c62e4dd75d058cfa9764b748b5/README.md) at b7319db76b5c57c62e4dd75d058cfa9764b748b5. [Current README](https://github.com/EauDoon/orbio-starter/blob/main/README.md).
 
 ### reflection-engine
 
