@@ -14,6 +14,7 @@ test('rejects malformed, unknown, duplicate and injected catalog values', () => 
     c => c.projects[0].source.revision = 'main', c => c.projects[0].summary = '\u001b[31m',
     c => c.projects[0].runtimes = ['unknown'], c => c.projects[0].secret = 'unexpected',
     c => c.assessedOn = '2026-02-31', c => c.projects[0].source = null,
+    c => c.projects[0].summary = 'hidden\u202Etext', c => c.projects[0].boundary = 'x'.repeat(1001),
   ]) { const c = loadCatalog(); mutate(c); assert.ok(validate(c).length); }
   assert.ok(validate(null).length);
 });
