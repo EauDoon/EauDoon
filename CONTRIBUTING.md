@@ -15,7 +15,7 @@ Do not edit the generated catalog guide directly. No package installation, secre
 
 ## Schema and validation contract
 
-`lib/catalog.mjs` is the executable schema. Unknown fields, duplicate ids, unsupported categories, repeated task/runtime labels, invalid dates, unpinned source URLs, control characters and oversized inputs are rejected. Catalog files are limited to 1 MiB and 1,000 projects. Tests cover the CLI as a real subprocess, malformed input, search/filter behavior, task gaps, snapshot diffs and generated-file parity.
+`lib/catalog.mjs` is the executable schema. Unknown fields, duplicate ids, unsupported categories, repeated task/runtime labels, invalid dates, unpinned source URLs, control characters and oversized inputs are rejected. Catalog files are limited to 1 MiB and 1,000 projects. The loader opens one read-only regular-file descriptor, reads at most the byte limit plus one sentinel byte, closes it on every path, and rejects invalid UTF-8. A nonblocking open allows POSIX FIFOs to be rejected without waiting for a writer. Concurrent growth cannot bypass the consumed-byte limit; this is not an atomic snapshot guarantee against concurrent in-place edits. Tests cover descriptor growth and nonregular inputs, the CLI as a real subprocess, malformed input, search/filter behavior, task gaps, snapshot diffs and generated-file parity.
 
 The link checker validates local file targets, path containment and basic external HTTPS syntax in the profile and discovery guides. It does not perform network requests, authenticate remote availability, check every anchor or replace a full Markdown parser. Confirm remote links separately during source review. Do not turn a read-only check into an automatic catalog updater or publisher.
 
