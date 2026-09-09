@@ -17,3 +17,7 @@ Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`ye
 ## See available filter choices
 
 `node cli.mjs facets QUERY.json` shows query-specific counts for runtimes, categories, privacy labels, task tags and fork status, including zero-count choices. Each count means replacing that field with the named value while preserving all other filters, text and exclusions. A selected flag records the current brief; the command does not change it. Counts describe catalog matches, not compatibility or quality.
+
+## Read results a page at a time
+
+`node cli.mjs page QUERY.json 5` returns up to five projects in stable id order, total count and `next`/`previous` cursors. Pass the returned cursor as the third argument to move pages. Sizes from 1 to 100 are accepted. A cursor is tied to the exact catalog content, normalized brief and page size; changing any of those requires starting again. Cursors are navigation hints, not signatures or authorization tokens. No result state is stored on disk.
