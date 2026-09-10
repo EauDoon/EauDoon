@@ -1,7 +1,7 @@
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
-  <img src="assets/banner-light.svg" alt="Daniel Oon. Decision infrastructure for agent systems and operators." width="100%">
+  <img src="assets/banner-light.svg" alt="Daniel Oon. Decision infrastructure operator." width="100%">
 </picture>
 
 <p align="center">
