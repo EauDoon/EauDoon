@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { loadCatalog } from '../lib/catalog.mjs';
+import { diffSnapshots } from '../lib/snapshot.mjs';
 
 const cli = fileURLToPath(new URL('../cli.mjs', import.meta.url));
 const run = (...args) => spawnSync(process.execPath, [cli, ...args], { encoding: 'utf8', timeout: 5000 });
@@ -55,4 +56,33 @@ test('malformed and duplicate JSON fail without echoing input content', () => wo
   const repeated = run('query', duplicate);
   assert.equal(repeated.status, 1);
   assert.match(repeated.stderr, /Duplicate JSON/);
+}));
+
+test('snapshot and CLI impact retain repository identity across casing changes', () => workspace(file => {
+  const before = loadCatalog();
+  before.projects = before.projects.filter(p => p.id === 'EauDoon');
+  const beforeFile = file('before.json', before);
+  const query = file('query.json', { version: 1 });
+  for (const changeSummary of [false, true]) {
+    const after = structuredClone(before); const project = after.projects[0];
+    project.id = 'eaudoon';
+    project.repository = 'https://github.com/EauDoon/eaudoon';
+    project.source.url = `${project.repository}/blob/${project.source.revision}/README.md`;
+    if (changeSummary) project.summary = 'Changed public discovery summary';
+    const afterFile = file('after.json', after);
+    loadCatalog(afterFile); // The differently cased snapshot must still satisfy strict validation.
+    const fields = ['id', 'repository', ...(changeSummary ? ['summary'] : []), 'source'];
+    const diff = diffSnapshots(before, after);
+    assert.deepEqual(diff.added, []); assert.deepEqual(diff.removed, []);
+    assert.deepEqual(diff.changed, [{ id: 'eaudoon', fields }]);
+    const impact = parsed('impact', beforeFile, afterFile, query);
+    assert.deepEqual(impact.entered, []); assert.deepEqual(impact.left, []);
+    assert.deepEqual(impact.retained, ['eaudoon']);
+    assert.deepEqual(impact.changedRetained, [{ id: 'eaudoon', fields }]);
+    const excluded = file('excluded.json', { version: 1, exclude: ['EAUDOON'] });
+    assert.deepEqual(parsed('impact', beforeFile, afterFile, excluded).retained, []);
+    project.category = 'publishing'; file('after.json', after);
+    const discovery = file('discovery.json', { version: 1, filters: { category: ['discovery'] } });
+    assert.deepEqual(parsed('impact', beforeFile, afterFile, discovery).left, ['EauDoon']);
+  }
 }));
