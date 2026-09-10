@@ -11,7 +11,7 @@ test('snapshot review detects semantic changes and ignores project/key ordering'
   assert.deepEqual(diffSnapshots(before, after).changed, []);
   after.projects.find(p => p.id === 'EauDoon').summary = 'Public discovery tools';
   after.projects = after.projects.filter(p => p.id !== 'mandatebound');
-  after.assessedOn = '2026-09-10';
+  after.assessedOn = new Date(Date.parse(before.assessedOn) + 86400000).toISOString().slice(0, 10);
   const diff = diffSnapshots(before, after);
   assert.deepEqual(diff.removed, ['mandatebound']);
   assert.deepEqual(diff.changed, [{ id: 'EauDoon', fields: ['summary'] }]);
