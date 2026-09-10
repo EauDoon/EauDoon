@@ -1,4 +1,5 @@
 import { loadCatalog } from './lib/catalog.mjs';
+import { workflows } from './lib/workflows.mjs';
 import { search, summarize, parseOptions, filterProjects, selectProject, detail, renderDetail, compare, renderComparison, taskIndex, shortlist } from './lib/discover.mjs';
 
 const help = `Offline public project discovery (Node.js 22+)
@@ -16,7 +17,8 @@ No installs, network calls, telemetry or project execution.`;
 try {
   const args = process.argv.slice(2);
   const command = args.shift() || 'help';
-  if (command === 'help' || command === '--help') { console.log(help); process.exit(0); }
+  if (Object.hasOwn(workflows, command)) { console.log(JSON.stringify(workflows[command](loadCatalog(), args), null, 2)); process.exit(0); }
+  if (command === 'help' || command === '--help') { console.log(help + '\nArtifact workflows (JSON output): ' + Object.keys(workflows).join(', ') + '\nSee docs/WORKFLOWS.md for contracts and examples.'); process.exit(0); }
   if (!['validate', 'list', 'search', 'show', 'compare', 'tasks', 'shortlist'].includes(command)) throw new Error(`Unknown command.\n${help}`);
   const catalog = loadCatalog();
   const { options, positional } = parseOptions(args, catalog.projects);

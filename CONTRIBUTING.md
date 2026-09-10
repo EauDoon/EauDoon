@@ -30,4 +30,4 @@ node cli.mjs shortlist replay-evidence gate-actions --json
 node cli.mjs show reflection-engine
 ```
 
-The first command currently returns three forks. The synthetic payment query returns Operator Labs. The shortlist places Consequence Rail first because it has both declared task tags, and lists missing tags for other matches. These are snapshot expectations, not permanent assertions about future catalog entries. Misspelled options and unknown ids must fail visibly instead of silently broadening the search.
+The first command currently returns two forks. The synthetic payment query returns Operator Labs. The shortlist places Consequence Rail first because it has both declared task tags, and lists missing tags for other matches. These are snapshot expectations, not permanent assertions about future catalog entries. Misspelled options and unknown ids must fail visibly instead of silently broadening the search.

@@ -2,10 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadCatalog, validate } from '../lib/catalog.mjs';
 
-test('public snapshot contains 16 distinct pinned projects', () => {
+test('public snapshot contains 15 distinct pinned projects', () => {
   const c = loadCatalog();
-  assert.equal(c.projects.length, 16);
-  assert.equal(c.projects.filter(p => p.fork).length, 3);
+  assert.equal(c.projects.length, 15);
+  assert.equal(c.projects.filter(p => p.fork).length, 2);
   assert.deepEqual(validate(c), []);
 });
 test('rejects malformed, unknown, duplicate and injected catalog values', () => {

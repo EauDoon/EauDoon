@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { checkLinks } from '../lib/links.mjs';
 
 const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
-const files = ['README.md', 'docs/CATALOG.md', 'docs/DISCOVERY.md'];
+const files = ['README.md', 'docs/CATALOG.md', 'docs/DISCOVERY.md', 'docs/WORKFLOWS.md'];
 const errors = files.flatMap(name => {
   const file = fileURLToPath(new URL(`../${name}`, import.meta.url));
   return checkLinks(readFileSync(file, 'utf8'), file, root).map(e => `${name}: ${e}`);

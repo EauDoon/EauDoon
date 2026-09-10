@@ -22,11 +22,11 @@ Add `--json` to discovery commands for structured output. List, search, show, co
 
 ## Interpret the snapshot
 
-The 16 entries describe public repositories, including three forks and this profile. They point to immutable reviewed README revisions. Classification is editorial and static. A source link is provenance, not proof that every claim in that source is true. Privacy labels describe a documented workflow and are not a security certification. Runtime labels may indicate required combinations or alternative interfaces. Read the source for exact versions.
+The 15 entries describe public repositories, including two forks and this profile. They point to immutable reviewed README revisions. Classification is editorial and static. A source link is provenance, not proof that every claim in that source is true. Privacy labels describe a documented workflow and are not a security certification. Runtime labels may indicate required combinations or alternative interfaces. Read the source for exact versions.
 
-The source revision for this profile is an earlier public snapshot that already includes the discovery CLI and predates this catalog reconciliation. Hermes Agent retains its earlier assessed public source. The catalog does not claim that every pin is current main. Other repositories can advance independently; current README links help identify changes before setup. No deployment, availability or current compatibility check is implied.
+The source revision for this profile is an earlier public snapshot that already includes the discovery CLI and predates this catalog reconciliation. Some other entries also retain earlier assessed source. Updated pins identify reviewed release commits; the catalog does not claim that every pin is current main. Repositories can advance independently; current README links help identify changes before setup. No deployment, availability or current compatibility check is implied.
 
-For connect.md, the assessed README describes the guest builder. The [middleware at the same revision](https://github.com/EauDoon/connect.md/blob/1ab2ba57f08d2520e5f9233da3d2f5eb18df0d33/apps/web/middleware.ts) explicitly leaves new network routes outside its retired-route block. The catalog therefore distinguishes optional network source from the guest workflow; whether those routes are configured in production remains unverified.
+For connect.md, the assessed README describes the guest builder. The [middleware at the same revision](https://github.com/EauDoon/connect.md/blob/05286d2ba0b9c7721a1a44cb32b9e87a8e7326a3/apps/web/middleware.ts) explicitly leaves new network routes outside its retired-route block. The catalog therefore distinguishes optional network source from the guest workflow; whether those routes are configured in production remains unverified.
 
 The profile introduction is curated; the catalog includes the complete assessed public set. Existing upstream attribution stays with each fork. Reflection Engine originates from Kevin Rose's [kropdx/reflection-engine](https://github.com/kropdx/reflection-engine); Hermes Agent originates from [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent).
 
@@ -42,3 +42,5 @@ node scripts/diff.mjs previous-catalog.json candidate-catalog.json --json
 Both inputs must pass the same schema and size checks as the published catalog. The diff lists added and removed ids, changed fields, and assessment metadata changes. Project ordering and object-key ordering do not create false changes. Array ordering remains significant. A new source revision requires a fresh read of its content; the tool does not approve new claims automatically.
 
 See [the maintainer workflow](../CONTRIBUTING.md) for source review, regeneration and acceptance checks.
+
+For reusable briefs, contextual filter counts, paged results, complementary project sets, exports, receipts, revision impact and review handoffs, see [repeatable discovery workflows](WORKFLOWS.md). Those commands preserve the same static-assessment boundary.
