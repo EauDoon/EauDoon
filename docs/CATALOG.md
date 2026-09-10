@@ -123,7 +123,7 @@ Category: agent-workflows. [Assessed README](https://github.com/EauDoon/hermes-p
 
 Generated output is public when deployed; local build does not configure hosting or guarantee indexing.
 
-Category: publishing. [Assessed README](https://github.com/EauDoon/llms-txt-personal-site/blob/559670d007796c4d694c25399d3ea2cbbcbfec58/README.md) at 559670d007796c4d694c25399d3ea2cbbcbfec58. [Current README](https://github.com/EauDoon/llms-txt-personal-site/blob/main/README.md).
+Category: publishing. [Assessed README](https://github.com/EauDoon/llms-txt-personal-site/blob/a4bac9f923bd14a6500413062501046813c87ae9/README.md) at a4bac9f923bd14a6500413062501046813c87ae9. [Current README](https://github.com/EauDoon/llms-txt-personal-site/blob/main/README.md).
 
 ### mandatebound
 

@@ -224,8 +224,8 @@
       "boundary": "Generated output is public when deployed; local build does not configure hosting or guarantee indexing.",
       "fork": false,
       "source": {
-        "revision": "559670d007796c4d694c25399d3ea2cbbcbfec58",
-        "url": "https://github.com/EauDoon/llms-txt-personal-site/blob/559670d007796c4d694c25399d3ea2cbbcbfec58/README.md"
+        "revision": "a4bac9f923bd14a6500413062501046813c87ae9",
+        "url": "https://github.com/EauDoon/llms-txt-personal-site/blob/a4bac9f923bd14a6500413062501046813c87ae9/README.md"
       }
     },
     {
