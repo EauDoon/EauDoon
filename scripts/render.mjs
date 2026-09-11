@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'node:fs';
-import { loadCatalog } from '../lib/catalog.mjs';
+import { loadCatalog, errorMessage } from '../lib/catalog.mjs';
 import { renderCatalog } from '../lib/render.mjs';
 
 try {
@@ -10,4 +10,4 @@ try {
   if (mode === '--write') writeFileSync(target, output);
   else if (readFileSync(target, 'utf8').replace(/\r\n/g, '\n') !== output) throw new Error('Catalog guide is stale. Run node scripts/render.mjs --write and review the diff.');
   console.log(mode === '--write' ? 'Catalog guide generated' : 'Catalog guide is current');
-} catch (error) { console.error(error.message); process.exitCode = 1; }
+} catch (error) { console.error(errorMessage(error)); process.exitCode = 1; }

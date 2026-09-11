@@ -28,7 +28,7 @@ node cli.mjs shortlist replay-evidence gate-actions
 
 The [offline discovery guide](docs/DISCOVERY.md) covers filters, source-linked setup guidance and JSON output. No package installation or accounts are required. [Machine-readable catalog](catalog.json).
 
-For a repeatable decision, [save a discovery brief](docs/WORKFLOWS.md), inspect filter counts, compare its results across catalog revisions, or prepare a digest-bound review packet. The workflows keep missing requirements and project limits visible.
+For a repeatable decision, [save a discovery brief](docs/WORKFLOWS.md), inspect filter counts, compare its results across catalog revisions, or prepare a digest-bound review packet. The workflows keep missing requirements and project limits visible. Saved briefs can also be evaluated in batches, compared across requirement edits, checked for declared task coverage, and exported as line-oriented JSON. Select a historical catalog snapshot to reproduce the same review.
 
 ## Decide, act, prove
 
