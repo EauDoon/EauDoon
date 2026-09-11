@@ -54,6 +54,8 @@ Use `ndjson` to consume an export one JSON record per line. The first record has
 
 ## Record the assessed catalog
 
+`node cli.mjs freshness 2026-09-11 30` compares the catalog's declared assessment date with an explicit UTC calendar date and a maximum age from 0 to 36500 days. The threshold is inclusive. Output reports `within-threshold`, `stale`, or `future-assessment`, elapsed days and catalog digest. All three are successful reports with exit code 0; consumers choose their own acceptance policy. No local clock, network check or per-project maintenance claim is involved. Reusing the same snapshot and arguments reproduces the result.
+
 `node cli.mjs receipt` prints a semantic SHA-256 receipt with the assessment date and every pinned source revision. Save its JSON and retain the digest separately if you need a substitution check. `node cli.mjs verify-receipt RECEIPT.json EXPECTED-DIGEST` verifies it against this checkout and the independently retained digest. Omitting the digest checks only consistency with this checkout and explicitly reports `independentlyPinned: false`.
 
 The digest ignores object-key and project ordering; other array ordering remains significant. It binds summaries, limits, classifications and source revisions, not just project names. A matching receipt is not a signature, authentic source, live-availability check or endorsement. Editing both an unanchored catalog and its receipt can produce another internally consistent pair.

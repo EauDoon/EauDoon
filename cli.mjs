@@ -25,6 +25,7 @@ const usage = {
   batch: 'BRIEFS.json',
   coverage: 'QUERY.json TASKS.json',
   'compare-queries': 'BEFORE-QUERY.json AFTER-QUERY.json',
+  freshness: 'AS-OF-DATE MAXIMUM-DAYS',
 };
 
 try {

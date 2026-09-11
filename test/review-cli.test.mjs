@@ -118,3 +118,13 @@ test('brief comparison separates requirement changes from resulting membership c
   assert.equal(same.before.queryDigest, same.after.queryDigest);
   assert.equal(run('compare-queries', before, file('bad.json', { version: 1, filters: { unsupported: [] } })).status, 1);
 }));
+
+test('freshness uses explicit calendar dates with inclusive thresholds and future detection', () => workspace(file => {
+  const catalog = loadCatalog(); catalog.assessedOn = '2024-02-28'; const snapshot = file('snapshot.json', catalog);
+  const check = (date, maximum) => parsed('--catalog', snapshot, 'freshness', date, maximum);
+  assert.equal(check('2024-02-29', '1').status, 'within-threshold');
+  assert.equal(check('2024-03-01', '1').status, 'stale'); assert.equal(check('2024-03-01', '1').ageDays, 2);
+  assert.equal(check('2024-02-27', '1').status, 'future-assessment');
+  assert.deepEqual(check('2024-03-01', '1'), check('2024-03-01', '1'));
+  for (const [date, max] of [['2024-02-30', '1'], ['today', '1'], ['2024-03-01', '-1'], ['2024-03-01', '1.5'], ['2024-03-01', '36501']]) assert.equal(run('--catalog', snapshot, 'freshness', date, max).status, 1);
+}));
