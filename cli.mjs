@@ -21,6 +21,7 @@ const usage = {
   impact: 'BEFORE.json AFTER.json QUERY.json', receipt: '', 'verify-receipt': 'RECEIPT.json [EXPECTED-DIGEST]',
   export: 'QUERY.json FORMAT NEW-OUTPUT', plan: 'QUERY.json TASKS.json MAX-PROJECTS', page: 'QUERY.json SIZE [CURSOR]',
   facets: 'QUERY.json', query: 'QUERY.json', inventory: 'PUBLIC-INVENTORY.json',
+  'save-query': 'NEW-QUERY.json [words...] [filters]',
 };
 
 try {

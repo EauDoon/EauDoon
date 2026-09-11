@@ -70,3 +70,17 @@ test('NDJSON export retains provenance for both matching and empty selections', 
     assert.equal(run('export', query, 'ndjson', target).status, 1);
   }
 }));
+
+test('save-query carries an interactive search into reusable workflows without overwrites', () => workspace(file => {
+  const target = file('brief.json');
+  const result = parsed('save-query', target, 'synthetic', 'payment', '--runtime', 'python');
+  assert.equal(result.status, 'written');
+  const saved = JSON.parse(readFileSync(target, 'utf8'));
+  assert.deepEqual(saved, { version: 1, text: 'synthetic payment', filters: { runtime: ['python'] }, exclude: [] });
+  assert.deepEqual(parsed('query', target).projects, parsed('search', 'synthetic', 'payment', '--runtime', 'python', '--json').projects);
+  assert.equal(run('save-query', target).status, 1);
+  assert.deepEqual(JSON.parse(readFileSync(target, 'utf8')), saved);
+  const invalid = file('invalid.json'); assert.equal(run('save-query', invalid, '--runtime', 'unsupported').status, 1);
+  assert.throws(() => readFileSync(invalid));
+  assert.equal(run('save-query', invalid, '--json').status, 1);
+}));

@@ -18,6 +18,8 @@ Input shape: `{"owner":"EauDoon","repositories":[{"id":"example-project","public
 
 ## Save a discovery brief
 
+`node cli.mjs save-query NEW-QUERY.json synthetic payment --runtime python` saves the same search and single-value filters used interactively as a normalized brief. Omit words and filters to save an unconstrained brief. It validates before writing, never replaces a file, and returns the saved query for review. Edit the JSON to add multi-value filters or explicit exclusions. The saved brief works with query, facets, page, plan, export and handoff.
+
 `node cli.mjs query docs/examples/local-evidence.query.json` runs a reusable query. Copy [the example](examples/local-evidence.query.json) outside the repository to adapt it. A query requires `version: 1`; optional `text`, `filters` and `exclude` default to empty. Text retains the existing all-words search behavior.
 
 Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`yes`/`no`). Values within one field are alternatives (OR); different fields intersect (AND). Empty arrays impose no constraint. `exclude` removes exact ids case-insensitively, even if an id is absent from the current snapshot. Unknown fields, unsupported values and duplicate values fail. Results echo the normalized brief so exclusions and selection logic remain inspectable.
