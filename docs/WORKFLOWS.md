@@ -60,6 +60,8 @@ The digest ignores object-key and project ordering; other array ordering remains
 
 ## Review how an update affects your brief
 
+`node cli.mjs compare-queries BEFORE-QUERY.json AFTER-QUERY.json` reviews an edit to your requirements against one unchanged catalog. It reports changed text/filter/exclusion fields, both normalized briefs and digests, and entering, leaving and shared project ids in stable order. It never applies either brief or weakens exclusions. Use `impact` below when the catalog itself changes instead.
+
 `node cli.mjs impact BEFORE.json AFTER.json QUERY.json` applies the same brief to two validated catalog snapshots. It reports entering, leaving and retained matches, changed fields within retained matches, metadata changes and both digests. A task present only in the older snapshot remains a constraint, so its disappearing matches are visible. Unknown task tags absent from both snapshots still fail validation. Nothing is promoted or overwritten.
 
 ## Hand off a selection for review

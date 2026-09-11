@@ -106,3 +106,15 @@ test('coverage matrix exposes task owners and uncovered requirements without inv
   assert.deepEqual(parsed('coverage', excluded, tasks).missingTasks, ['replay-evidence', 'gate-actions']);
   assert.equal(run('coverage', query, file('bad.json', { tasks: ['unknown-task'] })).status, 1);
 }));
+
+test('brief comparison separates requirement changes from resulting membership changes', () => workspace(file => {
+  const before = file('before.json', { version: 1, text: 'synthetic payment' });
+  const after = file('after.json', { version: 1, text: 'mandatebound' });
+  const result = parsed('compare-queries', before, after);
+  assert.deepEqual(result.entered, ['mandatebound']); assert.deepEqual(result.left, ['operator-labs']); assert.deepEqual(result.shared, []);
+  assert.deepEqual(result.changedConstraints, ['text']); assert.notEqual(result.before.queryDigest, result.after.queryDigest);
+  const same = parsed('compare-queries', before, before);
+  assert.deepEqual(same.entered, []); assert.deepEqual(same.left, []); assert.deepEqual(same.shared, ['operator-labs']);
+  assert.equal(same.before.queryDigest, same.after.queryDigest);
+  assert.equal(run('compare-queries', before, file('bad.json', { version: 1, filters: { unsupported: [] } })).status, 1);
+}));
