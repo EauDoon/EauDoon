@@ -1,4 +1,4 @@
-import { loadCatalog } from './lib/catalog.mjs';
+import { loadCatalog, errorMessage } from './lib/catalog.mjs';
 import { workflows } from './lib/workflows.mjs';
 import { search, summarize, parseOptions, filterProjects, selectProject, detail, renderDetail, compare, renderComparison, taskIndex, shortlist } from './lib/discover.mjs';
 
@@ -69,6 +69,6 @@ try {
     console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects }, null, 2) : summarize(projects));
   }
 } catch (error) {
-  console.error(`catalog: ${error.message}`);
+  console.error(`catalog: ${errorMessage(error)}`);
   process.exitCode = 1;
 }

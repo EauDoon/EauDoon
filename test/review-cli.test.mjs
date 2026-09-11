@@ -34,3 +34,14 @@ test('workflow help is command-specific and needs no readable catalog or output'
   assert.equal(run('help', 'unknown').status, 1);
   assert.equal(run('export', '--help', 'extra').status, 1);
 }));
+
+test('CLI diagnostics do not reveal paths or terminal control arguments', () => workspace(file => {
+  for (const args of [['query', file('PRIVATE_MARKER.json')], ['show', '\u001b[31mPRIVATE_MARKER'], ['list', '--PRIVATE_MARKER']]) {
+    const result = run(...args); assert.equal(result.status, 1);
+    assert.doesNotMatch(result.stderr, /PRIVATE_MARKER|\u001b|catalog-review-/);
+    assert.match(result.stderr, /^catalog: /);
+  }
+  const query = file('query.json', { version: 1 }); const output = file('PRIVATE_MARKER.csv', 'keep');
+  assert.doesNotMatch(run('export', query, 'csv', output).stderr, /PRIVATE_MARKER/);
+  assert.equal(readFileSync(output, 'utf8'), 'keep');
+}));
