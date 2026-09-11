@@ -129,7 +129,7 @@ Category: publishing. [Assessed README](https://github.com/EauDoon/llms-txt-pers
 
 Experimental decision support; legal effect stays not determined. Evidence packs can contain sensitive data.
 
-Category: action-systems. [Assessed README](https://github.com/EauDoon/mandatebound/blob/0b3541bdd1850648b38b44b6da554c62cd023ebf/README.md) at 0b3541bdd1850648b38b44b6da554c62cd023ebf. [Current README](https://github.com/EauDoon/mandatebound/blob/main/README.md).
+Category: action-systems. [Assessed README](https://github.com/EauDoon/mandatebound/blob/e2a807d7cba912073cfb613ce425ea92cdbabec1/README.md) at e2a807d7cba912073cfb613ce425ea92cdbabec1. [Current README](https://github.com/EauDoon/mandatebound/blob/main/README.md).
 
 ### operator-labs
 
