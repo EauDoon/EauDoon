@@ -42,6 +42,8 @@ The search is bounded to 25 relevant candidates, 10 known tasks and a maximum of
 
 The destination must not exist, its parent must already exist, and output is limited to 4 MiB. Existing files and symlinks are never replaced. A disk failure can leave an incomplete newly created file; an error never reports successful export. Review the output before sharing, especially query text that may contain your own context.
 
+Use `ndjson` to consume an export one JSON record per line. The first record has `kind: "selection"`, assessment metadata, normalized query and total count. Each following `kind: "project"` record contains a complete `project`, including source and boundary. An empty selection still emits its metadata record. Generation is bounded in memory by the same catalog and output limits.
+
 ## Record the assessed catalog
 
 `node cli.mjs receipt` prints a semantic SHA-256 receipt with the assessment date and every pinned source revision. Save its JSON and retain the digest separately if you need a substitution check. `node cli.mjs verify-receipt RECEIPT.json EXPECTED-DIGEST` verifies it against this checkout and the independently retained digest. Omitting the digest checks only consistency with this checkout and explicitly reports `independentlyPinned: false`.

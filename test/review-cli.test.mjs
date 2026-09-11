@@ -56,3 +56,17 @@ test('JSON inputs reject excessive nesting before recursive receipt processing',
   assert.doesNotMatch(result.stderr, /call stack|RangeError/);
   assert.equal(readJson(file('string.json', JSON.stringify('['.repeat(1000)))), '['.repeat(1000));
 }));
+
+test('NDJSON export retains provenance for both matching and empty selections', () => workspace(file => {
+  for (const text of ['', 'unmatched-query-value']) {
+    const query = file('query.json', { version: 1, text }); const target = file(text ? 'empty.ndjson' : 'all.ndjson');
+    parsed('export', query, 'ndjson', target);
+    const records = readFileSync(target, 'utf8').trim().split('\n').map(line => JSON.parse(line));
+    assert.equal(records[0].kind, 'selection'); assert.equal(records[0].total, records.length - 1);
+    assert.equal(records[0].query.text, text); assert.equal(records[0].assessedOn, loadCatalog().assessedOn);
+    assert.ok(records.slice(1).every(row => row.kind === 'project' && row.project.source.revision.length === 40 && row.project.boundary));
+    const again = file(text ? 'empty-again.ndjson' : 'all-again.ndjson'); parsed('export', query, 'ndjson', again);
+    assert.deepEqual(readFileSync(target), readFileSync(again));
+    assert.equal(run('export', query, 'ndjson', target).status, 1);
+  }
+}));
