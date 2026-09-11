@@ -4,6 +4,8 @@ These offline commands print JSON for inspection or redirection. They never quer
 
 Malformed JSON errors do not echo source text. Output artifacts may include the normalized query you supplied, so review them before sharing.
 
+Prefix any command with `--catalog SNAPSHOT.json` to use a previously saved, validated catalog instead of this checkout's catalog. For example, `node cli.mjs --catalog SNAPSHOT.json receipt` reproduces that snapshot's receipt. Relative input and output paths resolve from your working directory. This reads supplied files only; it never retrieves source repositories. The `impact` command still uses its two explicit snapshots.
+
 ## Compare a public inventory
 
 `node cli.mjs inventory PUBLIC-INVENTORY.json` compares a supplied public-only snapshot with the assessed catalog. It lists catalog entries absent from that snapshot and public ids that need assessment. It never infers why a name is absent or changes the catalog.

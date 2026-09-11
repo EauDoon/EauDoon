@@ -16,11 +16,16 @@ No installs, network calls, telemetry or project execution.`;
 
 try {
   const args = process.argv.slice(2);
+  let catalogPath;
+  if (args[0] === '--catalog') {
+    args.shift(); catalogPath = args.shift();
+    if (!catalogPath || catalogPath.startsWith('--') || !args.length) throw new Error('Usage: node cli.mjs --catalog SNAPSHOT.json COMMAND [ARGS]');
+  }
   const command = args.shift() || 'help';
-  if (Object.hasOwn(workflows, command)) { console.log(JSON.stringify(workflows[command](loadCatalog(), args), null, 2)); process.exit(0); }
+  if (Object.hasOwn(workflows, command)) { console.log(JSON.stringify(workflows[command](loadCatalog(catalogPath), args), null, 2)); process.exit(0); }
   if (command === 'help' || command === '--help') { console.log(help + '\nArtifact workflows (JSON output): ' + Object.keys(workflows).join(', ') + '\nSee docs/WORKFLOWS.md for contracts and examples.'); process.exit(0); }
   if (!['validate', 'list', 'search', 'show', 'compare', 'tasks', 'shortlist'].includes(command)) throw new Error(`Unknown command.\n${help}`);
-  const catalog = loadCatalog();
+  const catalog = loadCatalog(catalogPath);
   const { options, positional } = parseOptions(args, catalog.projects);
   if (['validate', 'list'].includes(command) && positional.length || command === 'validate' && Object.keys(options).length || command === 'search' && !positional.length || command === 'show' && (positional.length !== 1 || Object.keys(options).some(k => k !== 'json'))) throw new Error(`Invalid arguments.\n${help}`);
   if (command === 'validate') console.log(`Valid catalog: ${catalog.projects.length} public projects`);
