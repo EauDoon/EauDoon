@@ -77,3 +77,5 @@ The digest ignores object-key and project ordering; other array ordering remains
 `node cli.mjs diagnose QUERY.json` reports which constraints each near miss fails and what would match if one text/filter constraint were omitted. It preserves explicit exclusions in every diagnostic and never edits or reruns a broadened request automatically. At most 50 near misses are shown, ordered by failed-constraint count then id, with the total stated. This explains selection mechanics, not project quality or a recommendation to relax your requirements.
 
 CLI file errors report a stable reason without disclosing the supplied path. Unknown project ids and options are not echoed, including terminal control characters. Existing output files remain untouched on failure.
+
+CLI output drains normally before process exit, including large JSON receipts and batch reports redirected through pipes. The catalog remains limited to 1000 entries; batch output is limited to 20 briefs.

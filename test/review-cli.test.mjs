@@ -128,3 +128,16 @@ test('freshness uses explicit calendar dates with inclusive thresholds and futur
   assert.deepEqual(check('2024-03-01', '1'), check('2024-03-01', '1'));
   for (const [date, max] of [['2024-02-30', '1'], ['today', '1'], ['2024-03-01', '-1'], ['2024-03-01', '1.5'], ['2024-03-01', '36501']]) assert.equal(run('--catalog', snapshot, 'freshness', date, max).status, 1);
 }));
+
+test('large piped receipts and batch reports remain complete JSON', () => workspace(file => {
+  const catalog = loadCatalog(); const prototype = catalog.projects.find(p => p.id === 'operator-labs');
+  catalog.projects = Array.from({ length: 1000 }, (_, i) => {
+    const id = `synthetic-project-${String(i).padStart(4, '0')}`; const repository = `https://github.com/EauDoon/${id}`;
+    return { ...prototype, id, repository, source: { revision: prototype.source.revision, url: `${repository}/blob/${prototype.source.revision}/README.md` } };
+  });
+  const snapshot = file('large.json', catalog);
+  assert.equal(parsed('--catalog', snapshot, 'receipt').sources.length, 1000);
+  const briefs = file('briefs.json', { version: 1, queries: Array.from({ length: 20 }, (_, i) => ({ id: `brief-${i}`, query: { version: 1 } })) });
+  const result = parsed('--catalog', snapshot, 'batch', briefs);
+  assert.equal(result.results.length, 20); assert.ok(result.results.every(row => row.ids.length === 1000));
+}));

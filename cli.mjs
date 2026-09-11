@@ -28,7 +28,7 @@ const usage = {
   freshness: 'AS-OF-DATE MAXIMUM-DAYS',
 };
 
-try {
+function main() {
   const args = process.argv.slice(2);
   let catalogPath;
   if (args[0] === '--catalog') {
@@ -39,11 +39,11 @@ try {
   const helpCommand = command === 'help' && args.length === 1 ? args[0] : args.length === 1 && args[0] === '--help' ? command : undefined;
   if (helpCommand !== undefined) {
     if (!Object.hasOwn(usage, helpCommand)) throw new Error('Unknown help command');
-    console.log(`Usage: node cli.mjs [--catalog SNAPSHOT.json] ${helpCommand} ${usage[helpCommand]}\nSee docs/WORKFLOWS.md and docs/DISCOVERY.md for input contracts.`); process.exit(0);
+    console.log(`Usage: node cli.mjs [--catalog SNAPSHOT.json] ${helpCommand} ${usage[helpCommand]}\nSee docs/WORKFLOWS.md and docs/DISCOVERY.md for input contracts.`); return;
   }
   if ((command === 'help' || command === '--help') && args.length) throw new Error('Help accepts at most one command');
-  if (Object.hasOwn(workflows, command)) { console.log(JSON.stringify(workflows[command](loadCatalog(catalogPath), args), null, 2)); process.exit(0); }
-  if (command === 'help' || command === '--help') { console.log(help + '\nArtifact workflows (JSON output): ' + Object.keys(workflows).join(', ') + '\nSee docs/WORKFLOWS.md for contracts and examples.'); process.exit(0); }
+  if (Object.hasOwn(workflows, command)) { console.log(JSON.stringify(workflows[command](loadCatalog(catalogPath), args), null, 2)); return; }
+  if (command === 'help' || command === '--help') { console.log(help + '\nArtifact workflows (JSON output): ' + Object.keys(workflows).join(', ') + '\nSee docs/WORKFLOWS.md for contracts and examples.'); return; }
   if (!['validate', 'list', 'search', 'show', 'compare', 'tasks', 'shortlist'].includes(command)) throw new Error(`Unknown command.\n${help}`);
   const catalog = loadCatalog(catalogPath);
   const { options, positional } = parseOptions(args, catalog.projects);
@@ -73,7 +73,9 @@ try {
     const projects = search(filterProjects(catalog.projects, options), positional.join(' '));
     console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects }, null, 2) : summarize(projects));
   }
-} catch (error) {
+}
+
+try { main(); } catch (error) {
   console.error(`catalog: ${errorMessage(error)}`);
   process.exitCode = 1;
 }
