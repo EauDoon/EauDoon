@@ -24,8 +24,6 @@ Input shape: `{"owner":"EauDoon","repositories":[{"id":"example-project","public
 
 Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`yes`/`no`). Values within one field are alternatives (OR); different fields intersect (AND). Empty arrays impose no constraint. `exclude` removes exact ids case-insensitively, even if an id is absent from the current snapshot. Unknown fields, unsupported values and duplicate values fail. Results echo the normalized brief so exclusions and selection logic remain inspectable.
 
-## See available filter choices
-
 ## Evaluate a set of briefs
 
 `node cli.mjs batch BRIEFS.json` evaluates 1 to 20 named briefs against one catalog. Input: `{"version":1,"queries":[{"id":"payments","query":{"version":1,"text":"synthetic payment"}}]}`. Ids must be unique case-insensitively. All briefs validate before any result is printed. Output preserves input brief order, each normalized query and digest, stable matching ids, empty-result count and the catalog digest. An empty result is valid and explicit; malformed entries fail the entire request. Nothing is saved or run.
@@ -39,6 +37,8 @@ Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`ye
 `node cli.mjs page QUERY.json 5` returns up to five projects in stable id order, total count and `next`/`previous` cursors. Pass the returned cursor as the third argument to move pages. Sizes from 1 to 100 are accepted. A cursor is tied to the exact catalog content, normalized brief and page size; changing any of those requires starting again. Cursors are navigation hints, not signatures or authorization tokens. No result state is stored on disk.
 
 ## Find complementary projects
+
+`node cli.mjs coverage QUERY.json TASKS.json` shows every selected project's declared coverage of your requested tasks before choosing a combination. It accepts the same 1 to 10 known task ids as `plan`, retains requested task order, and lists each task's matching project ids and missing tasks. Selected source links and boundaries remain available for review. At most 100 projects are accepted; empty selections explicitly leave every task uncovered. This matrix does not establish that projects integrate.
 
 `node cli.mjs plan QUERY.json docs/examples/evidence.tasks.json 3` searches combinations of up to three matching projects for the [requested task set](examples/evidence.tasks.json). It prefers the most declared task coverage, then fewer projects, then stable id order. Missing tasks stay explicit. Unlike `shortlist`, it considers coverage across a group rather than ranking projects individually.
 

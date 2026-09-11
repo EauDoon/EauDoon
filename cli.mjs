@@ -23,6 +23,7 @@ const usage = {
   facets: 'QUERY.json', query: 'QUERY.json', inventory: 'PUBLIC-INVENTORY.json',
   'save-query': 'NEW-QUERY.json [words...] [filters]',
   batch: 'BRIEFS.json',
+  coverage: 'QUERY.json TASKS.json',
 };
 
 try {

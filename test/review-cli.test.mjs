@@ -95,3 +95,14 @@ test('batch evaluates named briefs atomically and exposes empty results', () => 
     const failure = run('batch', file('bad.json', invalid)); assert.equal(failure.status, 1); assert.equal(failure.stdout, '');
   }
 }));
+
+test('coverage matrix exposes task owners and uncovered requirements without inventing integration', () => workspace(file => {
+  const query = file('query.json', { version: 1, text: 'mandatebound' });
+  const tasks = file('tasks.json', { tasks: ['replay-evidence', 'gate-actions'] });
+  const result = parsed('coverage', query, tasks);
+  assert.deepEqual(result.rows.map(row => row.coveredBy), [['mandatebound'], []]);
+  assert.deepEqual(result.missingTasks, ['gate-actions']); assert.ok(result.projects[0].boundary);
+  const excluded = file('none.json', { version: 1, text: 'mandatebound', exclude: ['mandatebound'] });
+  assert.deepEqual(parsed('coverage', excluded, tasks).missingTasks, ['replay-evidence', 'gate-actions']);
+  assert.equal(run('coverage', query, file('bad.json', { tasks: ['unknown-task'] })).status, 1);
+}));
