@@ -6,6 +6,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { loadCatalog } from '../lib/catalog.mjs';
+import { readJson } from '../lib/catalog.mjs';
 
 const cli = fileURLToPath(new URL('../cli.mjs', import.meta.url));
 const run = (...args) => spawnSync(process.execPath, [cli, ...args], { encoding: 'utf8', timeout: 5000 });
@@ -44,4 +45,14 @@ test('CLI diagnostics do not reveal paths or terminal control arguments', () => 
   const query = file('query.json', { version: 1 }); const output = file('PRIVATE_MARKER.csv', 'keep');
   assert.doesNotMatch(run('export', query, 'csv', output).stderr, /PRIVATE_MARKER/);
   assert.equal(readFileSync(output, 'utf8'), 'keep');
+}));
+
+test('JSON inputs reject excessive nesting before recursive receipt processing', () => workspace(file => {
+  const nested = depth => '['.repeat(depth) + '0' + ']'.repeat(depth);
+  assert.ok(Array.isArray(readJson(file('allowed.json', nested(64)))));
+  assert.throws(() => readJson(file('deep.json', nested(65))), /nesting exceeds 64/);
+  const result = run('verify-receipt', file('receipt.json', nested(10000)));
+  assert.equal(result.status, 1); assert.match(result.stderr, /nesting exceeds 64/);
+  assert.doesNotMatch(result.stderr, /call stack|RangeError/);
+  assert.equal(readJson(file('string.json', JSON.stringify('['.repeat(1000)))), '['.repeat(1000));
 }));
