@@ -84,3 +84,14 @@ test('save-query carries an interactive search into reusable workflows without o
   assert.throws(() => readFileSync(invalid));
   assert.equal(run('save-query', invalid, '--json').status, 1);
 }));
+
+test('batch evaluates named briefs atomically and exposes empty results', () => workspace(file => {
+  const request = { version: 1, queries: [{ id: 'payments', query: { version: 1, text: 'synthetic payment' } }, { id: 'empty', query: { version: 1, text: 'no-matching-value' } }] };
+  const input = file('batch.json', request); const result = parsed('batch', input);
+  assert.equal(result.emptyCount, 1); assert.equal(result.catalogDigest.length, 64);
+  assert.deepEqual(result.results.map(row => row.ids), [['operator-labs'], []]);
+  assert.deepEqual(result, parsed('batch', input));
+  for (const invalid of [{ ...request, extra: true }, { ...request, queries: [] }, { ...request, queries: Array(21).fill(request.queries[0]) }, { ...request, queries: [...request.queries, request.queries[0]] }, { ...request, queries: [request.queries[0], { id: 'bad', query: { version: 2 } }] }]) {
+    const failure = run('batch', file('bad.json', invalid)); assert.equal(failure.status, 1); assert.equal(failure.stdout, '');
+  }
+}));

@@ -26,6 +26,12 @@ Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`ye
 
 ## See available filter choices
 
+## Evaluate a set of briefs
+
+`node cli.mjs batch BRIEFS.json` evaluates 1 to 20 named briefs against one catalog. Input: `{"version":1,"queries":[{"id":"payments","query":{"version":1,"text":"synthetic payment"}}]}`. Ids must be unique case-insensitively. All briefs validate before any result is printed. Output preserves input brief order, each normalized query and digest, stable matching ids, empty-result count and the catalog digest. An empty result is valid and explicit; malformed entries fail the entire request. Nothing is saved or run.
+
+## See available filter choices
+
 `node cli.mjs facets QUERY.json` shows query-specific counts for runtimes, categories, privacy labels, task tags and fork status, including zero-count choices. Each count means replacing that field with the named value while preserving all other filters, text and exclusions. A selected flag records the current brief; the command does not change it. Counts describe catalog matches, not compatibility or quality.
 
 ## Read results a page at a time
