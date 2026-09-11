@@ -14,6 +14,15 @@ List/search filters: --category VALUE --runtime VALUE --privacy VALUE --task VAL
 Filters intersect. Invalid values print the available choices.
 No installs, network calls, telemetry or project execution.`;
 
+const usage = {
+  validate: '', list: '[filters] [--json]', search: '<words...> [filters] [--json]',
+  show: '<project-id> [--json]', compare: '<id> <id> [up to 6 ids] [--json]', tasks: '[--json]', shortlist: '<task-id...> [filters] [--json]',
+  diagnose: 'QUERY.json', handoff: 'QUERY.json NEW-PACKET.json', 'verify-handoff': 'PACKET.json EXPECTED-DIGEST',
+  impact: 'BEFORE.json AFTER.json QUERY.json', receipt: '', 'verify-receipt': 'RECEIPT.json [EXPECTED-DIGEST]',
+  export: 'QUERY.json FORMAT NEW-OUTPUT', plan: 'QUERY.json TASKS.json MAX-PROJECTS', page: 'QUERY.json SIZE [CURSOR]',
+  facets: 'QUERY.json', query: 'QUERY.json', inventory: 'PUBLIC-INVENTORY.json',
+};
+
 try {
   const args = process.argv.slice(2);
   let catalogPath;
@@ -22,6 +31,12 @@ try {
     if (!catalogPath || catalogPath.startsWith('--') || !args.length) throw new Error('Usage: node cli.mjs --catalog SNAPSHOT.json COMMAND [ARGS]');
   }
   const command = args.shift() || 'help';
+  const helpCommand = command === 'help' && args.length === 1 ? args[0] : args.length === 1 && args[0] === '--help' ? command : undefined;
+  if (helpCommand !== undefined) {
+    if (!Object.hasOwn(usage, helpCommand)) throw new Error('Unknown help command');
+    console.log(`Usage: node cli.mjs [--catalog SNAPSHOT.json] ${helpCommand} ${usage[helpCommand]}\nSee docs/WORKFLOWS.md and docs/DISCOVERY.md for input contracts.`); process.exit(0);
+  }
+  if ((command === 'help' || command === '--help') && args.length) throw new Error('Help accepts at most one command');
   if (Object.hasOwn(workflows, command)) { console.log(JSON.stringify(workflows[command](loadCatalog(catalogPath), args), null, 2)); process.exit(0); }
   if (command === 'help' || command === '--help') { console.log(help + '\nArtifact workflows (JSON output): ' + Object.keys(workflows).join(', ') + '\nSee docs/WORKFLOWS.md for contracts and examples.'); process.exit(0); }
   if (!['validate', 'list', 'search', 'show', 'compare', 'tasks', 'shortlist'].includes(command)) throw new Error(`Unknown command.\n${help}`);

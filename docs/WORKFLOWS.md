@@ -2,6 +2,8 @@
 
 These offline commands print JSON for inspection or redirection. They never query accounts or run a project. All input files use UTF-8 JSON, reject duplicate object members and share the regular-file 1 MiB limit. Existing discovery commands are unchanged.
 
+Use `node cli.mjs help export` or `node cli.mjs export --help` for a command's argument order. Command help performs no catalog reads or output writes, so it remains available when a supplied snapshot is missing or invalid.
+
 Malformed JSON errors do not echo source text. Output artifacts may include the normalized query you supplied, so review them before sharing.
 
 Prefix any command with `--catalog SNAPSHOT.json` to use a previously saved, validated catalog instead of this checkout's catalog. For example, `node cli.mjs --catalog SNAPSHOT.json receipt` reproduces that snapshot's receipt. Relative input and output paths resolve from your working directory. This reads supplied files only; it never retrieves source repositories. The `impact` command still uses its two explicit snapshots.

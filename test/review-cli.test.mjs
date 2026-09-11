@@ -25,3 +25,12 @@ test('global catalog selection reproduces discovery and receipts from a supplied
   assert.equal(run('--catalog').status, 1);
   assert.equal(run('--catalog', file('bad.json', {}), 'list').status, 1);
 }));
+
+test('workflow help is command-specific and needs no readable catalog or output', () => workspace(file => {
+  for (const args of [['export', '--help'], ['help', 'export'], ['--catalog', file('missing.json'), 'export', '--help']]) {
+    const result = run(...args); assert.equal(result.status, 0, result.stderr);
+    assert.match(result.stdout, /export QUERY.json FORMAT NEW-OUTPUT/);
+  }
+  assert.equal(run('help', 'unknown').status, 1);
+  assert.equal(run('export', '--help', 'extra').status, 1);
+}));
