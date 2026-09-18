@@ -1,6 +1,6 @@
 {
   "name": "eaudoon-project-catalog",
-  "private": true,
+  "private": false,
   "type": "module",
   "engines": { "node": ">=22" },
   "scripts": {
