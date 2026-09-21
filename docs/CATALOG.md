@@ -1,6 +1,6 @@
 # Public project catalog
 
-Assessed 11-09-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.
+Assessed 21-09-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.
 
 Generated from [catalog.json](../catalog.json). For search, filters, comparison and task coverage, see the [discovery guide](DISCOVERY.md).
 
