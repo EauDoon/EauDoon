@@ -1,3 +1,7 @@
+[![build](https://img.shields.io/github/actions/workflow/status/EauDoon/EauDoon/catalog.yml?branch=main)](https://github.com/EauDoon/EauDoon/actions)
+[![license](https://img.shields.io/github/license/EauDoon/EauDoon)](https://github.com/EauDoon/EauDoon/blob/main/LICENSE)
+[![last commit](https://img.shields.io/github/last-commit/EauDoon/EauDoon)](https://github.com/EauDoon/EauDoon)
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
@@ -11,6 +15,24 @@
 </p>
 
 I build software that makes agent actions and business decisions inspectable. My projects combine explicit rules, failure recovery, and reproducible evidence using Python, TypeScript, and JavaScript.
+
+## Featured repos
+
+| Repo | What it does |
+| --- | --- |
+| [decision-labs](https://github.com/EauDoon/decision-labs) | 4 offline browser workbenches for partnership, pooling, agreement, weekend liquidity. |
+| [mandatebound](https://github.com/EauDoon/mandatebound) | deterministic evidence-pack builder and offline policy replay for UCP/AP2. |
+| [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk) | browser-only crypto research packet workbench with a frozen multi-agent team charter. |
+| [reflection-engine](https://github.com/EauDoon/reflection-engine) | portable reflection prompt and offline companion that prepares bounded packets for an LLM. |
+| [consequence-rail](https://github.com/EauDoon/consequence-rail) | bounded remedy reservation, postcondition verification, and signed settlement receipts. |
+| [operator-labs](https://github.com/EauDoon/operator-labs) | two offline Python tools for synthetic payment-route comparison and OTLP privacy regression. |
+| [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) | deterministic policy-conformance and precedence-tracing harness, pip-installable. |
+| [llms-txt-personal-site](https://github.com/EauDoon/llms-txt-personal-site) | AI-assistant-first personal-site template with llms.txt, JSON-LD, and a quality gate. |
+| [connect.md](https://github.com/EauDoon/connect.md) | markdown-first professional network for people and agents, with FastAPI + Next.js surfaces. |
+| [agent-team-os](https://github.com/EauDoon/agent-team-os) | installable skill that turns a broad request into bounded role assignments. |
+| [agent-action-stack](https://github.com/EauDoon/agent-action-stack) | thin orchestrator running Constitutional Agent Testbench + Consequence Rail + MandateBound. |
+| [unconventional-moves](https://github.com/EauDoon/unconventional-moves) | installable skill that produces 5 to 7 mechanism-distinct practical approaches with 48-hour experiments. |
+| [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) | Claude skill that runs a build/verify gauntlet loop with isolated verifiers. |
 
 ## Selected work
 
