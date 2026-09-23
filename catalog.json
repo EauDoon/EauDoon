@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "assessedOn": "2026-09-21",
+  "assessedOn": "2026-09-23",
   "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.",
-  "portfolioWavesCompleted": [1, 2, 3, 5, 6, 7],
+  "portfolioWavesCompleted": [1, 2, 3, 5, 6, 7, 9, 10],
   "projects": [
     {
       "id": "agent-action-stack",
@@ -21,7 +21,7 @@
       ],
       "boundary": "Experimental synthetic workflow; does not prove legal effect or evidence truth.",
       "fork": false,
-      "wavesTouched": [1, 2, 5, 7],
+      "wavesTouched": [1, 2, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "491eede8a88e9ba70a37298f0620a92a3201585a",
@@ -44,7 +44,7 @@
       ],
       "boundary": "Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the chosen provider.",
       "fork": false,
-      "wavesTouched": [1, 2, 5, 6, 7],
+      "wavesTouched": [1, 2, 5, 6, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "1593cb1f90f9f98b2f208d1a6adfa57eabc7bffe",
@@ -67,7 +67,7 @@
       ],
       "boundary": "Guest drafts and checkpoints live in browser memory; downloaded recovery sessions and exports can be sensitive. Optional network routes require separate configuration; deployment remains unverified.",
       "fork": false,
-      "wavesTouched": [1, 3, 5],
+      "wavesTouched": [1, 3, 5, 9, 10],
       "source": {
         "revision": "1fabde9155f93266b0a78d6f6b33d495601ea6a7",
         "url": "https://github.com/EauDoon/connect.md/blob/1fabde9155f93266b0a78d6f6b33d495601ea6a7/README.md"
@@ -88,7 +88,7 @@
       ],
       "boundary": "Experimental reference implementation; no guaranteed recovery, insurance or legal compliance.",
       "fork": false,
-      "wavesTouched": [1, 3, 5, 7],
+      "wavesTouched": [1, 3, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "4c3afdbfc5e0a638755313829f08b44fa2a6a12e",
@@ -110,7 +110,7 @@
       ],
       "boundary": "Checks declared structure and rules, not free-form reasoning or safety certification.",
       "fork": false,
-      "wavesTouched": [1, 6, 7],
+      "wavesTouched": [1, 6, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "a9123af65f64cba74e5dfbc08f28f23ae4df9bbb",
@@ -134,7 +134,7 @@
       ],
       "boundary": "Research only; no trading authority. Browser validation does not authenticate sources or independent review.",
       "fork": false,
-      "wavesTouched": [1, 3, 5, 7],
+      "wavesTouched": [1, 3, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "4968d3f8807d0026e9cef7ad5d77d3bb66ec1a54",
@@ -157,7 +157,7 @@
       ],
       "boundary": "Declared-input models and unsigned review packets; no quotes, authenticated facts or execution authority. Exports can contain private inputs.",
       "fork": false,
-      "wavesTouched": [1, 5, 7],
+      "wavesTouched": [1, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "77d9aee1764c9a1b02349153610d756aef0d3318",
@@ -179,7 +179,7 @@
       ],
       "boundary": "A curated public snapshot, not certification or a live inventory service.",
       "fork": false,
-      "wavesTouched": [1, 5, 7],
+      "wavesTouched": [1, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "89183a9af48ac26104b57dd9834cf5528fc073d8",
@@ -239,7 +239,7 @@
       ],
       "boundary": "Generated output is public when deployed; local build does not configure hosting or guarantee indexing.",
       "fork": false,
-      "wavesTouched": [1, 2, 5, 7],
+      "wavesTouched": [1, 2, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "a5349349b3e26b59affdadd5dcfec538afdbd195",
@@ -261,7 +261,7 @@
       ],
       "boundary": "Experimental decision support; legal effect stays not determined. Evidence packs can contain sensitive data.",
       "fork": false,
-      "wavesTouched": [1, 3, 5, 7],
+      "wavesTouched": [1, 3, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "e2a807d7cba912073cfb613ce425ea92cdbabec1",
@@ -283,7 +283,7 @@
       ],
       "boundary": "Synthetic research inputs only; no live routing or payment execution.",
       "fork": false,
-      "wavesTouched": [1, 2, 5, 7],
+      "wavesTouched": [1, 2, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "ceb2ecb119c0f873deafb8647c4558f8434ad149",
@@ -305,7 +305,7 @@
       ],
       "boundary": "The offline companion prepares chosen source episodes locally. Uploading packets shares them with the chosen provider. Sensitive output, not therapy or diagnosis.",
       "fork": true,
-      "wavesTouched": [1, 5, 7],
+      "wavesTouched": [1, 5, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "8aff243a77b4b9483928e0cbd5260659316aa715",
@@ -327,7 +327,7 @@
       ],
       "boundary": "Local tools validate declared plans and reported observations; assistant use follows provider settings. No command runs experiments or grants authority.",
       "fork": false,
-      "wavesTouched": [1, 2, 3, 5, 6, 7],
+      "wavesTouched": [1, 2, 3, 5, 6, 7, 9, 10],
       "lastAudited": "2026-09-21",
       "source": {
         "revision": "ca30eb36bc6716611e244f73f4c71b2b0ea1e190",
