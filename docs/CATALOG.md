@@ -1,3 +1,8 @@
+<!--
+  Generated catalog guide. Edits here are overwritten by `node scripts/render.mjs --write`.
+  Encoding: UTF-8, LF, no BOM.
+  Catalog waves recorded: 1, 2, 3, 5, 6, 7, 9, 10, 12, 13, 14, 15.
+-->
 # Public project catalog
 
 Assessed 23-09-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.

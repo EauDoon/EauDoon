@@ -1,3 +1,4 @@
+// encoding: utf-8, LF, no BOM
 import { loadCatalog, errorMessage } from './lib/catalog.mjs';
 import { workflows } from './lib/workflows.mjs';
 import { search, summarize, parseOptions, filterProjects, selectProject, detail, renderDetail, compare, renderComparison, taskIndex, shortlist } from './lib/discover.mjs';
