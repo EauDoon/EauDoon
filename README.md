@@ -16,6 +16,20 @@
 
 I build software that makes agent actions and business decisions inspectable. My projects combine explicit rules, failure recovery, and reproducible evidence using Python, TypeScript, and JavaScript.
 
+## Quick start
+
+Requires Node.js 22 or newer (declared in `package.json` `engines`). No install
+step is needed; this repo is a CLI and JSON catalog.
+
+```bash
+node cli.mjs validate
+node --test
+```
+
+`npm run check` runs the same three steps in sequence: validate, test, render
+check, and link check. The project catalog and offline search source are
+`catalog.json` and the `scripts/` folder.
+
 ## Featured repos
 
 | Repo | What it does |
