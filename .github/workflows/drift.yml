@@ -1,0 +1,49 @@
+name: Catalog drift check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'catalog.json'
+      - 'lib/catalog.mjs'
+      - 'lib/render.mjs'
+      - 'scripts/render.mjs'
+      - 'scripts/drift.mjs'
+      - 'package.json'
+  pull_request:
+    paths:
+      - 'catalog.json'
+      - 'lib/catalog.mjs'
+      - 'lib/render.mjs'
+      - 'scripts/drift.mjs'
+      - 'package.json'
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [22, 24]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: ${{ matrix.node }}
+      - run: node scripts/drift.mjs --check
+      - run: node scripts/drift.mjs --json > drift-report.json
+      - uses: actions/upload-artifact@ea1f15feb6a28f0bd0e3b95e94f05b93845aca1a # v4.6.0
+        if: always()
+        with:
+          name: drift-report-${{ matrix.os }}-${{ matrix.node }}
+          path: drift-report.json

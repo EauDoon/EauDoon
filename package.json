@@ -6,6 +6,7 @@
   "scripts": {
     "test": "node --test",
     "validate": "node cli.mjs validate",
-    "check": "node cli.mjs validate && node --test && node scripts/render.mjs --check && node scripts/links.mjs"
+    "drift": "node scripts/drift.mjs --check",
+    "check": "node cli.mjs validate && node --test && node scripts/render.mjs --check && node scripts/links.mjs && node scripts/drift.mjs --check"
   }
 }
