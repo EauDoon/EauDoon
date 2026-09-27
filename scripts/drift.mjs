@@ -116,7 +116,9 @@ function main() {
     process.exitCode = result.issues.length ? 1 : 0;
     return;
   }
-  console.log(`catalog drift: assessedOn=${catalog.assessedOn}, referenceDate=${result.referenceDate}, projects=${result.summary.projects}, topLevel=[${result.summary.topLevel.join(',')}]`);
+  const unaudited = catalog.projects.filter(p => !p.lastAudited).map(p => p.id);
+  console.log(`catalog drift: assessedOn=${catalog.assessedOn}, referenceDate=${result.referenceDate}, projects=${result.summary.projects}, audited=${result.summary.projectsWithAudit}/${result.summary.projects}, topLevel=[${result.summary.topLevel.join(',')}]`);
+  if (unaudited.length) console.log(`no lastAudited date recorded for: ${unaudited.join(', ')}.`);
   if (result.issues.length === 0) {
     console.log('no drift detected.');
     return;

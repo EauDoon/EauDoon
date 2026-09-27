@@ -31,6 +31,10 @@ All notable changes to this repository are documented here. The format follows
   recognised.
 
 ### Added
+- `node scripts/drift.mjs --check` reports per-project audit coverage
+  (`audited=12/15`) and names the entries with no `lastAudited` date. The
+  `--json` report already carried `projectsWithAudit`; the human-readable
+  summary line did not, so the gap was invisible outside the artifact.
 - `SECURITY.md` describing the private vulnerability reporting flow for this
   static profile repository.
 

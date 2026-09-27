@@ -3,8 +3,20 @@ import assert from 'node:assert/strict';
 import { mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { spawnSync } from 'node:child_process';
 import { detectDrift } from '../scripts/drift.mjs';
 import { loadCatalog } from '../lib/catalog.mjs';
+
+test('the drift report states audit coverage and names entries with no lastAudited', () => {
+  const catalog = loadCatalog();
+  const unaudited = catalog.projects.filter(p => !p.lastAudited).map(p => p.id);
+  const result = spawnSync(process.execPath, [fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url)), '--check', '--today', catalog.assessedOn], { encoding: 'utf8', timeout: 10000 });
+  assert.equal(result.status, 0, result.stderr);
+  assert.match(result.stdout, new RegExp(`audited=${catalog.projects.length - unaudited.length}/${catalog.projects.length}`));
+  assert.equal(/^no lastAudited date recorded for: (.+)\.$/m.exec(result.stdout)?.[1], unaudited.join(', '));
+  assert.match(result.stdout, /no drift detected\./);
+});
 
 function writeCatalog(tmp, name, data) {
   const path = join(tmp, name);
