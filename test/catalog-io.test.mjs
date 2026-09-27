@@ -53,6 +53,12 @@ test('exact byte limit is accepted; extra byte, invalid UTF-8 and directories re
   assert.throws(() => loadCatalog(dir), /regular file|EISDIR|EPERM|EACCES/);
 }));
 
+test('UTF-16 catalog bytes are reported as an encoding fault, not malformed JSON', () => fixture(file => {
+  fs.writeFileSync(file, Buffer.from(fs.readFileSync(source, 'utf8'), 'utf16le'));
+  assert.throws(() => loadCatalog(file), { code: 'ERR_ENCODING_INVALID_ENCODED_DATA' });
+  assert.throws(() => loadCatalog(file), /UTF-8/);
+}));
+
 test('descriptor rejected as nonregular is closed before reading', () => fixture(file => {
   fs.copyFileSync(source, file);
   const original = { fstat: fs.fstatSync, read: fs.readSync, close: fs.closeSync };
