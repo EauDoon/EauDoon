@@ -53,6 +53,13 @@ test('exact byte limit is accepted; extra byte, invalid UTF-8 and directories re
   assert.throws(() => loadCatalog(dir), /regular file|EISDIR|EPERM|EACCES/);
 }));
 
+test('a UTF-8 catalog with a byte order mark still loads', () => fixture(file => {
+  // TextDecoder strips a UTF-8 BOM by default. This pins that behaviour: the
+  // loader no longer strips it a second time, and must not start rejecting one.
+  fs.writeFileSync(file, Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), fs.readFileSync(source)]));
+  assert.equal(loadCatalog(file).projects.length, 15);
+}));
+
 test('UTF-16 catalog bytes are reported as an encoding fault, not malformed JSON', () => fixture(file => {
   fs.writeFileSync(file, Buffer.from(fs.readFileSync(source, 'utf8'), 'utf16le'));
   assert.throws(() => loadCatalog(file), { code: 'ERR_ENCODING_INVALID_ENCODED_DATA' });
