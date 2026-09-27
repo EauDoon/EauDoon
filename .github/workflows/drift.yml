@@ -41,7 +41,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: node scripts/drift.mjs --check
+      # Runs even when --check fails: the artifact exists to diagnose the drift
+      # that just failed the build, so it must not be skipped in that case.
       - run: node scripts/drift.mjs --json > drift-report.json
+        if: always()
       - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         if: always()
         with:
