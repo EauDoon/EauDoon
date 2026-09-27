@@ -15,6 +15,9 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- `lib/catalog.mjs` now rejects `summary`, `boundary` and `assessment` values
+  that are only whitespace. They previously validated and rendered as an empty
+  Purpose cell and an empty Limit paragraph in `docs/CATALOG.md`.
 - An argument beginning with a single `-` is now rejected as `Unknown option`
   instead of being treated as a search word or project id. `node cli.mjs search
   -jsno` previously printed `No projects match.` and exited 0.
