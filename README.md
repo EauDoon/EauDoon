@@ -26,9 +26,9 @@ node cli.mjs validate
 node --test
 ```
 
-`npm run check` runs the same three steps in sequence: validate, test, render
-check, and link check. The project catalog and offline search source are
-`catalog.json` and the `scripts/` folder.
+`npm run check` runs the full gate, five commands in sequence: validate, test,
+render check, link check and catalog drift check. The project catalog and
+offline search source are `catalog.json` and the `scripts/` folder.
 
 ## Featured repos
 
