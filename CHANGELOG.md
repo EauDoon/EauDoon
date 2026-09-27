@@ -12,6 +12,10 @@ All notable changes to this repository are documented here. The format follows
   dropped from a retained project. Previously only fields still present in the
   newer snapshot were compared, so a deleted `source` pin, `boundary` or
   `lastAudited` value was reported as "no change".
+- A UTF-16 catalog is now rejected as an encoding fault instead of being
+  reported as `Invalid JSON input`. UTF-16LE bytes decode as valid UTF-8 (NUL is
+  a legal code point), so only a UTF-16 file carrying a BOM was previously
+  recognised.
 
 ### Added
 - `SECURITY.md` describing the private vulnerability reporting flow for this
