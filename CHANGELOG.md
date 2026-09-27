@@ -7,6 +7,13 @@ All notable changes to this repository are documented here. The format follows
 
 ## [Unreleased] - 2026-09-18
 
+### Changed
+- `node scripts/links.mjs` now checks every Markdown file in the repository
+  instead of a fixed list of four. `CHANGELOG.md`, `CONTRIBUTING.md`,
+  `SECURITY.md`, the issue and pull-request templates and the `audits/` notes
+  are covered, and a new document is picked up without editing the script.
+  `lib/links.mjs` exports the walk as `markdownFiles`.
+
 ### Fixed
 - An argument beginning with a single `-` is now rejected as `Unknown option`
   instead of being treated as a search word or project id. `node cli.mjs search
