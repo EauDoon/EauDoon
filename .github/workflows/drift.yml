@@ -42,7 +42,7 @@ jobs:
           node-version: ${{ matrix.node }}
       - run: node scripts/drift.mjs --check
       - run: node scripts/drift.mjs --json > drift-report.json
-      - uses: actions/upload-artifact@ea1f15feb6a28f0bd0e3b95e94f05b93845aca1a # v4.6.0
+      - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08 # v4.6.0
         if: always()
         with:
           name: drift-report-${{ matrix.os }}-${{ matrix.node }}
