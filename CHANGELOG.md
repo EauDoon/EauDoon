@@ -8,6 +8,9 @@ All notable changes to this repository are documented here. The format follows
 ## [Unreleased] - 2026-09-18
 
 ### Fixed
+- An argument beginning with a single `-` is now rejected as `Unknown option`
+  instead of being treated as a search word or project id. `node cli.mjs search
+  -jsno` previously printed `No projects match.` and exited 0.
 - `node scripts/diff.mjs` and `cli.mjs impact` now report a field that was
   dropped from a retained project. Previously only fields still present in the
   newer snapshot were compared, so a deleted `source` pin, `boundary` or
