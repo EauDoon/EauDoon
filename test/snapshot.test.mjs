@@ -18,3 +18,14 @@ test('snapshot review detects semantic changes and ignores project/key ordering'
   assert.deepEqual(diff.metadataChanged, ['assessedOn']);
   assert.deepEqual(diffSnapshots(after, before).added, ['mandatebound']);
 });
+
+test('snapshot review reports fields dropped from a retained project', () => {
+  const before = loadCatalog();
+  const after = structuredClone(before);
+  delete after.projects.find(p => p.id === 'consequence-rail').lastAudited;
+  delete after.projects.find(p => p.id === 'agent-team-os').source;
+  assert.deepEqual(diffSnapshots(before, after).changed, [
+    { id: 'agent-team-os', fields: ['source'] },
+    { id: 'consequence-rail', fields: ['lastAudited'] },
+  ]);
+});

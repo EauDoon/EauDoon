@@ -7,6 +7,12 @@ All notable changes to this repository are documented here. The format follows
 
 ## [Unreleased] - 2026-09-18
 
+### Fixed
+- `node scripts/diff.mjs` and `cli.mjs impact` now report a field that was
+  dropped from a retained project. Previously only fields still present in the
+  newer snapshot were compared, so a deleted `source` pin, `boundary` or
+  `lastAudited` value was reported as "no change".
+
 ### Added
 - `SECURITY.md` describing the private vulnerability reporting flow for this
   static profile repository.
