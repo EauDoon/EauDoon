@@ -51,6 +51,14 @@ test('task tags are listed in case-insensitive catalog order', () => {
   assert.deepEqual(listed, ['Apple', 'apple', 'gate-actions', 'Zebra']);
 });
 
+test('filter values are stored in case-insensitive catalog order', () => {
+  const catalog = { projects: [{ tasks: ['Zebra', 'apple', 'reflect'] }] };
+  const query = normalizeQuery({ version: 1, filters: { task: ['Zebra', 'apple'] } }, catalog);
+  assert.deepEqual(query.filters.task, ['apple', 'Zebra']);
+  assert.deepEqual(query, normalizeQuery({ version: 1, filters: { task: ['apple', 'Zebra'] } }, catalog));
+  assert.deepEqual(normalizeQuery({ version: 1, filters: { runtime: ['python', 'node'] } }, loadCatalog()).filters.runtime, ['node', 'python']);
+});
+
 test('explicit null fields cannot silently broaden an authored brief', () => {
   const c = loadCatalog();
   for (const field of ['text','filters','exclude']) assert.throws(() => normalizeQuery({ version: 1, [field]: null }, c));
