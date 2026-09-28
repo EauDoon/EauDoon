@@ -107,6 +107,21 @@ test('flags when the catalog.assessedOn is too old', () => {
   assert.ok(result.issues.some(i => i.includes('days old')));
 });
 
+test('an invalid reference date is rejected instead of reporting no drift', () => {
+  const catalog = makeCatalog([
+    baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2020-01-01' }),
+  ], { assessedOn: '2020-01-01', portfolioWavesCompleted: [1] });
+  for (const today of ['not-a-date', '2026-02-31', '2026-09-31', '2026/09/23']) {
+    assert.throws(() => detectDrift(catalog, { today, maxAgeDays: 1 }), /YYYY-MM-DD/, today);
+  }
+  const aged = detectDrift(catalog, { today: '2020-01-03', maxAgeDays: 1 });
+  assert.ok(aged.issues.some(issue => issue.includes('days old')));
+  const cli = spawnSync(process.execPath, [fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url)), '--check', '--today', 'not-a-date'], { encoding: 'utf8', timeout: 10000 });
+  assert.equal(cli.status, 1, cli.stderr);
+  assert.doesNotMatch(cli.stdout, /no drift detected/);
+  assert.doesNotMatch(cli.stderr, /not-a-date/);
+});
+
 test('does not flag age when within tolerance', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-23' }),

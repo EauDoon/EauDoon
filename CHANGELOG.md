@@ -15,6 +15,9 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- `node scripts/drift.mjs --today` rejects a value that is not a real
+  `YYYY-MM-DD` date. `not-a-date` and `2026-02-31` previously skipped the age
+  check and printed `no drift detected.`
 - `node scripts/diff.mjs` and `cli.mjs impact` now report a change to
   `portfolioWavesCompleted` or `schemaVersion`. Previously only `assessedOn`
   and `assessment` were compared, so a completed portfolio wave could be added,
