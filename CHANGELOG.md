@@ -15,6 +15,9 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- Page cursors use the catalog receipt identity. Reordering projects or object
+  keys invalidated `next` even though the page contents were unchanged. A real
+  content change still invalidates the cursor.
 - The link checker reads CommonMark inline destinations. An angle-bracket
   destination was checked as a literal filename, so a link to an existing file
   was reported missing. A destination followed by a title was ignored, and an

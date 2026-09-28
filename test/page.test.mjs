@@ -13,6 +13,11 @@ test('cursor navigation covers results once and refuses stale contexts', () => {
   assert.throws(() => pageResults(c, q, 5, firstCursor), /Cursor/);
   const changed = structuredClone(c); changed.projects[0].summary += ' Updated';
   assert.throws(() => pageResults(changed, q, 4, firstCursor), /Cursor/);
+  const reordered = structuredClone(c); reordered.projects.reverse();
+  reordered.projects[0] = Object.fromEntries(Object.entries(reordered.projects[0]).reverse());
+  const continued = pageResults(reordered, q, 4, firstCursor);
+  assert.equal(continued.offset, 4);
+  assert.deepEqual(continued.projects.map(p => p.id), pageResults(c, q, 4, firstCursor).projects.map(p => p.id));
   assert.throws(() => pageResults(c, q, 4, '$bad'), /cursor/);
   assert.equal(pageResults(c, normalizeQuery({ version: 1, text: 'no-match-xyz' }, c), 4).next, null);
 });
