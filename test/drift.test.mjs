@@ -8,6 +8,15 @@ import { spawnSync } from 'node:child_process';
 import { detectDrift } from '../scripts/drift.mjs';
 import { loadCatalog } from '../lib/catalog.mjs';
 
+test('importing the drift detector does not run the check', () => {
+  const result = spawnSync(process.execPath, ['--input-type=module', '--eval', 'await import("./scripts/drift.mjs")'], {
+    encoding: 'utf8', cwd: fileURLToPath(new URL('..', import.meta.url)), timeout: 10000,
+  });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, '');
+  assert.equal(result.stderr, '');
+});
+
 test('the drift report states audit coverage and names entries with no lastAudited', () => {
   const catalog = loadCatalog();
   const unaudited = catalog.projects.filter(p => !p.lastAudited).map(p => p.id);
