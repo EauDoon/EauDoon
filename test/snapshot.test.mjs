@@ -57,3 +57,20 @@ test('snapshot id lists follow catalog id order', () => {
   for (const id of ['EauDoon', 'agent-action-stack']) edited.projects.find(p => p.id === id).summary += ' Updated';
   assert.deepEqual(diffSnapshots(after, edited).changed.map(row => row.id), ['agent-action-stack', 'EauDoon']);
 });
+
+test('changed field names ignore object key order', () => {
+  const before = loadCatalog();
+  const after = structuredClone(before);
+  const project = after.projects.find(p => p.id === 'EauDoon');
+  project.summary = 'Changed summary';
+  project.boundary = 'Changed boundary';
+  const reversed = structuredClone(before);
+  reversed.projects = reversed.projects.map(entry => {
+    const out = {};
+    for (const key of Object.keys(entry).reverse()) out[key] = entry[key];
+    return out;
+  });
+  const expected = [{ id: 'EauDoon', fields: ['summary', 'boundary'] }];
+  assert.deepEqual(diffSnapshots(before, after).changed, expected);
+  assert.deepEqual(diffSnapshots(reversed, after).changed, expected);
+});
