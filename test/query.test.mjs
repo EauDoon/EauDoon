@@ -24,6 +24,15 @@ test('facets preserve other constraints and show unavailable replacement choices
   assert.equal(result.facets.category.find(x => x.value === 'decision-methods').count, runQuery(c, { ...q, filters: { ...q.filters, category: ['decision-methods'] } }).length);
 });
 
+test('whitespace-only query text cannot silently match every project', () => {
+  const c = loadCatalog();
+  for (const text of [' ', '   ', '\u00a0', '\u2028']) assert.throws(() => normalizeQuery({ version: 1, text }, c), /visible word/);
+  const trimmed = normalizeQuery({ version: 1, text: '  synthetic payment  ' }, c);
+  assert.equal(trimmed.text, 'synthetic payment');
+  assert.equal(runQuery(c, normalizeQuery({ version: 1, text: '' }, c)).length, c.projects.length);
+  assert.equal(runQuery(c, normalizeQuery({ version: 1 }, c)).length, c.projects.length);
+});
+
 test('explicit null fields cannot silently broaden an authored brief', () => {
   const c = loadCatalog();
   for (const field of ['text','filters','exclude']) assert.throws(() => normalizeQuery({ version: 1, [field]: null }, c));
