@@ -15,6 +15,9 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- The drift detector treats project ids as case-insensitive. `Fixture-A` and
+  `fixture-a` were not reported as duplicates, even though search, diff, and
+  validation treat that pair as one id.
 - Importing `scripts/drift.mjs` no longer runs the drift check. Loading the
   module parsed `process.argv`, printed a report, and would set a failing exit
   code once `assessedOn` aged past the limit. `node scripts/drift.mjs` is
