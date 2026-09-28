@@ -131,6 +131,19 @@ test('an invalid reference date is rejected instead of reporting no drift', () =
   assert.doesNotMatch(cli.stderr, /not-a-date/);
 });
 
+test('an invalid maximum age is rejected instead of hiding staleness', () => {
+  const catalog = makeCatalog([
+    baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-01' }),
+  ], { assessedOn: '2026-09-01', portfolioWavesCompleted: [1] });
+  const flagged = detectDrift(catalog, { today: '2026-09-23', maxAgeDays: 10 });
+  assert.ok(flagged.issues.some(issue => issue.includes('limit 10')));
+  for (const maxAgeDays of [0, -1, 1.5, Number.NaN, 1e21, 36501]) {
+    assert.throws(() => detectDrift(catalog, { today: '2026-09-23', maxAgeDays }), /max-age-days/, String(maxAgeDays));
+  }
+  assert.equal(detectDrift(catalog, { today: '2026-09-23', maxAgeDays: 30 }).issues.filter(issue => issue.includes('days old')).length, 0);
+  assert.equal(detectDrift(catalog, { today: '2026-09-23' }).issues.filter(issue => issue.includes('days old')).length, 0);
+});
+
 test('does not flag age when within tolerance', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-23' }),

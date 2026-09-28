@@ -25,7 +25,11 @@ function summarize(catalog) {
 }
 
 export function detectDrift(catalog, options = {}) {
-  const maxAgeDays = Number.isInteger(options.maxAgeDays) && options.maxAgeDays > 0 ? options.maxAgeDays : 45;
+  const maxAgeDays = options.maxAgeDays === undefined ? 45 : options.maxAgeDays;
+  // 0, fractions, and unsafe magnitudes used to become the 45-day default, so a
+  // catalog younger than 45 days was reported as fresh. 1e21 is an integer in
+  // IEEE-754 and made the age check impossible to fail.
+  if (!Number.isSafeInteger(maxAgeDays) || maxAgeDays <= 0 || maxAgeDays > 36500) throw new Error('--max-age-days must be a positive integer up to 36500');
   const referenceDate = options.today === undefined ? today() : options.today;
   // Date.parse('2026-02-31') overflows to March instead of failing, and a
   // non-date makes the age comparison NaN. Either path used to exit 0.
