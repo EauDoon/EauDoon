@@ -28,6 +28,9 @@ test('local link checker rejects traversal, active schemes, credentials and miss
   assert.equal(checkLinks('[bad](missing.md "title")', file, root).length, 1);
   assert.equal(checkLinks('[bad](<../outside.md>)', file, root).length, 1);
   assert.equal(checkLinks('[bad]()', file, root).length, 1);
+  assert.equal(checkLinks('See <https://user:secret@github.com/EauDoon/EauDoon>.', file, root).length, 1);
+  assert.deepEqual(checkLinks('See <https://github.com/EauDoon/EauDoon>.', file, root), []);
+  assert.equal(checkLinks('See <http://github.com/EauDoon/EauDoon>.', file, root).length, 1);
 });
 test('the link check walks every Markdown file, not a fixed list of four', () => {
   const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
