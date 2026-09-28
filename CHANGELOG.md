@@ -15,6 +15,10 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- A whitespace-only `search` or saved-query `text` is rejected. Spaces, a
+  non-breaking space, or a line separator previously trimmed to no words and
+  matched every project with exit code 0. An omitted or empty query text is
+  still an unconstrained brief.
 - `node scripts/drift.mjs --today` rejects a value that is not a real
   `YYYY-MM-DD` date. `not-a-date` and `2026-02-31` previously skipped the age
   check and printed `no drift detected.`

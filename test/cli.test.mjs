@@ -13,6 +13,16 @@ test('CLI fails on misspelled commands and options', () => {
   for (const args of [['seach'], ['list', '--jsno'], ['search'], ['validate', 'extra']]) assert.equal(run(...args).status, 1);
   assert.match(run('--help').stdout, /No installs/);
 });
+test('a whitespace-only search is rejected instead of matching every project', () => {
+  for (const args of [['search', ' '], ['search', '   ', '--json'], ['search', '\u00a0'], ['search', '\t']]) {
+    const result = run(...args);
+    assert.equal(result.status, 1, `${args.join(' ')} should fail: ${result.stdout}`);
+    assert.doesNotMatch(result.stdout, /operator-labs|agent-action-stack|No projects match/);
+  }
+  const listed = run('list', '--json');
+  assert.equal(listed.status, 0, listed.stderr);
+  assert.equal(JSON.parse(listed.stdout).projects.length, 15);
+});
 test('a single-dash flag is rejected instead of searched as a word', () => {
   for (const args of [['search', '-jsno'], ['list', '-json'], ['shortlist', '-replay-evidence'], ['search', '-'], ['search', '--']]) {
     const result = run(...args);
