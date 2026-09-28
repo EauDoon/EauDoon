@@ -26,11 +26,17 @@ test('facets preserve other constraints and show unavailable replacement choices
 
 test('whitespace-only query text cannot silently match every project', () => {
   const c = loadCatalog();
-  for (const text of [' ', '   ', '\u00a0', '\u2028']) assert.throws(() => normalizeQuery({ version: 1, text }, c), /visible word/);
+  for (const text of [' ', '   ', '\u00a0']) assert.throws(() => normalizeQuery({ version: 1, text }, c), /visible word/);
+  assert.throws(() => normalizeQuery({ version: 1, text: '\u2028' }, c));
   const trimmed = normalizeQuery({ version: 1, text: '  synthetic payment  ' }, c);
   assert.equal(trimmed.text, 'synthetic payment');
   assert.equal(runQuery(c, normalizeQuery({ version: 1, text: '' }, c)).length, c.projects.length);
   assert.equal(runQuery(c, normalizeQuery({ version: 1 }, c)).length, c.projects.length);
+});
+
+test('line and paragraph separators are not query text', () => {
+  const c = loadCatalog();
+  for (const text of ['hello\u2028world', 'hello\u2029world']) assert.throws(() => normalizeQuery({ version: 1, text }, c));
 });
 
 test('explicit null fields cannot silently broaden an authored brief', () => {
