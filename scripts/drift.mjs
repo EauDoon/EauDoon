@@ -57,12 +57,14 @@ export function detectDrift(catalog, options = {}) {
   let newestLastAudited = null;
   for (const p of catalog.projects) {
     if (Array.isArray(p.wavesTouched) && p.wavesTouched.length > 0) projectsWithWave += 1;
-    if (typeof p.lastAudited === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(p.lastAudited)) {
+    // A shape-only check counted 2026-02-31 as an audit and treated the string
+    // "9999" as newer than assessedOn because it sorts later.
+    if (validDate(p.lastAudited)) {
       projectsWithAudit += 1;
       if (newestLastAudited === null || p.lastAudited > newestLastAudited) newestLastAudited = p.lastAudited;
-    }
-    if (typeof p.lastAudited === 'string' && p.lastAudited > catalog.assessedOn) {
-      issues.push(`${p.id}: lastAudited ${p.lastAudited} is newer than catalog.assessedOn ${catalog.assessedOn}`);
+      if (typeof catalog.assessedOn === 'string' && p.lastAudited > catalog.assessedOn) {
+        issues.push(`${p.id}: lastAudited ${p.lastAudited} is newer than catalog.assessedOn ${catalog.assessedOn}`);
+      }
     }
   }
 
