@@ -98,6 +98,18 @@ test('flags a per-project wave that is missing from the top-level set', () => {
   assert.ok(result.issues.some(i => i.includes('wave 7') && i.includes('missing')));
 });
 
+test('impossible lastAudited dates are not treated as audits', () => {
+  const catalog = makeCatalog([
+    baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-02-31' }),
+    baseProject('fixture-b', { wavesTouched: [1], lastAudited: '9999' }),
+    baseProject('fixture-c', { wavesTouched: [1], lastAudited: '2026-09-23' }),
+  ], { assessedOn: '2026-09-23', portfolioWavesCompleted: [1] });
+  const result = detectDrift(catalog, { today: '2026-09-23', maxAgeDays: 45 });
+  assert.equal(result.summary.projectsWithAudit, 1);
+  assert.equal(result.summary.newestLastAudited, '2026-09-23');
+  assert.equal(result.issues.filter(issue => issue.includes('lastAudited')).length, 0);
+});
+
 test('flags when project lastAudited is newer than catalog.assessedOn', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-30' }),
