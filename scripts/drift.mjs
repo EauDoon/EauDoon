@@ -72,9 +72,11 @@ export function detectDrift(catalog, options = {}) {
   const projectIds = new Set();
   const duplicateIds = [];
   for (const p of catalog.projects) {
-    if (!p.id) continue;
-    if (projectIds.has(p.id)) duplicateIds.push(p.id);
-    projectIds.add(p.id);
+    if (typeof p.id !== 'string' || !p.id) continue;
+    // Catalog identity is case-insensitive: EauDoon and eaudoon are one project.
+    const key = p.id.toLowerCase();
+    if (projectIds.has(key)) duplicateIds.push(p.id);
+    projectIds.add(key);
   }
   for (const id of duplicateIds) issues.push(`duplicate project id: ${id}`);
 

@@ -149,6 +149,16 @@ test('flags duplicate project ids', () => {
   assert.ok(result.issues.some(i => i.includes('duplicate project id')));
 });
 
+test('flags project ids that differ only by case', () => {
+  const catalog = makeCatalog([
+    baseProject('Fixture-A', { wavesTouched: [1], lastAudited: '2026-09-23' }),
+    baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-23' }),
+  ]);
+  const result = detectDrift(catalog);
+  assert.ok(result.issues.some(i => i.includes('duplicate project id')));
+  assert.equal(result.issues.filter(i => i.includes('duplicate project id')).length, 1);
+});
+
 test('exposes summary statistics', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1, 2], lastAudited: '2026-09-23' }),
