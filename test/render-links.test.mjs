@@ -38,6 +38,23 @@ test('local link checker rejects traversal, active schemes, credentials and miss
   assert.equal(checkLinks('[bad]( )', file, root).length, 1);
   assert.equal(checkLinks('[bad]( missing.md "gone")', file, root).length, 1);
 });
+test('reference definitions are checked like inline links', () => {
+  const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
+  const file = fileURLToPath(new URL('../README.md', import.meta.url));
+  assert.deepEqual(checkLinks('[catalog]: docs/CATALOG.md', file, root), []);
+  assert.deepEqual(checkLinks('[catalog]: <docs/CATALOG.md>', file, root), []);
+  assert.deepEqual(checkLinks('[catalog]:\n docs/CATALOG.md', file, root), []);
+  assert.deepEqual(checkLinks('[home]: https://github.com/EauDoon/EauDoon "profile"', file, root), []);
+  for (const text of [
+    '[id]: https://user:secret@github.com',
+    '[id]: javascript:alert(1)',
+    '[id]: missing-file.md',
+    '[id]: ../outside.md',
+    '[id]: <../outside.md>',
+    '[bad][id]\n\n[id]: https://user:secret@github.com',
+    '[id]:\nhttps://user:secret@github.com',
+  ]) assert.equal(checkLinks(text, file, root).length, 1, text);
+});
 test('the link check walks every Markdown file, not a fixed list of four', () => {
   const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
   const found = markdownFiles(root).map(file => relative(root, file).split(sep).join('/'));

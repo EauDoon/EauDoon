@@ -15,6 +15,7 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- The link checker reads CommonMark reference definitions, including a destination on the following line. `[id]: https://user:secret@github.com` was ignored, while the same URL in an inline link or autolink was rejected. Missing and out-of-scope reference targets are rejected too.
 - The link checker skips spaces, tabs, and one line ending between `(` and an inline destination. `[catalog]( docs/CATALOG.md)` was reported as an empty destination, so the real target was never checked.
 - Public inventory comparison lists absent and unassessed ids in catalog id
   order. Code-unit sort put `EauDoon` before `agent-action-stack`.
