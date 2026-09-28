@@ -1,4 +1,4 @@
-import { loadCatalog, errorMessage } from '../lib/catalog.mjs';
+import { loadCatalog, errorMessage, validDate } from '../lib/catalog.mjs';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const dayMs = 86400000;
@@ -24,7 +24,10 @@ function summarize(catalog) {
 
 export function detectDrift(catalog, options = {}) {
   const maxAgeDays = Number.isInteger(options.maxAgeDays) && options.maxAgeDays > 0 ? options.maxAgeDays : 45;
-  const referenceDate = typeof options.today === 'string' ? options.today : today();
+  const referenceDate = options.today === undefined ? today() : options.today;
+  // Date.parse('2026-02-31') overflows to March instead of failing, and a
+  // non-date makes the age comparison NaN. Either path used to exit 0.
+  if (!validDate(referenceDate)) throw new Error('--today must be a real YYYY-MM-DD date');
   const issues = [];
 
   if (!Array.isArray(catalog.projects) || catalog.projects.length === 0) {
