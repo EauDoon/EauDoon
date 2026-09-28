@@ -15,6 +15,10 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- `node scripts/diff.mjs` and `cli.mjs impact` now report a change to
+  `portfolioWavesCompleted` or `schemaVersion`. Previously only `assessedOn`
+  and `assessment` were compared, so a completed portfolio wave could be added,
+  removed, or reordered and the review still said metadata was unchanged.
 - `lib/catalog.mjs` now rejects `summary`, `boundary` and `assessment` values
   that are only whitespace. They previously validated and rendered as an empty
   Purpose cell and an empty Limit paragraph in `docs/CATALOG.md`.
