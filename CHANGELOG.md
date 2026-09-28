@@ -15,6 +15,10 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- Importing `scripts/drift.mjs` no longer runs the drift check. Loading the
+  module parsed `process.argv`, printed a report, and would set a failing exit
+  code once `assessedOn` aged past the limit. `node scripts/drift.mjs` is
+  unchanged.
 - The UTF-8 guard now checks `LICENSE`. The walk compared file extensions to
   the string `LICENSE`, so the extensionless license was never read and a
   UTF-16 copy would have passed.

@@ -1,3 +1,5 @@
+import { realpathSync } from 'node:fs';
+import { pathToFileURL } from 'node:url';
 import { loadCatalog, errorMessage, validDate } from '../lib/catalog.mjs';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -130,7 +132,21 @@ function main() {
   process.exitCode = 1;
 }
 
-try { main(); } catch (error) {
-  console.error(`drift: ${errorMessage(error)}`);
-  process.exitCode = 1;
+function invokedAsCli() {
+  try {
+    const entry = process.argv[1];
+    if (!entry) return false;
+    return import.meta.url === pathToFileURL(realpathSync(entry)).href;
+  } catch {
+    return false;
+  }
+}
+
+// Importing detectDrift must not parse argv or print a report. The test runner
+// loads this module, and a stale catalog would otherwise fail that process.
+if (invokedAsCli()) {
+  try { main(); } catch (error) {
+    console.error(`drift: ${errorMessage(error)}`);
+    process.exitCode = 1;
+  }
 }
