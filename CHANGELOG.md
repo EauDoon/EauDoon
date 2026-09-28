@@ -15,6 +15,7 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- `node scripts/drift.mjs --max-age-days` accepts only a plain decimal integer from 1 to 36500. `45.0`, `0x2d`, `045`, `+45`, and `1e2` were coerced by `Number` and could exit 0.
 - `detectDrift` rejects a maximum age that is not a safe positive integer up to 36500 days. `0`, a fraction, and `1e21` previously became the 45-day default or disabled the age check, so a stale catalog could be reported as fresh.
 - Snapshot changed-field lists follow schema order. Reversing object keys listed `boundary` before `summary` for the same edit.
 - Saved query filters sort values case-insensitively. `['Zebra', 'apple']` was stored as `Zebra` then `apple`, so two briefs for the same tags did not share a normalized order.

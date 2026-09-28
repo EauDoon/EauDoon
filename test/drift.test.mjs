@@ -144,6 +144,21 @@ test('an invalid maximum age is rejected instead of hiding staleness', () => {
   assert.equal(detectDrift(catalog, { today: '2026-09-23' }).issues.filter(issue => issue.includes('days old')).length, 0);
 });
 
+test('drift rejects a max age that is not written as a decimal integer', () => {
+  const script = fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url));
+  const run = value => spawnSync(process.execPath, [script, '--check', '--max-age-days', value, '--today', '2026-09-23'], { encoding: 'utf8', timeout: 10000 });
+  for (const value of ['45.0', '0x2d', '045', '+45', '1e2', '1e21', '36501']) {
+    const result = run(value);
+    assert.equal(result.status, 1, `${value} status ${result.status} stdout ${result.stdout}`);
+    assert.match(result.stderr, /max-age-days/, value);
+    assert.doesNotMatch(result.stdout, /no drift detected/, value);
+    assert.doesNotMatch(result.stderr, new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')), value);
+  }
+  const ok = run('45');
+  assert.equal(ok.status, 0, ok.stderr);
+  assert.match(ok.stdout, /no drift detected/);
+});
+
 test('does not flag age when within tolerance', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-23' }),
