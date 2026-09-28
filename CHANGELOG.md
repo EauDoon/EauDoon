@@ -15,6 +15,8 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- Public inventory comparison lists absent and unassessed ids in catalog id
+  order. Code-unit sort put `EauDoon` before `agent-action-stack`.
 - The link checker reads autolinks. A credentialed `https` autolink was
   accepted, while the same URL written as a Markdown link was rejected.
   Non-`https` autolinks are unsupported, matching inline links.
