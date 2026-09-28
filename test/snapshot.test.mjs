@@ -46,3 +46,14 @@ test('snapshot review reports fields dropped from a retained project', () => {
     { id: 'consequence-rail', fields: ['lastAudited'] },
   ]);
 });
+
+test('snapshot id lists follow catalog id order', () => {
+  const after = loadCatalog();
+  const before = structuredClone(after);
+  before.projects = before.projects.filter(p => p.id !== 'EauDoon' && p.id !== 'agent-action-stack');
+  assert.deepEqual(diffSnapshots(before, after).added, ['agent-action-stack', 'EauDoon']);
+  assert.deepEqual(diffSnapshots(after, before).removed, ['agent-action-stack', 'EauDoon']);
+  const edited = structuredClone(after);
+  for (const id of ['EauDoon', 'agent-action-stack']) edited.projects.find(p => p.id === id).summary += ' Updated';
+  assert.deepEqual(diffSnapshots(after, edited).changed.map(row => row.id), ['agent-action-stack', 'EauDoon']);
+});
