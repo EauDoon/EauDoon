@@ -19,6 +19,23 @@ test('snapshot review detects semantic changes and ignores project/key ordering'
   assert.deepEqual(diffSnapshots(after, before).added, ['mandatebound']);
 });
 
+test('snapshot review reports catalog wave and schema metadata changes', () => {
+  const before = loadCatalog();
+  const after = structuredClone(before);
+  after.portfolioWavesCompleted = [...before.portfolioWavesCompleted, 16];
+  assert.deepEqual(diffSnapshots(before, after).metadataChanged, ['portfolioWavesCompleted']);
+  const dropped = structuredClone(before);
+  delete dropped.portfolioWavesCompleted;
+  assert.deepEqual(diffSnapshots(before, dropped).metadataChanged, ['portfolioWavesCompleted']);
+  const reordered = structuredClone(before);
+  reordered.portfolioWavesCompleted = [...before.portfolioWavesCompleted].reverse();
+  assert.deepEqual(diffSnapshots(before, reordered).metadataChanged, ['portfolioWavesCompleted']);
+  const schema = structuredClone(before);
+  schema.schemaVersion = 2;
+  assert.deepEqual(diffSnapshots(before, schema).metadataChanged, ['schemaVersion']);
+  assert.deepEqual(diffSnapshots(before, structuredClone(before)).metadataChanged, []);
+});
+
 test('snapshot review reports fields dropped from a retained project', () => {
   const before = loadCatalog();
   const after = structuredClone(before);
