@@ -15,6 +15,7 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- The link checker skips spaces, tabs, and one line ending between `(` and an inline destination. `[catalog]( docs/CATALOG.md)` was reported as an empty destination, so the real target was never checked.
 - Public inventory comparison lists absent and unassessed ids in catalog id
   order. Code-unit sort put `EauDoon` before `agent-action-stack`.
 - The link checker reads autolinks. A credentialed `https` autolink was
