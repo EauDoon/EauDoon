@@ -21,3 +21,13 @@ test('rejects malformed, unknown, duplicate and injected catalog values', () => 
   ]) { const c = loadCatalog(); mutate(c); assert.ok(validate(c).length); }
   assert.ok(validate(null).length);
 });
+test('task tags that differ only by case are one tag', () => {
+  const c = loadCatalog();
+  const tasks = c.projects[0].tasks;
+  c.projects[0].tasks = ['reflect', 'Reflect'];
+  assert.ok(validate(c).some(error => error.includes('classification')));
+  c.projects[0].tasks = ['REFLECT', 'reflect'];
+  assert.ok(validate(c).some(error => error.includes('classification')));
+  c.projects[0].tasks = tasks;
+  assert.deepEqual(validate(c), []);
+});
