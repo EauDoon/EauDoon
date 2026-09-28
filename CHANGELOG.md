@@ -15,6 +15,9 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- Catalog `summary`, `boundary`, and `assessment`, and saved query text, reject
+  Unicode line and paragraph separators. U+2028 in a summary validated and was
+  copied into a catalog-guide table cell. Newlines were already rejected.
 - Snapshot added, removed, and changed ids use the catalog's case-insensitive
   id order. Code-unit sort listed `EauDoon` before `agent-action-stack`.
 - The drift detector treats project ids as case-insensitive. `Fixture-A` and
