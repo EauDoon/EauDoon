@@ -15,6 +15,9 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- The UTF-8 guard now checks `LICENSE`. The walk compared file extensions to
+  the string `LICENSE`, so the extensionless license was never read and a
+  UTF-16 copy would have passed.
 - Page cursors use the catalog receipt identity. Reordering projects or object
   keys invalidated `next` even though the page contents were unchanged. A real
   content change still invalidates the cursor.
