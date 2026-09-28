@@ -111,8 +111,12 @@ function main() {
   let todayOverride;
   for (let i = 1; i < args.length; i += 1) {
     if (args[i] === '--max-age-days' && args[i + 1]) {
-      const n = Number(args[i + 1]);
-      if (!Number.isInteger(n) || n <= 0) throw new Error('--max-age-days must be a positive integer');
+      const raw = args[i + 1];
+      // Number('45.0'), Number('0x2d'), and Number('1e2') are integers. Freshness
+      // already requires a plain decimal; the same spellings must not widen drift.
+      if (!/^[1-9][0-9]{0,4}$/.test(raw)) throw new Error('--max-age-days must be a positive integer up to 36500');
+      const n = Number(raw);
+      if (!Number.isSafeInteger(n) || n <= 0 || n > 36500) throw new Error('--max-age-days must be a positive integer up to 36500');
       maxAgeDays = n; i += 1;
     } else if (args[i] === '--today' && args[i + 1]) {
       todayOverride = args[i + 1]; i += 1;
