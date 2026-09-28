@@ -15,6 +15,9 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- The link checker reads autolinks. A credentialed `https` autolink was
+  accepted, while the same URL written as a Markdown link was rejected.
+  Non-`https` autolinks are unsupported, matching inline links.
 - Catalog `summary`, `boundary`, and `assessment`, and saved query text, reject
   Unicode line and paragraph separators. U+2028 in a summary validated and was
   copied into a catalog-guide table cell. Newlines were already rejected.
