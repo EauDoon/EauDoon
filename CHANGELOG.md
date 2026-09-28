@@ -15,6 +15,10 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- The link checker reads CommonMark inline destinations. An angle-bracket
+  destination was checked as a literal filename, so a link to an existing file
+  was reported missing. A destination followed by a title was ignored, and an
+  empty destination was accepted.
 - A whitespace-only `search` or saved-query `text` is rejected. Spaces, a
   non-breaking space, or a line separator previously trimmed to no words and
   matched every project with exit code 0. An omitted or empty query text is
