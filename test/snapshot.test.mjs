@@ -1,7 +1,24 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
 import { diffSnapshots } from '../lib/snapshot.mjs';
+
+test('importing the snapshot diff does not run the review', () => {
+  const result = spawnSync(process.execPath, ['--input-type=module', '--eval', 'await import("./scripts/diff.mjs")'], {
+    encoding: 'utf8', cwd: fileURLToPath(new URL('..', import.meta.url)), timeout: 10000,
+  });
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, '');
+  assert.equal(result.stderr, '');
+});
+
+test('the snapshot diff still rejects missing arguments', () => {
+  const result = spawnSync(process.execPath, [fileURLToPath(new URL('../scripts/diff.mjs', import.meta.url))], { encoding: 'utf8', timeout: 10000 });
+  assert.equal(result.status, 1);
+  assert.match(result.stderr, /Usage/);
+});
 
 test('snapshot review detects semantic changes and ignores project/key ordering', () => {
   const before = loadCatalog();

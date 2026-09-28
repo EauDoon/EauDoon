@@ -15,6 +15,7 @@ All notable changes to this repository are documented here. The format follows
   `lib/links.mjs` exports the walk as `markdownFiles`.
 
 ### Fixed
+- Importing `scripts/diff.mjs` no longer runs the snapshot review. Loading the module parsed `process.argv`, printed a usage error, and set a failing exit code. `node scripts/diff.mjs` is unchanged.
 - Drift audit dates must be real calendar dates. `2026-02-31` counted toward `projectsWithAudit`, and the string `9999` was reported as newer than `assessedOn` because it sorts later.
 - `node scripts/drift.mjs --max-age-days` accepts only a plain decimal integer from 1 to 36500. `45.0`, `0x2d`, `045`, `+45`, and `1e2` were coerced by `Number` and could exit 0.
 - `detectDrift` rejects a maximum age that is not a safe positive integer up to 36500 days. `0`, a fraction, and `1e21` previously became the 45-day default or disabled the age check, so a stale catalog could be reported as fresh.
