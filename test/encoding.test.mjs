@@ -6,10 +6,11 @@ import { extname, join, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const tracked = ['LICENSE', '.json', '.md', '.mjs', '.svg', '.yml'];
+const trackedNames = new Set(['LICENSE']);
+const trackedExtensions = new Set(['.json', '.md', '.mjs', '.svg', '.yml']);
 const walk = dir => readdirSync(dir, { withFileTypes: true }).flatMap(entry => {
   if (entry.isDirectory()) return entry.name === '.git' || entry.name === 'node_modules' ? [] : walk(join(dir, entry.name));
-  return tracked.includes(extname(entry.name)) ? [join(dir, entry.name)] : [];
+  return trackedNames.has(entry.name) || trackedExtensions.has(extname(entry.name)) ? [join(dir, entry.name)] : [];
 });
 const name = file => relative(root, file).split(sep).join('/');
 
@@ -33,6 +34,7 @@ function encodingFault(bytes) {
 test('every tracked text file is valid UTF-8 without a byte order mark', () => {
   const files = walk(root);
   assert.ok(files.length >= 60, `expected the whole tree, found ${files.length} files`);
+  assert.ok(files.map(name).includes('LICENSE'), 'LICENSE is not encoding-checked');
   for (const file of files) assert.equal(encodingFault(readFileSync(file)), null, `${name(file)} ${encodingFault(readFileSync(file))}`);
 });
 
