@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { loadCatalog } from '../lib/catalog.mjs';
 import { normalizeQuery, runQuery, facets } from '../lib/query.mjs';
+import { taskIndex } from '../lib/discover.mjs';
 
 test('saved query uses alternatives within fields and intersections across fields', () => {
   const c = loadCatalog();
@@ -37,6 +38,17 @@ test('whitespace-only query text cannot silently match every project', () => {
 test('line and paragraph separators are not query text', () => {
   const c = loadCatalog();
   for (const text of ['hello\u2028world', 'hello\u2029world']) assert.throws(() => normalizeQuery({ version: 1, text }, c));
+});
+
+test('task tags are listed in case-insensitive catalog order', () => {
+  const projects = [
+    { id: 'b', summary: 'Second', category: 'discovery', runtimes: ['node'], privacy: 'public-content', fork: false, tasks: ['Zebra', 'apple'] },
+    { id: 'a', summary: 'First', category: 'discovery', runtimes: ['node'], privacy: 'public-content', fork: false, tasks: ['gate-actions', 'Apple'] },
+  ];
+  assert.deepEqual(taskIndex(projects).map(item => item.task), ['Apple', 'apple', 'gate-actions', 'Zebra']);
+  const catalog = { assessedOn: '2026-09-23', projects };
+  const listed = facets(catalog, normalizeQuery({ version: 1 }, catalog)).facets.task.map(item => item.value);
+  assert.deepEqual(listed, ['Apple', 'apple', 'gate-actions', 'Zebra']);
 });
 
 test('explicit null fields cannot silently broaden an authored brief', () => {
