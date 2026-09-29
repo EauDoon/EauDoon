@@ -5,7 +5,7 @@
 -->
 # Public project catalog
 
-Assessed 23-09-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.
+Assessed 29-09-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.
 
 Generated from [catalog.json](../catalog.json). For search, filters, comparison and task coverage, see the [discovery guide](DISCOVERY.md).
 
@@ -30,6 +30,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk) | Research-only crypto team kit with five specialist lanes, fixed forecast horizons and independent risk review\. | browser, node, assistant | configuration-dependent |
 | [decision-labs](https://github.com/EauDoon/decision-labs) | Four browser decision workbenches with bounded scenario analyses and replayable review packets\. | browser, node | local-after-setup |
 | [EauDoon](https://github.com/EauDoon/EauDoon) | Offline public project catalog with reproducible saved briefs, task coverage matrices and review exports\. | markdown, node | public-content |
+| [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) (fork) | Claude skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims\. | assistant, node, python | provider-dependent |
 | [hermes-agent](https://github.com/EauDoon/hermes-agent) (fork) | Fork of Nous Research Hermes Agent with terminal and gateway workflows\. | python, node | provider-dependent |
 | [hermes-parallel-followups](https://github.com/EauDoon/hermes-parallel-followups) | Patches for Hermes message boundaries and optional parallel follow-ups\. | python | configuration-dependent |
 | [llms-txt-personal-site](https://github.com/EauDoon/llms-txt-personal-site) | Static personal-site template with draft-first writing, topic/date browsing and candidate-build review\. | python | public-content |
@@ -52,6 +53,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | gate-actions | [consequence-rail](https://github.com/EauDoon/consequence-rail) |
 | generate-experiments | [unconventional-moves](https://github.com/EauDoon/unconventional-moves) |
 | manage-followups | [hermes-parallel-followups](https://github.com/EauDoon/hermes-parallel-followups) |
+| match-reference-build | [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) |
 | model-liquidity | [decision-labs](https://github.com/EauDoon/decision-labs) |
 | publish-profile | [llms-txt-personal-site](https://github.com/EauDoon/llms-txt-personal-site) |
 | reflect | [reflection-engine](https://github.com/EauDoon/reflection-engine) |
@@ -60,6 +62,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | review-evidence | [agent-team-os](https://github.com/EauDoon/agent-team-os), [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench), [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk), [mandatebound](https://github.com/EauDoon/mandatebound) |
 | run-agent | [hermes-agent](https://github.com/EauDoon/hermes-agent) |
 | validate-policy | [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) |
+| verify-claims | [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) |
 | write-profile | [connect\.md](https://github.com/EauDoon/connect.md) |
 
 ## Limits and assessed instructions
@@ -111,6 +114,12 @@ Category: decision-methods. [Assessed README](https://github.com/EauDoon/decisio
 A curated public snapshot, not certification or a live inventory service.
 
 Category: discovery. [Assessed README](https://github.com/EauDoon/EauDoon/blob/89183a9af48ac26104b57dd9834cf5528fc073d8/README.md) at 89183a9af48ac26104b57dd9834cf5528fc073d8. [Current README](https://github.com/EauDoon/EauDoon/blob/main/README.md).
+
+### gauntlet-verify
+
+Needs an agent that can run isolated subagents, a browser or screenshot tool for a live reference, and web access; one full-formation round cost about 325k subagent tokens when measured. Enabling it alongside upstream gauntlet-loop can make both answer the same request. Fork source is not an endorsed upstream release.
+
+Category: agent-workflows. [Assessed README](https://github.com/EauDoon/gauntlet-verify/blob/4c0f066e2018dc6bcc3761f069c361442bd84f66/README.md) at 4c0f066e2018dc6bcc3761f069c361442bd84f66. [Current README](https://github.com/EauDoon/gauntlet-verify/blob/main/README.md).
 
 ### hermes-agent
 

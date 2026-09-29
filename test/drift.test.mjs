@@ -23,7 +23,9 @@ test('the drift report states audit coverage and names entries with no lastAudit
   const result = spawnSync(process.execPath, [fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url)), '--check', '--today', catalog.assessedOn], { encoding: 'utf8', timeout: 10000 });
   assert.equal(result.status, 0, result.stderr);
   assert.match(result.stdout, new RegExp(`audited=${catalog.projects.length - unaudited.length}/${catalog.projects.length}`));
-  assert.equal(/^no lastAudited date recorded for: (.+)\.$/m.exec(result.stdout)?.[1], unaudited.join(', '));
+  // With no gaps the report omits the line entirely, so both directions are pinned.
+  const named = /^no lastAudited date recorded for: (.+)\.$/m.exec(result.stdout)?.[1];
+  assert.equal(named, unaudited.length ? unaudited.join(', ') : undefined);
   assert.match(result.stdout, /no drift detected\./);
 });
 

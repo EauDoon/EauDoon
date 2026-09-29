@@ -5,6 +5,38 @@ All notable changes to this repository are documented here. The format follows
 `catalog.json` `assessedOn` and from `git log` for commits that touched
 `catalog.json`. Project identifiers match the `id` field in `catalog.json`.
 
+## [Unreleased] - 2026-09-29
+
+### Added
+- `gauntlet-verify` is catalogued. The repository is featured in the profile
+  README but had no `catalog.json` entry, so it was absent from every generated
+  view. Classification is taken from the repository itself: a Claude skill
+  (`.claude/skills/gauntlet-verify`) with `node` and `python` tooling in
+  `evals/` and `scripts/`, forked from `robonuggets/gauntlet-loop`, and pinned
+  to README revision `4c0f066`. The `boundary` records the documented limits:
+  isolated subagents, a browser or screenshot tool and web access are required,
+  one full-formation round cost about 325k subagent tokens when measured, and
+  enabling it alongside upstream `gauntlet-loop` can make both answer the same
+  request.
+
+### Changed
+- `catalog.json` `assessedOn` moves to `2026-09-29` and `lastAudited` is recorded
+  for `connect.md`, `hermes-agent` and `hermes-parallel-followups`, which were
+  the three entries without one. Each was re-checked against its live repository
+  before the date was written, and all three descriptions still hold:
+  `connect.md`'s README names the browser Markdown builder as the active
+  product with the network routes as separately configured optional extras, and
+  `hermes-parallel-followups` still documents exactly one supported upstream
+  snapshot. `drift.mjs` rejects a `lastAudited` newer than `assessedOn`, so the
+  two dates had to move together.
+
+### Fixed
+- The drift test that asserts the report names entries with no `lastAudited` now
+  holds in both directions. It compared the report against an empty string when
+  the catalog had no gaps, while the report omits the line entirely, so `''`
+  never equalled `undefined`. The report line is still checked exactly when gaps
+  exist.
+
 ## [Unreleased] - 2026-09-18
 
 ### Changed

@@ -45,7 +45,7 @@ test('concurrent growth after descriptor stat cannot bypass consumed-byte limit'
 test('exact byte limit is accepted; extra byte, invalid UTF-8 and directories reject', () => fixture((file, dir) => {
   const bytes = fs.readFileSync(source);
   fs.writeFileSync(file, Buffer.concat([bytes, Buffer.alloc(limit - bytes.length, 0x20)]));
-  assert.equal(loadCatalog(file).projects.length, 15);
+  assert.equal(loadCatalog(file).projects.length, 16);
   fs.appendFileSync(file, ' ');
   assert.throws(() => loadCatalog(file), /exceeds 1 MiB/);
   fs.writeFileSync(file, Buffer.from('{"bad":"\xff"}', 'latin1'));
@@ -57,7 +57,7 @@ test('a UTF-8 catalog with a byte order mark still loads', () => fixture(file =>
   // TextDecoder strips a UTF-8 BOM by default. This pins that behaviour: the
   // loader no longer strips it a second time, and must not start rejecting one.
   fs.writeFileSync(file, Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), fs.readFileSync(source)]));
-  assert.equal(loadCatalog(file).projects.length, 15);
+  assert.equal(loadCatalog(file).projects.length, 16);
 }));
 
 test('UTF-16 catalog bytes are reported as an encoding fault, not malformed JSON', () => fixture(file => {
