@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "assessedOn": "2026-09-23",
+  "assessedOn": "2026-09-29",
   "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.",
   "portfolioWavesCompleted": [1, 2, 3, 5, 6, 7, 9, 10, 12, 13, 14, 15],
   "projects": [
@@ -68,6 +68,7 @@
       "boundary": "Guest drafts and checkpoints live in browser memory; downloaded recovery sessions and exports can be sensitive. Optional network routes require separate configuration; deployment remains unverified.",
       "fork": false,
       "wavesTouched": [1, 3, 5, 12, 13, 14, 15],
+      "lastAudited": "2026-09-29",
       "source": {
         "revision": "1fabde9155f93266b0a78d6f6b33d495601ea6a7",
         "url": "https://github.com/EauDoon/connect.md/blob/1fabde9155f93266b0a78d6f6b33d495601ea6a7/README.md"
@@ -187,6 +188,29 @@
       }
     },
     {
+      "id": "gauntlet-verify",
+      "repository": "https://github.com/EauDoon/gauntlet-verify",
+      "summary": "Claude skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims.",
+      "category": "agent-workflows",
+      "runtimes": [
+        "assistant",
+        "node",
+        "python"
+      ],
+      "privacy": "provider-dependent",
+      "tasks": [
+        "match-reference-build",
+        "verify-claims"
+      ],
+      "boundary": "Needs an agent that can run isolated subagents, a browser or screenshot tool for a live reference, and web access; one full-formation round cost about 325k subagent tokens when measured. Enabling it alongside upstream gauntlet-loop can make both answer the same request. Fork source is not an endorsed upstream release.",
+      "fork": true,
+      "lastAudited": "2026-09-29",
+      "source": {
+        "revision": "4c0f066e2018dc6bcc3761f069c361442bd84f66",
+        "url": "https://github.com/EauDoon/gauntlet-verify/blob/4c0f066e2018dc6bcc3761f069c361442bd84f66/README.md"
+      }
+    },
+    {
       "id": "hermes-agent",
       "repository": "https://github.com/EauDoon/hermes-agent",
       "summary": "Fork of Nous Research Hermes Agent with terminal and gateway workflows.",
@@ -202,6 +226,7 @@
       "boundary": "Model providers and enabled integrations define data access and external actions. Fork source is not an endorsed upstream release.",
       "fork": true,
       "wavesTouched": [14, 15],
+      "lastAudited": "2026-09-29",
       "source": {
         "revision": "4a7e28483f486c7096e74b06ebc203b643820667",
         "url": "https://github.com/EauDoon/hermes-agent/blob/4a7e28483f486c7096e74b06ebc203b643820667/README.md"
@@ -222,6 +247,7 @@
       "boundary": "Supports one documented source snapshot; newer Hermes compatibility is not implied. Patching modifies selected local source files.",
       "fork": false,
       "wavesTouched": [14, 15],
+      "lastAudited": "2026-09-29",
       "source": {
         "revision": "cd9ff035566a872caac394b35751ad730c9abf06",
         "url": "https://github.com/EauDoon/hermes-parallel-followups/blob/cd9ff035566a872caac394b35751ad730c9abf06/README.md"

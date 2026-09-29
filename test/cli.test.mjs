@@ -21,7 +21,7 @@ test('a whitespace-only search is rejected instead of matching every project', (
   }
   const listed = run('list', '--json');
   assert.equal(listed.status, 0, listed.stderr);
-  assert.equal(JSON.parse(listed.stdout).projects.length, 15);
+  assert.equal(JSON.parse(listed.stdout).projects.length, 16);
 });
 test('a single-dash flag is rejected instead of searched as a word', () => {
   for (const args of [['search', '-jsno'], ['list', '-json'], ['shortlist', '-replay-evidence'], ['search', '-'], ['search', '--']]) {
@@ -37,7 +37,7 @@ test('filters intersect and never silently broaden invalid requests', () => {
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(result.stdout).projects.map(p => p.id), ['agent-action-stack', 'constitutional-agent-testbench', 'operator-labs']);
   for (const args of [['list', '--runtime', 'ruby'], ['list', '--fork'], ['list', '--json', '--json'], ['list', '--runtime', 'node', '--runtime', 'python']]) assert.equal(run(...args).status, 1);
-  assert.equal(JSON.parse(run('list', '--fork', 'yes', '--json').stdout).projects.length, 2);
+  assert.equal(JSON.parse(run('list', '--fork', 'yes', '--json').stdout).projects.length, 3);
 });
 test('detail binds setup guidance to a reviewed source without running it', () => {
   const result = run('show', 'MANDATEBOUND', '--json');
