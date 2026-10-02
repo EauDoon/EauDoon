@@ -78,31 +78,31 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 
 Experimental synthetic workflow; the response fixture gate is not signed authorization over the action proposal. Recorded handoffs do not prove source truth or legal effect.
 
-Category: action-systems. [Assessed README](https://github.com/EauDoon/agent-action-stack/blob/9449bd3a8cc3f06fff985db008e27225ffc69ecc/README.md) at 9449bd3a8cc3f06fff985db008e27225ffc69ecc. [Current README](https://github.com/EauDoon/agent-action-stack/blob/main/README.md).
+Category: action-systems. [Assessed README](https://github.com/EauDoon/agent-action-stack/blob/8179e59354355678f8b749f4faa178aa8ed0c39d/README.md) at 8179e59354355678f8b749f4faa178aa8ed0c39d. [Current README](https://github.com/EauDoon/agent-action-stack/blob/main/README.md).
 
 ### agent-team-os
 
 Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the provider; native routing and paired model quality remain unverified.
 
-Category: agent-workflows. [Assessed README](https://github.com/EauDoon/agent-team-os/blob/36e9a94088273cd1dc4846e18a2ae0b355289c51/README.md) at 36e9a94088273cd1dc4846e18a2ae0b355289c51. [Current README](https://github.com/EauDoon/agent-team-os/blob/main/README.md).
+Category: agent-workflows. [Assessed README](https://github.com/EauDoon/agent-team-os/blob/9bf353f67a5401f85c35d6847aa8f024f652b68f/README.md) at 9bf353f67a5401f85c35d6847aa8f024f652b68f. [Current README](https://github.com/EauDoon/agent-team-os/blob/main/README.md).
 
 ### connect.md
 
 Guest drafts and checkpoints live in browser memory; downloaded recovery sessions and exports can be sensitive. Optional network routes require separate configuration; deployment remains unverified.
 
-Category: publishing. [Assessed README](https://github.com/EauDoon/connect.md/blob/1247953f91947e32222ba5b3f578003e55be9430/README.md) at 1247953f91947e32222ba5b3f578003e55be9430. [Current README](https://github.com/EauDoon/connect.md/blob/main/README.md).
+Category: publishing. [Assessed README](https://github.com/EauDoon/connect.md/blob/1c030b60d2496b755e506e7b3ae7d56facc4eda5/README.md) at 1c030b60d2496b755e506e7b3ae7d56facc4eda5. [Current README](https://github.com/EauDoon/connect.md/blob/main/README.md).
 
 ### consequence-rail
 
 Experimental reference implementation; no guaranteed recovery, insurance or legal compliance.
 
-Category: action-systems. [Assessed README](https://github.com/EauDoon/consequence-rail/blob/9f60ab3223970c22371c20d3584e8330674d997c/README.md) at 9f60ab3223970c22371c20d3584e8330674d997c. [Current README](https://github.com/EauDoon/consequence-rail/blob/main/README.md).
+Category: action-systems. [Assessed README](https://github.com/EauDoon/consequence-rail/blob/c430383c0a0931f0dcf17845d6f0e8ccf328615a/README.md) at c430383c0a0931f0dcf17845d6f0e8ccf328615a. [Current README](https://github.com/EauDoon/consequence-rail/blob/main/README.md).
 
 ### constitutional-agent-testbench
 
 Checks declared structure and rules, not free-form reasoning or safety certification.
 
-Category: action-systems. [Assessed README](https://github.com/EauDoon/constitutional-agent-testbench/blob/fda346679658a19e32f13ce289e3d770695895ea/README.md) at fda346679658a19e32f13ce289e3d770695895ea. [Current README](https://github.com/EauDoon/constitutional-agent-testbench/blob/main/README.md).
+Category: action-systems. [Assessed README](https://github.com/EauDoon/constitutional-agent-testbench/blob/826008c0d615414330c376ed413fff3620686c80/README.md) at 826008c0d615414330c376ed413fff3620686c80. [Current README](https://github.com/EauDoon/constitutional-agent-testbench/blob/main/README.md).
 
 ### crypto-research-desk
 
@@ -114,7 +114,7 @@ Category: decision-methods. [Assessed README](https://github.com/EauDoon/crypto-
 
 Declared-input models and unsigned review packets; no quotes, authenticated facts or execution authority. Exports can contain private inputs.
 
-Category: decision-methods. [Assessed README](https://github.com/EauDoon/decision-labs/blob/c2c56c50121fc1cf61d24357a793e26de8b8389b/README.md) at c2c56c50121fc1cf61d24357a793e26de8b8389b. [Current README](https://github.com/EauDoon/decision-labs/blob/main/README.md).
+Category: decision-methods. [Assessed README](https://github.com/EauDoon/decision-labs/blob/d7003994fc439fa63eedd5aa13fc913539d09de0/README.md) at d7003994fc439fa63eedd5aa13fc913539d09de0. [Current README](https://github.com/EauDoon/decision-labs/blob/main/README.md).
 
 ### gauntlet-verify
 
@@ -132,25 +132,25 @@ Category: agent-workflows. [Assessed README](https://github.com/EauDoon/hermes-a
 
 Supports one documented source snapshot; newer Hermes compatibility is not implied. Patching modifies selected local source files; cancellation deadlines require cooperative adapters.
 
-Category: agent-workflows. [Assessed README](https://github.com/EauDoon/hermes-parallel-followups/blob/008290477ecdc9e23db8faf7d49e16f991b3b329/README.md) at 008290477ecdc9e23db8faf7d49e16f991b3b329. [Current README](https://github.com/EauDoon/hermes-parallel-followups/blob/main/README.md).
+Category: agent-workflows. [Assessed README](https://github.com/EauDoon/hermes-parallel-followups/blob/908a77ff6b58ef1932f3abaa49cef64fa09ad3e1/README.md) at 908a77ff6b58ef1932f3abaa49cef64fa09ad3e1. [Current README](https://github.com/EauDoon/hermes-parallel-followups/blob/main/README.md).
 
 ### llms-txt-personal-site
 
 Generated output is public when deployed; local build does not configure hosting or guarantee indexing.
 
-Category: publishing. [Assessed README](https://github.com/EauDoon/llms-txt-personal-site/blob/ac7114387fdd0cbfabc22174e35ead15b9a632ae/README.md) at ac7114387fdd0cbfabc22174e35ead15b9a632ae. [Current README](https://github.com/EauDoon/llms-txt-personal-site/blob/main/README.md).
+Category: publishing. [Assessed README](https://github.com/EauDoon/llms-txt-personal-site/blob/9e3642b9e691609bff0a58e9ed90ba4d87676003/README.md) at 9e3642b9e691609bff0a58e9ed90ba4d87676003. [Current README](https://github.com/EauDoon/llms-txt-personal-site/blob/main/README.md).
 
 ### mandatebound
 
 Experimental decision support; legal effect stays not determined. Evidence packs can contain sensitive data.
 
-Category: action-systems. [Assessed README](https://github.com/EauDoon/mandatebound/blob/b51fe137958afe26eee052c5a129e5481ccae560/README.md) at b51fe137958afe26eee052c5a129e5481ccae560. [Current README](https://github.com/EauDoon/mandatebound/blob/main/README.md).
+Category: action-systems. [Assessed README](https://github.com/EauDoon/mandatebound/blob/708256d4e48babeb13079fac7589d172920a5c95/README.md) at 708256d4e48babeb13079fac7589d172920a5c95. [Current README](https://github.com/EauDoon/mandatebound/blob/main/README.md).
 
 ### operator-labs
 
 Synthetic research inputs only; no live routing or payment execution.
 
-Category: decision-methods. [Assessed README](https://github.com/EauDoon/operator-labs/blob/fd068ca59c53758650c98241d26db6efb445cf93/README.md) at fd068ca59c53758650c98241d26db6efb445cf93. [Current README](https://github.com/EauDoon/operator-labs/blob/main/README.md).
+Category: decision-methods. [Assessed README](https://github.com/EauDoon/operator-labs/blob/5531da84d08df67b6b3de804a5b63b28b0df134e/README.md) at 5531da84d08df67b6b3de804a5b63b28b0df134e. [Current README](https://github.com/EauDoon/operator-labs/blob/main/README.md).
 
 ### reflection-engine
 
@@ -162,10 +162,10 @@ Category: decision-methods. [Assessed README](https://github.com/EauDoon/reflect
 
 Synthetic baseline and manual research; no trading or outreach. Exports can contain research notes, and browser storage is not a backup. Hosted source identity is unverified. No license selected.
 
-Category: decision-methods. [Assessed README](https://github.com/EauDoon/stable-desk/blob/23bac8ff4b5e58cebc4c2665871be4ba02ec250c/README.md) at 23bac8ff4b5e58cebc4c2665871be4ba02ec250c. [Current README](https://github.com/EauDoon/stable-desk/blob/main/README.md).
+Category: decision-methods. [Assessed README](https://github.com/EauDoon/stable-desk/blob/226cf10be05ca8b36aeba6bbc0d24a99c77d8bd7/README.md) at 226cf10be05ca8b36aeba6bbc0d24a99c77d8bd7. [Current README](https://github.com/EauDoon/stable-desk/blob/main/README.md).
 
 ### unconventional-moves
 
 Local tools validate declared plans and reported observations; assistant use follows provider settings. Native routing and paired model quality remain unverified. No command runs experiments or grants authority.
 
-Category: decision-methods. [Assessed README](https://github.com/EauDoon/unconventional-moves/blob/250d8587f240b301cd90d413d5044ae6f8b8fb31/README.md) at 250d8587f240b301cd90d413d5044ae6f8b8fb31. [Current README](https://github.com/EauDoon/unconventional-moves/blob/main/README.md).
+Category: decision-methods. [Assessed README](https://github.com/EauDoon/unconventional-moves/blob/d187cb3d827695919a18fb773899ddec1b2d6e68/README.md) at d187cb3d827695919a18fb773899ddec1b2d6e68. [Current README](https://github.com/EauDoon/unconventional-moves/blob/main/README.md).

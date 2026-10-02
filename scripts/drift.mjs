@@ -68,9 +68,11 @@ export function detectDrift(catalog, options = {}) {
     }
   }
 
-  if (typeof catalog.assessedOn === 'string' && referenceDate >= catalog.assessedOn) {
+  if (typeof catalog.assessedOn === 'string') {
     const ageDays = Math.floor((Date.parse(referenceDate) - Date.parse(catalog.assessedOn)) / dayMs);
-    if (ageDays > maxAgeDays) {
+    if (ageDays < 0) {
+      issues.push(`catalog.assessedOn ${catalog.assessedOn} is later than referenceDate ${referenceDate}`);
+    } else if (ageDays > maxAgeDays) {
       issues.push(`catalog.assessedOn ${catalog.assessedOn} is ${ageDays} days old (limit ${maxAgeDays}); refresh required`);
     }
   }
