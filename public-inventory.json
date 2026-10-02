@@ -1,0 +1,98 @@
+{
+  "owner": "EauDoon",
+  "retrievedOn": "2026-10-02",
+  "source": "https://api.github.com/search/repositories?q=user%3AEauDoon%20is%3Apublic%20fork%3Afalse",
+  "complete": true,
+  "repositories": [
+    {
+      "id": "agent-action-stack",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "agent-team-os",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "connect.md",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "consequence-rail",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "constitutional-agent-testbench",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "crypto-research-desk",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "decision-labs",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "EauDoon",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "hermes-parallel-followups",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "llms-txt-personal-site",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "mandatebound",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "operator-labs",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "stable-desk",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "unconventional-moves",
+      "public": true,
+      "fork": false,
+      "archived": false
+    }
+  ],
+  "exclusions": [
+    {
+      "id": "EauDoon",
+      "reason": "Profile presentation infrastructure, not a project."
+    }
+  ]
+}

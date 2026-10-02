@@ -60,13 +60,14 @@ test('malformed and duplicate JSON fail without echoing input content', () => wo
 
 test('snapshot and CLI impact retain repository identity across casing changes', () => workspace(file => {
   const before = loadCatalog();
-  before.projects = before.projects.filter(p => p.id === 'EauDoon');
+  before.projects = before.projects.filter(p => p.id === 'operator-labs');
+  before.projects[0].category = 'discovery';
   const beforeFile = file('before.json', before);
   const query = file('query.json', { version: 1 });
   for (const changeSummary of [false, true]) {
     const after = structuredClone(before); const project = after.projects[0];
-    project.id = 'eaudoon';
-    project.repository = 'https://github.com/EauDoon/eaudoon';
+    project.id = 'OPERATOR-LABS';
+    project.repository = 'https://github.com/EauDoon/OPERATOR-LABS';
     project.source.url = `${project.repository}/blob/${project.source.revision}/README.md`;
     if (changeSummary) project.summary = 'Changed public discovery summary';
     const afterFile = file('after.json', after);
@@ -74,15 +75,15 @@ test('snapshot and CLI impact retain repository identity across casing changes',
     const fields = ['id', 'repository', ...(changeSummary ? ['summary'] : []), 'source'];
     const diff = diffSnapshots(before, after);
     assert.deepEqual(diff.added, []); assert.deepEqual(diff.removed, []);
-    assert.deepEqual(diff.changed, [{ id: 'eaudoon', fields }]);
+    assert.deepEqual(diff.changed, [{ id: 'OPERATOR-LABS', fields }]);
     const impact = parsed('impact', beforeFile, afterFile, query);
     assert.deepEqual(impact.entered, []); assert.deepEqual(impact.left, []);
-    assert.deepEqual(impact.retained, ['eaudoon']);
-    assert.deepEqual(impact.changedRetained, [{ id: 'eaudoon', fields }]);
-    const excluded = file('excluded.json', { version: 1, exclude: ['EAUDOON'] });
+    assert.deepEqual(impact.retained, ['OPERATOR-LABS']);
+    assert.deepEqual(impact.changedRetained, [{ id: 'OPERATOR-LABS', fields }]);
+    const excluded = file('excluded.json', { version: 1, exclude: ['operator-LABS'] });
     assert.deepEqual(parsed('impact', beforeFile, afterFile, excluded).retained, []);
     project.category = 'publishing'; file('after.json', after);
     const discovery = file('discovery.json', { version: 1, filters: { category: ['discovery'] } });
-    assert.deepEqual(parsed('impact', beforeFile, afterFile, discovery).left, ['EauDoon']);
+    assert.deepEqual(parsed('impact', beforeFile, afterFile, discovery).left, ['operator-labs']);
   }
 }));

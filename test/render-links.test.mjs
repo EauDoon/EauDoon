@@ -15,7 +15,7 @@ test('generated guide is current, complete and source-bound', () => {
   for (const p of c.projects) { assert.ok(text.includes(`### ${p.id}\n`)); assert.ok(text.includes(p.source.url)); assert.ok(text.includes(p.boundary)); }
   const lines = text.split('\n');
   const tables = lines.map((line, i) => ({ line, i })).filter(x => /^\| ---/.test(x.line));
-  assert.equal(tables.length, 2);
+  assert.equal(tables.length, 3);
   for (const { line, i } of tables) assert.equal(line.split('|').length, lines[i - 1].split('|').length, 'GFM table separator must match header width');
 });
 test('local link checker rejects traversal, active schemes, credentials and missing targets', () => {

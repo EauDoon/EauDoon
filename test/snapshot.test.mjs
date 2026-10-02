@@ -26,12 +26,12 @@ test('snapshot review detects semantic changes and ignores project/key ordering'
   after.projects.reverse();
   after.projects[0] = Object.fromEntries(Object.entries(after.projects[0]).reverse());
   assert.deepEqual(diffSnapshots(before, after).changed, []);
-  after.projects.find(p => p.id === 'EauDoon').summary = 'Public discovery tools';
+  after.projects.find(p => p.id === 'operator-labs').summary = 'Public discovery tools';
   after.projects = after.projects.filter(p => p.id !== 'mandatebound');
   after.assessedOn = new Date(Date.parse(before.assessedOn) + 86400000).toISOString().slice(0, 10);
   const diff = diffSnapshots(before, after);
   assert.deepEqual(diff.removed, ['mandatebound']);
-  assert.deepEqual(diff.changed, [{ id: 'EauDoon', fields: ['summary'] }]);
+  assert.deepEqual(diff.changed, [{ id: 'operator-labs', fields: ['summary'] }]);
   assert.deepEqual(diff.metadataChanged, ['assessedOn']);
   assert.deepEqual(diffSnapshots(after, before).added, ['mandatebound']);
 });
@@ -66,19 +66,20 @@ test('snapshot review reports fields dropped from a retained project', () => {
 
 test('snapshot id lists follow catalog id order', () => {
   const after = loadCatalog();
+  after.projects.find(p => p.id === 'operator-labs').id = 'Operator-Labs';
   const before = structuredClone(after);
-  before.projects = before.projects.filter(p => p.id !== 'EauDoon' && p.id !== 'agent-action-stack');
-  assert.deepEqual(diffSnapshots(before, after).added, ['agent-action-stack', 'EauDoon']);
-  assert.deepEqual(diffSnapshots(after, before).removed, ['agent-action-stack', 'EauDoon']);
+  before.projects = before.projects.filter(p => p.id !== 'Operator-Labs' && p.id !== 'agent-action-stack');
+  assert.deepEqual(diffSnapshots(before, after).added, ['agent-action-stack', 'Operator-Labs']);
+  assert.deepEqual(diffSnapshots(after, before).removed, ['agent-action-stack', 'Operator-Labs']);
   const edited = structuredClone(after);
-  for (const id of ['EauDoon', 'agent-action-stack']) edited.projects.find(p => p.id === id).summary += ' Updated';
-  assert.deepEqual(diffSnapshots(after, edited).changed.map(row => row.id), ['agent-action-stack', 'EauDoon']);
+  for (const id of ['Operator-Labs', 'agent-action-stack']) edited.projects.find(p => p.id === id).summary += ' Updated';
+  assert.deepEqual(diffSnapshots(after, edited).changed.map(row => row.id), ['agent-action-stack', 'Operator-Labs']);
 });
 
 test('changed field names ignore object key order', () => {
   const before = loadCatalog();
   const after = structuredClone(before);
-  const project = after.projects.find(p => p.id === 'EauDoon');
+  const project = after.projects.find(p => p.id === 'operator-labs');
   project.summary = 'Changed summary';
   project.boundary = 'Changed boundary';
   const reversed = structuredClone(before);
@@ -87,7 +88,7 @@ test('changed field names ignore object key order', () => {
     for (const key of Object.keys(entry).reverse()) out[key] = entry[key];
     return out;
   });
-  const expected = [{ id: 'EauDoon', fields: ['summary', 'boundary'] }];
+  const expected = [{ id: 'operator-labs', fields: ['summary', 'boundary'] }];
   assert.deepEqual(diffSnapshots(before, after).changed, expected);
   assert.deepEqual(diffSnapshots(reversed, after).changed, expected);
 });

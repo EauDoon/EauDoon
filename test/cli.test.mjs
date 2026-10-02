@@ -54,7 +54,7 @@ test('comparison preserves requested order and exposes limits', () => {
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(result.stdout).projects.map(p => p.id), ['mandatebound', 'consequence-rail']);
   assert.match(run('compare', 'hermes-agent', 'operator-labs').stdout, /provider-dependent/);
-  for (const ids of [['mandatebound'], ['EauDoon', 'EAUDOON'], ['missing', 'EauDoon']]) assert.equal(run('compare', ...ids).status, 1);
+  for (const ids of [['mandatebound'], ['mandatebound', 'MANDATEBOUND'], ['missing', 'EauDoon']]) assert.equal(run('compare', ...ids).status, 1);
 });
 test('shortlist explains coverage and gaps without implying readiness', () => {
   const result = run('shortlist', 'replay-evidence', 'gate-actions', '--json');
