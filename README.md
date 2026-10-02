@@ -4,33 +4,63 @@
   <img src="assets/banner-light.svg" alt="Daniel Oon. Decision infrastructure for agent systems and operators." width="100%">
 </picture>
 
-[Website](https://danieloon.ai) · [LinkedIn](https://www.linkedin.com/in/danieloon) · [@EauDoon](https://x.com/EauDoon)
+<p align="center">
+  <a href="https://danieloon.ai">Website</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a> &nbsp;·&nbsp; <a href="https://x.com/EauDoon">@EauDoon</a>
+</p>
 
-I build tools that make agent actions and business decisions easier to inspect, question, and replay.
+I build tools for agent systems and business decisions, with explicit rules, recoverable actions, and evidence you can inspect.
+
+<a href="docs/CATALOG.md">
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/constellation-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/constellation-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/constellation-dark.svg">
+  <img src="assets/constellation-light.svg" alt="A constellation of thirteen public projects, grouped into agent systems, decision tools, and practical experiments. Open the project catalog for individual links." width="100%">
+</picture>
+</a>
 
 ## Selected work
 
-### [MandateBound](https://github.com/EauDoon/mandatebound)
+<a href="https://github.com/EauDoon/mandatebound">
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/mandatebound-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/mandatebound-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/mandatebound-dark.svg">
+  <img src="assets/mandatebound-light.svg" alt="MandateBound. Experimental evidence review for agentic commerce. The synthetic example distinguishes a complete case, missing evidence, and tampering." width="100%">
+</picture>
+</a>
 
-**Evidence review for agent-assisted purchases.** An experimental engine that replays disputes from supplied records and returns unresolved when evidence is missing, invalid, or conflicting.
+[Repository](https://github.com/EauDoon/mandatebound) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/mandatebound/blob/main/docs/CASE_STUDY.md)
 
-[Read the evidence case →](https://github.com/EauDoon/mandatebound/blob/main/docs/CASE_STUDY.md)
+<br>
 
-### [Decision Labs](https://github.com/EauDoon/decision-labs)
+<a href="https://github.com/EauDoon/decision-labs">
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/decision-labs-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/decision-labs-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/decision-labs-dark.svg">
+  <img src="assets/decision-labs-light.svg" alt="Decision Labs. Four local browser workbenches for partnerships, pooled buying, structured agreements, and weekend liquidity." width="100%">
+</picture>
+</a>
 
-**Business decisions with the assumptions visible.** Four local browser workbenches for partnership thresholds, pooled buying, structured agreements, and weekend liquidity.
+[Repository](https://github.com/EauDoon/decision-labs) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/decision-labs/blob/main/docs/CASE_STUDY.md)
 
-[Walk through a partnership decision →](https://github.com/EauDoon/decision-labs/blob/main/docs/CASE_STUDY.md)
+<br>
 
-### [Hermes Parallel Follow-ups](https://github.com/EauDoon/hermes-parallel-followups)
+<a href="https://github.com/EauDoon/hermes-parallel-followups">
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/hermes-followups-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/hermes-followups-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/hermes-followups-dark.svg">
+  <img src="assets/hermes-followups-light.svg" alt="Hermes Parallel Follow-ups. Reversible patches for a documented source revision, with bounded concurrency and cancellation tests." width="100%">
+</picture>
+</a>
 
-**Separate messages, predictable execution.** Reversible patches for a documented Hermes source revision, with bounded concurrency and cancellation tests.
+[Repository](https://github.com/EauDoon/hermes-parallel-followups) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/hermes-parallel-followups/blob/main/docs/CASE_STUDY.md)
 
-[Explore the debugging case →](https://github.com/EauDoon/hermes-parallel-followups/blob/main/docs/CASE_STUDY.md)
+<sub>Experimental software and synthetic worked cases. These checks do not establish customer adoption, production reliability, or business impact.</sub>
 
-These worked cases use synthetic inputs. They demonstrate specific checks, not customer adoption, production reliability, or business impact.
-
-## More to explore
+<br>
 
 <details>
 <summary><strong>Browse the project index</strong></summary>
@@ -60,10 +90,6 @@ These worked cases use synthetic inputs. They demonstrate specific checks, not c
 
 </details>
 
-[Compare projects in the catalog →](docs/CATALOG.md) · [Search and setup](docs/DISCOVERY.md) · [Review workflows](docs/WORKFLOWS.md)
+[Full project catalog](docs/CATALOG.md) &nbsp;·&nbsp; [Search and setup](docs/DISCOVERY.md) &nbsp;·&nbsp; [Review workflows](docs/WORKFLOWS.md)
 
-## How I build
-
-Explicit assumptions. Clear authority limits. Failure paths tested alongside successful ones. Reproducible examples close to the code.
-
-This is a public build record. Software checks do not establish decision quality, and the catalog is a dated source snapshot. Repository licenses and upstream attribution define reuse.
+<sub>The catalog is a dated source snapshot. Repository licenses and upstream attribution define reuse.</sub>
