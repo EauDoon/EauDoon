@@ -145,6 +145,21 @@ test('an invalid reference date is rejected instead of reporting no drift', () =
   assert.doesNotMatch(cli.stderr, /not-a-date/);
 });
 
+test('a future assessment fails both the detector and CLI', () => {
+  const catalog = makeCatalog([baseProject('fixture-a')]);
+  assert.deepEqual(detectDrift(catalog, { today: '2026-09-22' }).issues, [
+    'catalog.assessedOn 2026-09-23 is later than referenceDate 2026-09-22',
+  ]);
+  assert.deepEqual(detectDrift(catalog, { today: catalog.assessedOn }).issues, []);
+  const script = fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url));
+  for (const mode of ['--check', '--json']) {
+    const result = spawnSync(process.execPath, [script, mode, '--today', '2000-01-01'], { encoding: 'utf8', timeout: 10000 });
+    assert.equal(result.status, 1, result.stderr);
+    assert.match(result.stdout, /later than referenceDate/);
+    assert.doesNotMatch(result.stdout, /no drift detected/);
+  }
+});
+
 test('an invalid maximum age is rejected instead of hiding staleness', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-01' }),
@@ -160,7 +175,7 @@ test('an invalid maximum age is rejected instead of hiding staleness', () => {
 
 test('drift rejects a max age that is not written as a decimal integer', () => {
   const script = fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url));
-  const run = value => spawnSync(process.execPath, [script, '--check', '--max-age-days', value, '--today', '2026-09-23'], { encoding: 'utf8', timeout: 10000 });
+  const run = value => spawnSync(process.execPath, [script, '--check', '--max-age-days', value, '--today', loadCatalog().assessedOn], { encoding: 'utf8', timeout: 10000 });
   for (const value of ['45.0', '0x2d', '045', '+45', '1e2', '1e21', '36501']) {
     const result = run(value);
     assert.equal(result.status, 1, `${value} status ${result.status} stdout ${result.stdout}`);

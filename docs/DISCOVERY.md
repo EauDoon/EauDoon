@@ -26,7 +26,7 @@ The catalog describes assessed public projects, with forks labeled separately. T
 
 Owned-project pins identify reviewed source commits. The three historical fork entries retain their earlier assessments and were outside the public non-fork review. Repositories can advance independently; current README links help identify changes before setup. No deployment, availability, package publication or current compatibility check is implied.
 
-For connect.md, the assessed README describes the guest builder. The [middleware at the same revision](https://github.com/EauDoon/connect.md/blob/1247953f91947e32222ba5b3f578003e55be9430/apps/web/middleware.ts) explicitly leaves new network routes outside its retired-route block. The catalog therefore distinguishes optional network source from the guest workflow; whether those routes are configured in production remains unverified.
+For connect.md, the assessed README describes the guest builder. The [middleware at the same revision](https://github.com/EauDoon/connect.md/blob/1c030b60d2496b755e506e7b3ae7d56facc4eda5/apps/web/middleware.ts) explicitly leaves new network routes outside its retired-route block. The catalog therefore distinguishes optional network source from the guest workflow; whether those routes are configured in production remains unverified.
 
 The profile introduction is curated; the catalog includes the assessed public set. The inventory check below also records projects held out of assessment. Existing upstream attribution stays with each fork. Reflection Engine originates from Kevin Rose's [kropdx/reflection-engine](https://github.com/kropdx/reflection-engine); Hermes Agent originates from [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent).
 
