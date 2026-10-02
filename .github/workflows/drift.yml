@@ -5,6 +5,9 @@ on:
     branches: [main]
     paths:
       - 'catalog.json'
+      - 'public-inventory.json'
+      - 'scripts/inventory-check.mjs'
+      - 'lib/workflows.mjs'
       - 'lib/catalog.mjs'
       - 'lib/render.mjs'
       - 'scripts/render.mjs'
@@ -13,6 +16,9 @@ on:
   pull_request:
     paths:
       - 'catalog.json'
+      - 'public-inventory.json'
+      - 'scripts/inventory-check.mjs'
+      - 'lib/workflows.mjs'
       - 'lib/catalog.mjs'
       - 'lib/render.mjs'
       - 'scripts/drift.mjs'
@@ -41,6 +47,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: node scripts/drift.mjs --check
+      - run: node scripts/inventory-check.mjs
       # Runs even when --check fails: the artifact exists to diagnose the drift
       # that just failed the build, so it must not be skipped in that case.
       - run: node scripts/drift.mjs --json > drift-report.json

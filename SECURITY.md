@@ -1,8 +1,10 @@
 # Security Policy
 
-This repository is a static public profile catalog. It contains no production
-services, no runtime secrets, and no customer data. There is no application
-code executed by third parties from this repo.
+This repository contains a public profile, a curated catalog, and an offline
+Node.js CLI. It does not provide a hosted service. The CLI reads local catalog,
+query, and review files, and writes exports only when explicitly requested.
+It does not execute listed projects, make network requests, or send telemetry.
+Keep credentials and private data out of shared input files and exports.
 
 ## Reporting a vulnerability
 
@@ -27,6 +29,7 @@ This is a portfolio catalog, not a deployed service. Most reports will be out
 of scope. In-scope items include:
 
 - Malicious content in `catalog.json` or other tracked files.
+- Parser, path-handling, resource-limit, and output-overwrite bugs in the CLI.
 - Dependency or workflow vulnerabilities that affect this repository.
 - Anything that would mislead a reader about a listed project.
 

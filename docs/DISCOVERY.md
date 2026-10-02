@@ -22,13 +22,27 @@ Add `--json` to discovery commands for structured output. List, search, show, co
 
 ## Interpret the snapshot
 
-The 15 entries describe public repositories, including two forks and this profile. They point to immutable reviewed README revisions. Classification is editorial and static. A source link is provenance, not proof that every claim in that source is true. Privacy labels describe a documented workflow and are not a security certification. Runtime labels may indicate required combinations or alternative interfaces. Read the source for exact versions.
+The catalog describes assessed public projects, with forks labeled separately. The profile itself is presentation infrastructure and is not a project entry. Each entry points to an immutable reviewed README revision. Classification is editorial and static. A source link is provenance, not proof that every claim in that source is true. Privacy labels describe a documented workflow and are not a security certification. Runtime labels may indicate required combinations or alternative interfaces. Read the source for exact versions.
 
-The source revision for this profile is an earlier public snapshot that already includes the discovery CLI and predates this catalog reconciliation. Some other entries also retain earlier assessed source. Updated pins identify reviewed release commits; the catalog does not claim that every pin is current main. Repositories can advance independently; current README links help identify changes before setup. No deployment, availability or current compatibility check is implied.
+Owned-project pins identify reviewed source commits. The three historical fork entries retain their earlier assessments and were outside the public non-fork review. Repositories can advance independently; current README links help identify changes before setup. No deployment, availability, package publication or current compatibility check is implied.
 
-For connect.md, the assessed README describes the guest builder. The [middleware at the same revision](https://github.com/EauDoon/connect.md/blob/1fabde9155f93266b0a78d6f6b33d495601ea6a7/apps/web/middleware.ts) explicitly leaves new network routes outside its retired-route block. The catalog therefore distinguishes optional network source from the guest workflow; whether those routes are configured in production remains unverified.
+For connect.md, the assessed README describes the guest builder. The [middleware at the same revision](https://github.com/EauDoon/connect.md/blob/1247953f91947e32222ba5b3f578003e55be9430/apps/web/middleware.ts) explicitly leaves new network routes outside its retired-route block. The catalog therefore distinguishes optional network source from the guest workflow; whether those routes are configured in production remains unverified.
 
-The profile introduction is curated; the catalog includes the complete assessed public set. Existing upstream attribution stays with each fork. Reflection Engine originates from Kevin Rose's [kropdx/reflection-engine](https://github.com/kropdx/reflection-engine); Hermes Agent originates from [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent).
+The profile introduction is curated; the catalog includes the assessed public set. The inventory check below also records projects held out of assessment. Existing upstream attribution stays with each fork. Reflection Engine originates from Kevin Rose's [kropdx/reflection-engine](https://github.com/kropdx/reflection-engine); Hermes Agent originates from [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent).
+
+## Check public inventory coverage
+
+```text
+node cli.mjs validate
+node scripts/inventory-check.mjs
+npm run check
+```
+
+`npm run check` runs catalog validation, the existing tests, generated-document and link checks, the dated drift check, and the public-inventory coverage check. No command fetches repositories or makes network calls.
+
+[public-inventory.json](../public-inventory.json) records a dated, complete public non-fork owner inventory and explicit exclusions. The coverage check reuses the CLI's inventory comparison, rejects non-public/fork records, detects missing or archived catalog entries and stale snapshots, and prints held projects separately. A passed check establishes consistency with that saved snapshot, not today's GitHub inventory or project quality.
+
+To refresh it, retrieve every page from GitHub's public repository search for `user:EauDoon is:public fork:false`; require `incomplete_results: false` and reconcile the returned total before replacing the snapshot. Preserve public visibility, fork and archive flags, record the retrieval date and source, and review exclusions. An API error or incomplete result is unknown, never an empty successful inventory. Do not query private repositories, infer why a former public entry is absent, automatically advance source pins, or publish an unreviewed project.
 
 ## Review a catalog update
 

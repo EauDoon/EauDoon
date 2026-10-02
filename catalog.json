@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "assessedOn": "2026-09-29",
-  "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security audit or verified deployment. Pins identify reviewed source snapshots, including earlier entries; they do not guarantee current main.",
+  "assessedOn": "2026-10-02",
+  "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.",
   "portfolioWavesCompleted": [1, 2, 3, 5, 6, 7, 9, 10, 12, 13, 14, 15],
   "projects": [
     {
@@ -19,13 +19,13 @@
         "compose-agent-actions",
         "replay-evidence"
       ],
-      "boundary": "Experimental synthetic workflow; does not prove legal effect or evidence truth.",
+      "boundary": "Experimental synthetic workflow; the response fixture gate is not signed authorization over the action proposal. Recorded handoffs do not prove source truth or legal effect.",
       "fork": false,
       "wavesTouched": [1, 2, 5, 7, 13, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "491eede8a88e9ba70a37298f0620a92a3201585a",
-        "url": "https://github.com/EauDoon/agent-action-stack/blob/491eede8a88e9ba70a37298f0620a92a3201585a/README.md"
+        "revision": "9449bd3a8cc3f06fff985db008e27225ffc69ecc",
+        "url": "https://github.com/EauDoon/agent-action-stack/blob/9449bd3a8cc3f06fff985db008e27225ffc69ecc/README.md"
       }
     },
     {
@@ -42,13 +42,13 @@
         "coordinate-agents",
         "review-evidence"
       ],
-      "boundary": "Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the chosen provider.",
+      "boundary": "Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the provider; native routing and paired model quality remain unverified.",
       "fork": false,
       "wavesTouched": [1, 2, 5, 6, 7, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "1593cb1f90f9f98b2f208d1a6adfa57eabc7bffe",
-        "url": "https://github.com/EauDoon/agent-team-os/blob/1593cb1f90f9f98b2f208d1a6adfa57eabc7bffe/README.md"
+        "revision": "36e9a94088273cd1dc4846e18a2ae0b355289c51",
+        "url": "https://github.com/EauDoon/agent-team-os/blob/36e9a94088273cd1dc4846e18a2ae0b355289c51/README.md"
       }
     },
     {
@@ -68,10 +68,10 @@
       "boundary": "Guest drafts and checkpoints live in browser memory; downloaded recovery sessions and exports can be sensitive. Optional network routes require separate configuration; deployment remains unverified.",
       "fork": false,
       "wavesTouched": [1, 3, 5, 12, 13, 14, 15],
-      "lastAudited": "2026-09-29",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "1fabde9155f93266b0a78d6f6b33d495601ea6a7",
-        "url": "https://github.com/EauDoon/connect.md/blob/1fabde9155f93266b0a78d6f6b33d495601ea6a7/README.md"
+        "revision": "1247953f91947e32222ba5b3f578003e55be9430",
+        "url": "https://github.com/EauDoon/connect.md/blob/1247953f91947e32222ba5b3f578003e55be9430/README.md"
       }
     },
     {
@@ -90,10 +90,10 @@
       "boundary": "Experimental reference implementation; no guaranteed recovery, insurance or legal compliance.",
       "fork": false,
       "wavesTouched": [1, 3, 5, 7, 13, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "4c3afdbfc5e0a638755313829f08b44fa2a6a12e",
-        "url": "https://github.com/EauDoon/consequence-rail/blob/4c3afdbfc5e0a638755313829f08b44fa2a6a12e/README.md"
+        "revision": "9f60ab3223970c22371c20d3584e8330674d997c",
+        "url": "https://github.com/EauDoon/consequence-rail/blob/9f60ab3223970c22371c20d3584e8330674d997c/README.md"
       }
     },
     {
@@ -112,16 +112,16 @@
       "boundary": "Checks declared structure and rules, not free-form reasoning or safety certification.",
       "fork": false,
       "wavesTouched": [1, 6, 7, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "a9123af65f64cba74e5dfbc08f28f23ae4df9bbb",
-        "url": "https://github.com/EauDoon/constitutional-agent-testbench/blob/a9123af65f64cba74e5dfbc08f28f23ae4df9bbb/README.md"
+        "revision": "fda346679658a19e32f13ce289e3d770695895ea",
+        "url": "https://github.com/EauDoon/constitutional-agent-testbench/blob/fda346679658a19e32f13ce289e3d770695895ea/README.md"
       }
     },
     {
       "id": "crypto-research-desk",
       "repository": "https://github.com/EauDoon/crypto-research-desk",
-      "summary": "Research-only crypto team kit with five specialist lanes, fixed forecast horizons and independent risk review.",
+      "summary": "Browser workbench and five-specialist research kit for crypto forecast packets, fixed horizons and recorded independent review.",
       "category": "decision-methods",
       "runtimes": [
         "browser",
@@ -133,13 +133,13 @@
         "research-crypto",
         "review-evidence"
       ],
-      "boundary": "Research only; no trading authority. Browser validation does not authenticate sources or independent review.",
+      "boundary": "Research only; no trading authority. Structural checks do not authenticate sources, reviewer independence or delivery readiness.",
       "fork": false,
       "wavesTouched": [1, 3, 5, 7, 13, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "4968d3f8807d0026e9cef7ad5d77d3bb66ec1a54",
-        "url": "https://github.com/EauDoon/crypto-research-desk/blob/4968d3f8807d0026e9cef7ad5d77d3bb66ec1a54/README.md"
+        "revision": "5f69af383efe7b84b0d945873272522502e483b6",
+        "url": "https://github.com/EauDoon/crypto-research-desk/blob/5f69af383efe7b84b0d945873272522502e483b6/README.md"
       }
     },
     {
@@ -159,32 +159,10 @@
       "boundary": "Declared-input models and unsigned review packets; no quotes, authenticated facts or execution authority. Exports can contain private inputs.",
       "fork": false,
       "wavesTouched": [1, 5, 7, 13, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "77d9aee1764c9a1b02349153610d756aef0d3318",
-        "url": "https://github.com/EauDoon/decision-labs/blob/77d9aee1764c9a1b02349153610d756aef0d3318/README.md"
-      }
-    },
-    {
-      "id": "EauDoon",
-      "repository": "https://github.com/EauDoon/EauDoon",
-      "summary": "Offline public project catalog with reproducible saved briefs, task coverage matrices and review exports.",
-      "category": "discovery",
-      "runtimes": [
-        "markdown",
-        "node"
-      ],
-      "privacy": "public-content",
-      "tasks": [
-        "find-projects"
-      ],
-      "boundary": "A curated public snapshot, not certification or a live inventory service.",
-      "fork": false,
-      "wavesTouched": [1, 5, 7, 13, 14, 15],
-      "lastAudited": "2026-09-21",
-      "source": {
-        "revision": "89183a9af48ac26104b57dd9834cf5528fc073d8",
-        "url": "https://github.com/EauDoon/EauDoon/blob/89183a9af48ac26104b57dd9834cf5528fc073d8/README.md"
+        "revision": "c2c56c50121fc1cf61d24357a793e26de8b8389b",
+        "url": "https://github.com/EauDoon/decision-labs/blob/c2c56c50121fc1cf61d24357a793e26de8b8389b/README.md"
       }
     },
     {
@@ -244,13 +222,13 @@
       "tasks": [
         "manage-followups"
       ],
-      "boundary": "Supports one documented source snapshot; newer Hermes compatibility is not implied. Patching modifies selected local source files.",
+      "boundary": "Supports one documented source snapshot; newer Hermes compatibility is not implied. Patching modifies selected local source files; cancellation deadlines require cooperative adapters.",
       "fork": false,
       "wavesTouched": [14, 15],
-      "lastAudited": "2026-09-29",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "cd9ff035566a872caac394b35751ad730c9abf06",
-        "url": "https://github.com/EauDoon/hermes-parallel-followups/blob/cd9ff035566a872caac394b35751ad730c9abf06/README.md"
+        "revision": "008290477ecdc9e23db8faf7d49e16f991b3b329",
+        "url": "https://github.com/EauDoon/hermes-parallel-followups/blob/008290477ecdc9e23db8faf7d49e16f991b3b329/README.md"
       }
     },
     {
@@ -268,10 +246,10 @@
       "boundary": "Generated output is public when deployed; local build does not configure hosting or guarantee indexing.",
       "fork": false,
       "wavesTouched": [1, 2, 5, 7, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "a5349349b3e26b59affdadd5dcfec538afdbd195",
-        "url": "https://github.com/EauDoon/llms-txt-personal-site/blob/a5349349b3e26b59affdadd5dcfec538afdbd195/README.md"
+        "revision": "ac7114387fdd0cbfabc22174e35ead15b9a632ae",
+        "url": "https://github.com/EauDoon/llms-txt-personal-site/blob/ac7114387fdd0cbfabc22174e35ead15b9a632ae/README.md"
       }
     },
     {
@@ -290,10 +268,10 @@
       "boundary": "Experimental decision support; legal effect stays not determined. Evidence packs can contain sensitive data.",
       "fork": false,
       "wavesTouched": [1, 3, 5, 7, 12, 13, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "e2a807d7cba912073cfb613ce425ea92cdbabec1",
-        "url": "https://github.com/EauDoon/mandatebound/blob/e2a807d7cba912073cfb613ce425ea92cdbabec1/README.md"
+        "revision": "b51fe137958afe26eee052c5a129e5481ccae560",
+        "url": "https://github.com/EauDoon/mandatebound/blob/b51fe137958afe26eee052c5a129e5481ccae560/README.md"
       }
     },
     {
@@ -312,10 +290,10 @@
       "boundary": "Synthetic research inputs only; no live routing or payment execution.",
       "fork": false,
       "wavesTouched": [1, 2, 5, 7, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "ceb2ecb119c0f873deafb8647c4558f8434ad149",
-        "url": "https://github.com/EauDoon/operator-labs/blob/ceb2ecb119c0f873deafb8647c4558f8434ad149/README.md"
+        "revision": "fd068ca59c53758650c98241d26db6efb445cf93",
+        "url": "https://github.com/EauDoon/operator-labs/blob/fd068ca59c53758650c98241d26db6efb445cf93/README.md"
       }
     },
     {
@@ -341,6 +319,28 @@
       }
     },
     {
+      "id": "stable-desk",
+      "repository": "https://github.com/EauDoon/stable-desk",
+      "summary": "Browser-local stablecoin research and source review with human-written decisions, recovery copies and explicit backup restoration.",
+      "category": "decision-methods",
+      "runtimes": [
+        "browser",
+        "node"
+      ],
+      "privacy": "configuration-dependent",
+      "tasks": [
+        "research-stablecoins",
+        "review-evidence"
+      ],
+      "boundary": "Synthetic baseline and manual research; no trading or outreach. Exports can contain research notes, and browser storage is not a backup. Hosted source identity is unverified. No license selected.",
+      "fork": false,
+      "lastAudited": "2026-10-02",
+      "source": {
+        "revision": "23bac8ff4b5e58cebc4c2665871be4ba02ec250c",
+        "url": "https://github.com/EauDoon/stable-desk/blob/23bac8ff4b5e58cebc4c2665871be4ba02ec250c/README.md"
+      }
+    },
+    {
       "id": "unconventional-moves",
       "repository": "https://github.com/EauDoon/unconventional-moves",
       "summary": "Decision skill with offline experiment selection, checkpoint histories, bounded debriefs and reviewable handoff packets.",
@@ -353,13 +353,13 @@
       "tasks": [
         "generate-experiments"
       ],
-      "boundary": "Local tools validate declared plans and reported observations; assistant use follows provider settings. No command runs experiments or grants authority.",
+      "boundary": "Local tools validate declared plans and reported observations; assistant use follows provider settings. Native routing and paired model quality remain unverified. No command runs experiments or grants authority.",
       "fork": false,
       "wavesTouched": [1, 2, 3, 5, 6, 7, 14, 15],
-      "lastAudited": "2026-09-21",
+      "lastAudited": "2026-10-02",
       "source": {
-        "revision": "ca30eb36bc6716611e244f73f4c71b2b0ea1e190",
-        "url": "https://github.com/EauDoon/unconventional-moves/blob/ca30eb36bc6716611e244f73f4c71b2b0ea1e190/README.md"
+        "revision": "250d8587f240b301cd90d413d5044ae6f8b8fb31",
+        "url": "https://github.com/EauDoon/unconventional-moves/blob/250d8587f240b301cd90d413d5044ae6f8b8fb31/README.md"
       }
     }
   ]
