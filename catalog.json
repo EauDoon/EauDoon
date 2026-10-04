@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "assessedOn": "2026-10-02",
+  "assessedOn": "2026-10-04",
   "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.",
   "portfolioWavesCompleted": [1, 2, 3, 5, 6, 7, 9, 10, 12, 13, 14, 15],
   "projects": [
@@ -31,7 +31,7 @@
     {
       "id": "agent-team-os",
       "repository": "https://github.com/EauDoon/agent-team-os",
-      "summary": "Installable specialist-workflow skill with brief authoring, readiness inspection, evidence-impact review and checked handoffs.",
+      "summary": "Wire-format and tool pack for bounded multi-role work. Ships the six-field role-brief schema, the connect specification, dependency-light validators, calibrated synthetic evaluation harness, and a deterministic package builder with SHA-256 verification.",
       "category": "agent-workflows",
       "runtimes": [
         "assistant",
@@ -42,13 +42,13 @@
         "coordinate-agents",
         "review-evidence"
       ],
-      "boundary": "Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the provider; native routing and paired model quality remain unverified.",
+      "boundary": "Wire-format and tool pack; does not assert a coordination protocol. Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the provider; native routing and paired model quality remain unverified.",
       "fork": false,
       "wavesTouched": [1, 2, 5, 6, 7, 14, 15],
-      "lastAudited": "2026-10-02",
+      "lastAudited": "2026-10-04",
       "source": {
-        "revision": "9bf353f67a5401f85c35d6847aa8f024f652b68f",
-        "url": "https://github.com/EauDoon/agent-team-os/blob/9bf353f67a5401f85c35d6847aa8f024f652b68f/README.md"
+        "revision": "39c45d21b00ff5a9f987de8e79232cad77d14e12",
+        "url": "https://github.com/EauDoon/agent-team-os/blob/39c45d21b00ff5a9f987de8e79232cad77d14e12/README.md"
       }
     },
     {

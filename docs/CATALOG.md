@@ -5,7 +5,7 @@
 -->
 # Public project catalog
 
-Assessed 02-10-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.
+Assessed 04-10-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.
 
 Generated from [catalog.json](../catalog.json). For search, filters, comparison and task coverage, see the [discovery guide](DISCOVERY.md).
 
@@ -25,7 +25,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | Project | Purpose | Runtime | Data boundary |
 | --- | --- | --- | --- |
 | [agent-action-stack](https://github.com/EauDoon/agent-action-stack) | Synthetic agent-action reference path with alternate case stores, saved-case verification and offline review exports\. | node, python, browser | local-after-setup |
-| [agent-team-os](https://github.com/EauDoon/agent-team-os) | Installable specialist-workflow skill with brief authoring, readiness inspection, evidence-impact review and checked handoffs\. | assistant, python | configuration-dependent |
+| [agent-team-os](https://github.com/EauDoon/agent-team-os) | Wire-format and tool pack for bounded multi-role work\. Ships the six-field role-brief schema, the connect specification, dependency-light validators, calibrated synthetic evaluation harness, and a deterministic package builder with SHA-256 verification\. | assistant, python | configuration-dependent |
 | [connect\.md](https://github.com/EauDoon/connect.md) | Browser profile/resume Markdown builder with reviewed source replacements, recovery sessions, section excerpts and local review exports\. | browser, node | configuration-dependent |
 | [consequence-rail](https://github.com/EauDoon/consequence-rail) | Recourse-gated synthetic execution with settlement and drill comparisons, verified review exports and recovery diagnostics\. | node | local-after-setup |
 | [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) | Deterministic policy evaluation with fixture assertions, corpus migration checks and portable replay bundles\. | python | local-after-setup |
@@ -82,9 +82,9 @@ Category: action-systems. [Assessed README](https://github.com/EauDoon/agent-act
 
 ### agent-team-os
 
-Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the provider; native routing and paired model quality remain unverified.
+Wire-format and tool pack; does not assert a coordination protocol. Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the provider; native routing and paired model quality remain unverified.
 
-Category: agent-workflows. [Assessed README](https://github.com/EauDoon/agent-team-os/blob/9bf353f67a5401f85c35d6847aa8f024f652b68f/README.md) at 9bf353f67a5401f85c35d6847aa8f024f652b68f. [Current README](https://github.com/EauDoon/agent-team-os/blob/main/README.md).
+Category: agent-workflows. [Assessed README](https://github.com/EauDoon/agent-team-os/blob/39c45d21b00ff5a9f987de8e79232cad77d14e12/README.md) at 39c45d21b00ff5a9f987de8e79232cad77d14e12. [Current README](https://github.com/EauDoon/agent-team-os/blob/main/README.md).
 
 ### connect.md
 
