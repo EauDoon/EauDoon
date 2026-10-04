@@ -30,4 +30,49 @@ node cli.mjs shortlist replay-evidence gate-actions --json
 node cli.mjs show reflection-engine
 ```
 
-The first command currently returns three forks. The synthetic payment query returns Operator Labs. The shortlist places Consequence Rail first because it has both declared task tags, and lists missing tags for other matches. These are snapshot expectations, not permanent assertions about future catalog entries. Misspelled options and unknown ids must fail visibly instead of silently broadening the search.
+## Portfolio license and copyright policy
+
+The portfolio applies a single rule across its public repositories, written
+here so it does not drift per repo.
+
+**Default license: MIT.** MIT is the default for any new public repository
+unless the rule below says otherwise.
+
+**Exception: Apache License 2.0** is used for repositories that handle signed
+evidence, settlement receipts, recourse-gated execution, or policy evaluation
+that gates actions. The current Apache-2.0 cluster is:
+
+- `agent-action-stack` (orchestrates the cluster)
+- `consequence-rail` (recourse-gated execution)
+- `mandatebound` (evidence readiness)
+- `constitutional-agent-testbench` (policy evaluation that gates actions)
+
+The patent grant in Apache-2.0 is the reason this cluster uses it; consumers
+who run policy evaluation or evidence handling downstream benefit from the
+explicit patent license. Move a repo into this cluster only when its README
+names signed evidence, settlement receipts, recourse-gated execution, or
+policy gating as a load-bearing claim.
+
+**Exception: no license.** `stable-desk` is published publicly without a
+license grant. Its README and `LICENSE` file both state that public
+visibility does not imply a reuse, redistribution, modification, or
+attribution right. Treat this as the third license class in the portfolio,
+not an oversight.
+
+**Copyright string: `Copyright (c) 2026 EauDoon`** for every owned
+repository, regardless of the license family above. Personal-name forms
+(`Copyright (c) 2026 Daniel Oon`, `Copyright (c) 2026 Daniel Oon
+(danieloon.ai)`) are retired. Upstream attributions in derivative works
+remain in place and are not affected by this rule.
+
+**How to add a new repository.** New public repositories inherit MIT and
+the `Copyright (c) 2026 EauDoon` string by default. Re-license to Apache-2.0
+only when the README names a load-bearing claim from the exception list
+above. Add a `NOTICE` file when adopting Apache-2.0 so the project copyright
+survives downstream NOTICE propagation. Add a `LICENSE` file with a
+no-reuse-permission statement when adopting the no-license class.
+
+**How to change an existing repository's license.** Treat a license change
+as a public, irreversible event. Update `LICENSE` (and add `NOTICE` for
+Apache-2.0), update the catalog entry's `boundary` and `lastAudited`, and
+note the change in the repository's `CHANGELOG.md` Unreleased section.
