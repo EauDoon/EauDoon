@@ -18,7 +18,7 @@ List, search and shortlist accept `--category`, `--runtime`, `--privacy`, and `-
 
 Shortlist accepts known task ids from `tasks`. It lists projects that cover at least one requested task, ordered by coverage and then id. Each result states matched and missing tasks. This is a transparent catalog lookup, not a quality ranking, integration compatibility test or deployment recommendation.
 
-Add `--json` to discovery commands for structured output. List, search, show, compare and shortlist include the assessment date. Errors go to stderr and return exit code 1. No matches is a successful empty result with exit code 0. `validate` checks the local catalog and takes no options.
+Add `--json` to discovery commands for structured output. List, search, show, compare and shortlist include the assessment date. Errors go to stderr and return exit code 1. No matches is a successful empty result with exit code 0. `validate` checks the local catalog and takes no options. `node cli.mjs --version` prints the CLI version from `package.json` and needs no catalog; include it in bug reports.
 
 ## Interpret the snapshot
 

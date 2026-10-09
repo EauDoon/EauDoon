@@ -50,6 +50,16 @@ test('detail binds setup guidance to a reviewed source without running it', () =
   assert.equal(run('show', 'unknown').status, 1);
   assert.equal(run('show', 'mandatebound', '--runtime', 'node').status, 1);
 });
+test('command help has no trailing space and task choices follow the task index', () => {
+  const help = run('help', 'validate');
+  assert.equal(help.status, 0, help.stderr);
+  assert.equal(help.stdout.split('\n')[0], 'Usage: node cli.mjs [--catalog SNAPSHOT.json] validate');
+  assert.equal(run('help', 'receipt').stdout.split('\n')[0], 'Usage: node cli.mjs [--catalog SNAPSHOT.json] receipt');
+  const invalid = run('list', '--task', 'zz');
+  assert.equal(invalid.status, 1);
+  const choices = /Invalid --task\. Choose: (.+)$/m.exec(invalid.stderr)?.[1].split(', ');
+  assert.deepEqual(choices, JSON.parse(run('tasks', '--json').stdout).map(x => x.task));
+});
 test('plain show prints the documented human detail', () => {
   const project = loadCatalog().projects.find(p => p.id === 'operator-labs');
   const result = run('show', 'operator-labs');

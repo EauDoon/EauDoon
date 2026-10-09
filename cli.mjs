@@ -2,8 +2,12 @@
 import { loadCatalog, errorMessage } from './lib/catalog.mjs';
 import { workflows } from './lib/workflows.mjs';
 import { search, summarize, parseOptions, filterProjects, selectProject, detail, renderDetail, compare, renderComparison, taskIndex, shortlist } from './lib/discover.mjs';
+import { packageVersion } from './lib/version.mjs';
 
-const help = `Offline public project discovery (Node.js 22+)
+// Built on demand inside main(), so a bad package.json is reported as a CLI
+// error instead of throwing at import time.
+const helpText = () => `Offline public project discovery ${packageVersion()} (Node.js 22+)
+  node cli.mjs --version
   node cli.mjs validate
   node cli.mjs list [--json]
   node cli.mjs search <words...> [--json]
@@ -37,18 +41,24 @@ function main() {
     if (!catalogPath || catalogPath.startsWith('--') || !args.length) throw new Error('Usage: node cli.mjs --catalog SNAPSHOT.json COMMAND [ARGS]');
   }
   const command = args.shift() || 'help';
+  // Like help, the version needs no readable catalog.
+  if (command === '--version') {
+    if (args.length) throw new Error('--version takes no arguments');
+    console.log(packageVersion()); return;
+  }
   const helpCommand = command === 'help' && args.length === 1 ? args[0] : args.length === 1 && args[0] === '--help' ? command : undefined;
   if (helpCommand !== undefined) {
     if (!Object.hasOwn(usage, helpCommand)) throw new Error('Unknown help command');
-    console.log(`Usage: node cli.mjs [--catalog SNAPSHOT.json] ${helpCommand} ${usage[helpCommand]}\nSee docs/WORKFLOWS.md and docs/DISCOVERY.md for input contracts.`); return;
+    const line = ['Usage: node cli.mjs [--catalog SNAPSHOT.json]', helpCommand, usage[helpCommand]].filter(Boolean).join(' ');
+    console.log(`${line}\nSee docs/WORKFLOWS.md and docs/DISCOVERY.md for input contracts.`); return;
   }
   if ((command === 'help' || command === '--help') && args.length) throw new Error('Help accepts at most one command');
   if (Object.hasOwn(workflows, command)) { console.log(JSON.stringify(workflows[command](loadCatalog(catalogPath), args), null, 2)); return; }
-  if (command === 'help' || command === '--help') { console.log(help + '\nArtifact workflows (JSON output): ' + Object.keys(workflows).join(', ') + '\nSee docs/WORKFLOWS.md for contracts and examples.'); return; }
-  if (!['validate', 'list', 'search', 'show', 'compare', 'tasks', 'shortlist'].includes(command)) throw new Error(`Unknown command.\n${help}`);
+  if (command === 'help' || command === '--help') { console.log(helpText() + '\nArtifact workflows (JSON output): ' + Object.keys(workflows).join(', ') + '\nSee docs/WORKFLOWS.md for contracts and examples.'); return; }
+  if (!['validate', 'list', 'search', 'show', 'compare', 'tasks', 'shortlist'].includes(command)) throw new Error(`Unknown command.\n${helpText()}`);
   const catalog = loadCatalog(catalogPath);
   const { options, positional } = parseOptions(args, catalog.projects);
-  if (['validate', 'list'].includes(command) && positional.length || command === 'validate' && Object.keys(options).length || command === 'search' && !positional.join(' ').trim() || command === 'show' && (positional.length !== 1 || Object.keys(options).some(k => k !== 'json'))) throw new Error(`Invalid arguments.\n${help}`);
+  if (['validate', 'list'].includes(command) && positional.length || command === 'validate' && Object.keys(options).length || command === 'search' && !positional.join(' ').trim() || command === 'show' && (positional.length !== 1 || Object.keys(options).some(k => k !== 'json'))) throw new Error(`Invalid arguments.\n${helpText()}`);
   if (command === 'validate') console.log(`Valid catalog: ${catalog.projects.length} public projects`);
   else if (command === 'tasks') {
     if (positional.length || Object.keys(options).some(k => k !== 'json')) throw new Error('Tasks accepts only --json');

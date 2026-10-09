@@ -1,5 +1,7 @@
 {
   "name": "eaudoon-project-catalog",
+  "version": "0.0.0-development",
+  "description": "Provenance-pinned catalog of public EauDoon projects with an offline, zero-dependency discovery CLI.",
   "private": false,
   "type": "module",
   "engines": { "node": ">=22" },

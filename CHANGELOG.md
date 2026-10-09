@@ -33,6 +33,11 @@ match the `id` field in `catalog.json`.
   constellation's alt text, `aria-label` and `<title>` must state the number
   of owned projects in words, and the fork contribution section may link
   only catalogued forks.
+- `node cli.mjs --version` prints the version from `package.json`, the only
+  version source, without reading a catalog; help shows the same version.
+  `lib/version.mjs` reads it and checks it against the SemVer 2.0.0 grammar.
+  Receipts, handoffs and exports are unchanged, so retained digests stay
+  valid.
 
 ### Changed
 - The profile README restores the original banner, simplifies the
@@ -101,6 +106,10 @@ match the `id` field in `catalog.json`.
 - Two drift tests passed only until 45 days after their fixture's
   `assessedOn` and would have failed `npm test` from 2026-11-08. They now pin
   the reference date.
+- `node cli.mjs help COMMAND` no longer prints a trailing space after a
+  command that takes no arguments, and `Invalid --task. Choose:` lists tasks
+  in the same case-insensitive order as `tasks` and facets instead of catalog
+  insertion order.
 
 ### Security
 - The link checker reads HTML `href`, `src` and `srcset` attributes in any
