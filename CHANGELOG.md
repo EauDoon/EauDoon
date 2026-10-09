@@ -59,6 +59,15 @@ match the `id` field in `catalog.json`.
   date in both text and JSON modes. A future-dated assessment previously
   skipped the age check (26c6a49).
 
+### Security
+- The link checker reads HTML `href`, `src` and `srcset` attributes in any
+  letter case and with double, single or no quotes. A credentialed or
+  `javascript:` link in a single-quoted or uppercase `HREF` attribute, and an
+  unquoted or empty `src`, previously passed unchecked in the raw-HTML profile
+  README. Each `srcset` candidate is checked separately, so a valid
+  `1x, 2x` list is no longer reported missing, and `data-src` attributes or
+  prose that mentions an `href` outside a tag are no longer read as links.
+
 ## 2026-09-29 (pre-versioning)
 
 ### Added
