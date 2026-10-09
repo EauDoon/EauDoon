@@ -60,6 +60,13 @@ match the `id` field in `catalog.json`.
   `--help` prints the usage line and exits 0. `docs/DISCOVERY.md` and
   `CONTRIBUTING.md` state that the drift and inventory checks compare UTC
   calendar dates.
+- The profile banner honours `prefers-reduced-motion`: the sweep, the pulse
+  ring and the pulsing dot are hidden and a static dot is shown, while default
+  motion is unchanged. Its footer meets WCAG AA contrast (light 2.58:1 to
+  4.97:1, dark 3.93:1 to 5.39:1), and both variants carry a `<title>` equal to
+  their `aria-label`, like the other artworks. A new test pins the accessible
+  name, title, reduced-motion handling, text contrast and dark/light text
+  parity of every `assets/*.svg`.
 
 ### Removed
 - The `EauDoon` profile entry in `catalog.json`. The profile is presentation
