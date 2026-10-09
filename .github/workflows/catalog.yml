@@ -34,4 +34,8 @@ jobs:
           # No lockfile and no dependencies: there is nothing to cache.
           package-manager-cache: false
       - run: npm run check
+      # One leg is enough: coverage is the same code on every OS and Node.
+      # The threshold flags need Node 22.8 or later.
+      - run: npm run coverage
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 24
       - run: git diff --exit-code

@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
 import { diffSnapshots } from '../lib/snapshot.mjs';
@@ -18,6 +21,45 @@ test('the snapshot diff still rejects missing arguments', () => {
   const result = spawnSync(process.execPath, [fileURLToPath(new URL('../scripts/diff.mjs', import.meta.url))], { encoding: 'utf8', timeout: 10000 });
   assert.equal(result.status, 1);
   assert.match(result.stderr, /Usage/);
+});
+
+test('the snapshot diff CLI prints the documented review and matches the library', () => {
+  const script = fileURLToPath(new URL('../scripts/diff.mjs', import.meta.url));
+  const before = loadCatalog();
+  const after = structuredClone(before);
+  after.projects.find(p => p.id === 'operator-labs').summary = 'Public discovery tools';
+  after.projects = after.projects.filter(p => p.id !== 'mandatebound');
+  after.assessedOn = new Date(Date.parse(before.assessedOn) + 86400000).toISOString().slice(0, 10);
+  const dir = mkdtempSync(join(tmpdir(), 'catalog-diff-'));
+  try {
+    const beforePath = join(dir, 'before.json');
+    const afterPath = join(dir, 'after.json');
+    writeFileSync(beforePath, JSON.stringify(before));
+    writeFileSync(afterPath, JSON.stringify(after));
+    const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: 'utf8', timeout: 10000 });
+    const text = run(beforePath, afterPath);
+    assert.equal(text.status, 0, text.stderr);
+    assert.equal(text.stdout, [
+      `Snapshot review: ${before.assessedOn} -> ${after.assessedOn}`,
+      'Metadata: assessedOn',
+      'Added: none',
+      'Removed: mandatebound',
+      'Changed:',
+      '  operator-labs: summary',
+      'Source changes require renewed assessment; no updates were applied.',
+      '',
+    ].join('\n'));
+    const json = run(beforePath, afterPath, '--json');
+    assert.equal(json.status, 0, json.stderr);
+    assert.deepEqual(JSON.parse(json.stdout), diffSnapshots(loadCatalog(beforePath), loadCatalog(afterPath)));
+    const same = run(beforePath, beforePath);
+    assert.equal(same.status, 0, same.stderr);
+    assert.match(same.stdout, /\nMetadata: unchanged\nAdded: none\nRemoved: none\nChanged:\n {2}none\n/);
+    const yaml = run(beforePath, afterPath, '--yaml');
+    assert.equal(yaml.status, 1);
+    assert.match(yaml.stderr, /^catalog diff: Usage: node scripts\/diff\.mjs BEFORE\.json AFTER\.json \[--json\]/);
+    assert.equal(yaml.stdout, '');
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
 test('snapshot review detects semantic changes and ignores project/key ordering', () => {

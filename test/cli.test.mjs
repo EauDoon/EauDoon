@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
+import { loadCatalog } from '../lib/catalog.mjs';
 export const run = (...args) => spawnSync(process.execPath, [fileURLToPath(new URL('../cli.mjs', import.meta.url)), ...args], { encoding: 'utf8', timeout: 5000 });
 test('search is case-insensitive, intersects words and returns parseable provenance', () => {
   const result = run('search', 'SYNTHETIC', 'payment', '--json');
@@ -48,6 +49,18 @@ test('detail binds setup guidance to a reviewed source without running it', () =
   assert.match(p.boundary, /not determined/);
   assert.equal(run('show', 'unknown').status, 1);
   assert.equal(run('show', 'mandatebound', '--runtime', 'node').status, 1);
+});
+test('plain show prints the documented human detail', () => {
+  const project = loadCatalog().projects.find(p => p.id === 'operator-labs');
+  const result = run('show', 'operator-labs');
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stderr, '');
+  assert.ok(result.stdout.startsWith(`operator-labs\n${project.summary}\n`), result.stdout);
+  assert.match(result.stdout, /\nStart here:\n1\. Read the assessed README: /);
+  assert.ok(result.stdout.includes(`1. Read the assessed README: ${project.source.url}\n`));
+  assert.match(result.stdout, /\nSource revision: [0-9a-f]{40}\n/);
+  assert.ok(result.stdout.includes(`\nLimit: ${project.boundary}\n`));
+  assert.match(result.stdout, /\n3\. Review the documented prerequisites/);
 });
 test('comparison preserves requested order and exposes limits', () => {
   const result = run('compare', 'mandatebound', 'consequence-rail', '--json');

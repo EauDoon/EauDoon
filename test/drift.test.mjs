@@ -250,6 +250,15 @@ test('does not flag age when within tolerance', () => {
   assert.equal(result.issues.filter(i => i.includes('days old')).length, 0);
 });
 
+test('a catalog with no projects is an issue, not a pass', () => {
+  for (const catalog of [makeCatalog([]), { assessedOn: '2026-09-23' }]) {
+    const result = detectDrift(catalog, { today: '2026-09-23' });
+    assert.deepEqual(result.issues, ['catalog has no projects to check']);
+    assert.equal(result.summary.projects, 0);
+    assert.equal(result.referenceDate, '2026-09-23');
+  }
+});
+
 test('flags duplicate project ids', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-23' }),

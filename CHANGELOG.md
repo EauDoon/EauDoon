@@ -21,6 +21,12 @@ match the `id` field in `catalog.json`.
   (`mandatebound`, `decision-labs` and `hermes-parallel-followups`), each in
   light, dark and mobile variants. The constellation animation stops under
   `prefers-reduced-motion` (eeed045, 0ebebbe).
+- `npm run coverage` runs the test suite with coverage thresholds of 95%
+  lines, 85% branches and 90% functions, and CI runs it on the Ubuntu and
+  Node 24 job. New tests run the documented paths that no test reached: the
+  human `show` output, the text report of `node scripts/diff.mjs`, the exit
+  codes of `node scripts/inventory-check.mjs` on a snapshot dated today, and
+  drift's empty-catalog issue.
 
 ### Changed
 - The profile README restores the original banner, simplifies the
