@@ -44,6 +44,14 @@ match the `id` field in `catalog.json`.
   this changelog, so profile artwork, audits and tests stay out. `cli.mjs`
   starts with a `#!/usr/bin/env node` line. CI runs `npm pack --dry-run`.
   Nothing is published to npm.
+- `scripts/version-check.mjs`, run by `npm run check`, requires that the
+  `package.json` version, this changelog and, with `--tag`, a release tag
+  agree; `--notes` prints one release's section. A new release workflow turns
+  a pushed `vX.Y.Z` tag on `main` into a GitHub Release with those notes, the
+  `npm pack` tarball and `SHA256SUMS`, and a manual run dry-runs the same
+  steps. `CONTRIBUTING.md` documents the versioning policy and release steps,
+  and the pull request checklist asks for a changelog entry and an untouched
+  version.
 
 ### Changed
 - The profile README restores the original banner, simplifies the

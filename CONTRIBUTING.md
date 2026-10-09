@@ -30,6 +30,27 @@ node cli.mjs shortlist replay-evidence gate-actions --json
 node cli.mjs show reflection-engine
 ```
 
+## Versioning and releases
+
+The package follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html). The `version` field in `package.json` is the only version source: `node cli.mjs --version` and the help header read it, and no other file repeats the number.
+
+- MAJOR: a removed or renamed command, flag, exit code or JSON field, or a new catalog `schemaVersion` or a new query, batch, receipt or handoff format version.
+- MINOR: a new command, flag, optional field or vocabulary value.
+- PATCH: fixes, documentation and catalog data refreshes.
+
+The data formats keep their own version numbers (catalog `schemaVersion`; query, batch, receipt and handoff `version`; the `sha256-key-sorted-json-v1` digest algorithm), independent of the package version.
+
+Every pull request with a user-visible change adds a line under `## [Unreleased]` in `CHANGELOG.md` and leaves the version alone. `node scripts/version-check.mjs`, part of `npm run check`, requires a SemVer version, one `[Unreleased]` section above every release, release headings of the form `## [X.Y.Z] - YYYY-MM-DD` in descending order with link references, and a version that equals the newest release or is a prerelease above it.
+
+To release:
+
+1. In one commit, set `version` in `package.json`, rename `## [Unreleased]` to `## [X.Y.Z] - YYYY-MM-DD` with the UTC date, add a new empty `## [Unreleased]` above it, and update the link references at the end of the changelog.
+2. Merge the pull request with a merge commit once every check is green.
+3. Optionally dry-run the release workflow: `gh workflow run release.yml --ref main -f tag=vX.Y.Z`.
+4. Tag the merge commit on `main` and push the tag: `git tag -a vX.Y.Z -m vX.Y.Z <merge-commit>` then `git push origin vX.Y.Z`.
+
+The tag push runs `.github/workflows/release.yml`. It refuses a tag that is not on `main`, runs `npm run check`, checks the tag with `node scripts/version-check.mjs --tag vX.Y.Z`, and creates the GitHub Release with the changelog section as notes and the `npm pack` tarball plus `SHA256SUMS` attached. Nothing is published to npm, and historical commits are not retro-tagged.
+
 ## Portfolio license and copyright policy
 
 The portfolio applies a single rule across its public repositories, written

@@ -16,6 +16,6 @@
     "validate": "node cli.mjs validate",
     "drift": "node scripts/drift.mjs --check",
     "coverage": "node --test --experimental-test-coverage --test-coverage-lines=95 --test-coverage-branches=85 --test-coverage-functions=90",
-    "check": "node cli.mjs validate && node --test && node scripts/render.mjs --check && node scripts/links.mjs && node scripts/drift.mjs --check && node scripts/inventory-check.mjs"
+    "check": "node cli.mjs validate && node --test && node scripts/render.mjs --check && node scripts/links.mjs && node scripts/drift.mjs --check && node scripts/inventory-check.mjs && node scripts/version-check.mjs"
   }
 }

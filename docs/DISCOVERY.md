@@ -38,7 +38,7 @@ node scripts/inventory-check.mjs
 npm run check
 ```
 
-`npm run check` runs catalog validation, the existing tests, generated-document and link checks, the dated drift check, and the public-inventory coverage check. No command fetches repositories or makes network calls.
+`npm run check` runs catalog validation, the existing tests, generated-document and link checks, the dated drift check, the public-inventory coverage check, and the version and changelog consistency check. No command fetches repositories or makes network calls.
 
 [public-inventory.json](../public-inventory.json) records a dated, complete public non-fork owner inventory and explicit exclusions. The coverage check reuses the CLI's inventory comparison, rejects non-public/fork records, detects missing or archived catalog entries and stale snapshots, and prints held projects separately. A passed check establishes consistency with that saved snapshot, not today's GitHub inventory or project quality.
 
