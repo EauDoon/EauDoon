@@ -27,7 +27,8 @@ export function checkInventory(catalog, snapshot, today = new Date().toISOString
   for (const row of snapshot.exclusions) {
     if (!exact(row, 'id,reason') || typeof row.id !== 'string' || !ids.has(row.id.toLowerCase())
       || excluded.has(row.id.toLowerCase()) || typeof row.reason !== 'string' || !row.reason.trim()
-      || row.reason.length > 500 || /[\p{Cc}\p{Cf}<>]/u.test(row.reason)) {
+      // Line and paragraph separators are rejected, as in catalog text.
+      || row.reason.length > 500 || /[\p{Cc}\p{Cf}\p{Zl}\p{Zp}<>]/u.test(row.reason)) {
       throw new Error('Exclusions must name unique inventory entries with a public reason');
     }
     excluded.add(row.id.toLowerCase());

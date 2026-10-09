@@ -48,6 +48,12 @@ match the `id` field in `catalog.json`.
   push and pull request, including all of `lib/` and the workflow itself, and
   writes `drift-report.json` through bash on every OS. Dependabot proposes one
   grouped weekly update to the action pins.
+- `node scripts/drift.mjs` usage errors exit 2 instead of 1 and print the
+  usage line: an unknown argument, an option with no value, and a repeated
+  option. An invalid `--today` or `--max-age-days` value still exits 1.
+  `--help` prints the usage line and exits 0. `docs/DISCOVERY.md` and
+  `CONTRIBUTING.md` state that the drift and inventory checks compare UTC
+  calendar dates.
 
 ### Removed
 - The `EauDoon` profile entry in `catalog.json`. The profile is presentation
@@ -64,6 +70,18 @@ match the `id` field in `catalog.json`.
   any footnote, previously failed `npm run check`. A query string is ignored
   when resolving a local target, so `docs/CATALOG.md?plain=1` is no longer
   reported missing. `CONTRIBUTING.md` now describes the full scope.
+- `node scripts/drift.mjs --today YYYY-MM-DD` without a mode runs the check,
+  as the usage line always promised; it previously exited with the usage
+  line. `--today` with no value reports a missing value instead of an unknown
+  argument, and a repeated option is rejected instead of the last value
+  silently winning.
+- `node scripts/drift.mjs` no longer echoes an unknown argument, so a terminal
+  escape sequence in an argument cannot reach stderr.
+- Public inventory exclusion reasons reject Unicode line and paragraph
+  separators, as catalog text already did.
+- Two drift tests passed only until 45 days after their fixture's
+  `assessedOn` and would have failed `npm test` from 2026-11-08. They now pin
+  the reference date.
 
 ### Security
 - The link checker reads HTML `href`, `src` and `srcset` attributes in any

@@ -42,6 +42,8 @@ npm run check
 
 [public-inventory.json](../public-inventory.json) records a dated, complete public non-fork owner inventory and explicit exclusions. The coverage check reuses the CLI's inventory comparison, rejects non-public/fork records, detects missing or archived catalog entries and stale snapshots, and prints held projects separately. A passed check establishes consistency with that saved snapshot, not today's GitHub inventory or project quality.
 
+The drift and inventory checks compare UTC calendar dates. East of UTC the local date can be a day ahead of the UTC date, so write `assessedOn`, `lastAudited` and `retrievedOn` as UTC dates. `node scripts/drift.mjs --today YYYY-MM-DD` pins the drift reference date, `--check` (the default) or `--json` selects the output, and `--help` prints the usage line. A usage error exits 2; an invalid date or maximum age exits 1.
+
 To refresh it, retrieve every page from GitHub's public repository search for `user:EauDoon is:public fork:false`; require `incomplete_results: false` and reconcile the returned total before replacing the snapshot. Preserve public visibility, fork and archive flags, record the retrieval date and source, and review exclusions. An API error or incomplete result is unknown, never an empty successful inventory. Do not query private repositories, infer why a former public entry is absent, automatically advance source pins, or publish an unreviewed project.
 
 ## Review a catalog update

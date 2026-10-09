@@ -35,6 +35,13 @@ test('incomplete, private, fork, stale and invalid snapshots cannot become passe
     const value = snapshot(); change(value);
     assert.throws(() => check(catalog, value));
   }
+  // Catalog text has rejected line and paragraph separators since the
+  // separator fix; an exclusion reason is public text of the same kind.
+  for (const separator of [0x2028, 0x2029]) {
+    const value = snapshot();
+    value.exclusions[0].reason = `held${String.fromCharCode(separator)}back`;
+    assert.throws(() => check(catalog, value), /Exclusions must name/, separator.toString(16));
+  }
   const value = snapshot();
   const shiftedDate = days => new Date(Date.parse(value.retrievedOn) + days * 86400000).toISOString().slice(0, 10);
   assert.match(checkInventory(catalog, value, shiftedDate(46)).issues.join('\n'), /refresh required/);
