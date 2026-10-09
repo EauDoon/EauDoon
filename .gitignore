@@ -1,0 +1,8 @@
+node_modules/
+coverage/
+# Written by drift.yml and by local drift runs.
+drift-report.json
+# Written by npm pack and by the release workflow.
+*.tgz
+release-notes.md
+SHA256SUMS

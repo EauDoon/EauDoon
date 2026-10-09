@@ -1,0 +1,10 @@
+# The repository declares UTF-8, LF, no BOM. These rules pin LF in the index
+# and in every checkout, whatever core.autocrlf says: windows-latest runners
+# and Git for Windows installs default to autocrlf=true.
+* text=auto eol=lf
+*.mjs text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.svg text eol=lf
+*.yml text eol=lf
+LICENSE text eol=lf
