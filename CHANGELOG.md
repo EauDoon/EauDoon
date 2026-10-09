@@ -40,6 +40,14 @@ match the `id` field in `catalog.json`.
   (d590d35).
 - `CONTRIBUTING.md` records the portfolio license and copyright policy, and the
   `LICENSE` copyright holder is normalised to match it (914b564).
+- CI runs on the Node 24 majors of `actions/checkout` (v7.0.1),
+  `actions/setup-node` (v7.0.0) and `actions/upload-artifact` (v7.0.1), still
+  pinned by commit SHA, so jobs no longer warn about the deprecated Node 20
+  action runtime. A newer push to a pull request cancels its superseded runs;
+  runs on `main` are never cancelled. `drift.yml` watches the same paths on
+  push and pull request, including all of `lib/` and the workflow itself, and
+  writes `drift-report.json` through bash on every OS. Dependabot proposes one
+  grouped weekly update to the action pins.
 
 ### Removed
 - The `EauDoon` profile entry in `catalog.json`. The profile is presentation

@@ -8,6 +8,13 @@ on:
 permissions:
   contents: read
 
+# A newer push to the same pull request cancels its superseded run. Runs on
+# main are keyed by commit and never cancelled, because other agents push
+# straight to main and each of those commits needs its own result.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   validate:
     strategy:
@@ -18,11 +25,13 @@ jobs:
     runs-on: ${{ matrix.os }}
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: ${{ matrix.node }}
+          # No lockfile and no dependencies: there is nothing to cache.
+          package-manager-cache: false
       - run: npm run check
       - run: git diff --exit-code
