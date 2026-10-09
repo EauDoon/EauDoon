@@ -11,6 +11,11 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-09
+
+First versioned release. Earlier changes are kept below as dated
+pre-versioning history.
+
 ### Added
 - `stable-desk` is catalogued as an owned project (d590d35).
 - `public-inventory.json` records a dated public non-fork inventory (retrieved
@@ -71,6 +76,11 @@ match the `id` field in `catalog.json`.
   (d590d35).
 - `CONTRIBUTING.md` records the portfolio license and copyright policy, and the
   `LICENSE` copyright holder is normalised to match it (914b564).
+- `.gitattributes` pins LF line endings for every text file whatever
+  `core.autocrlf` says, and `.gitignore` covers local and CI scratch output.
+  The UTF-8 guard reads the files git tracks instead of every file on disk,
+  so an untracked UTF-16 `drift-report.json` no longer fails `npm test`, and
+  a new test fails on any file committed with CRLF line endings.
 - CI runs on the Node 24 majors of `actions/checkout` (v7.0.1),
   `actions/setup-node` (v7.0.0) and `actions/upload-artifact` (v7.0.1), still
   pinned by commit SHA, so jobs no longer warn about the deprecated Node 20
@@ -306,4 +316,6 @@ match the `id` field in `catalog.json`.
 - This changelog tracks the catalog and repository metadata. It does not
   release-version the projects listed in `catalog.json`; those projects track
   their own changes in their own repositories.
-[Unreleased]: https://github.com/EauDoon/EauDoon/commits/main
+
+[Unreleased]: https://github.com/EauDoon/EauDoon/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/EauDoon/EauDoon/releases/tag/v1.0.0

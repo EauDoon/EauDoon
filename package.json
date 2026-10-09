@@ -1,6 +1,6 @@
 {
   "name": "eaudoon-project-catalog",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Provenance-pinned catalog of public EauDoon projects with an offline, zero-dependency discovery CLI.",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/EauDoon/EauDoon.git" },
