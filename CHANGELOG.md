@@ -27,6 +27,12 @@ match the `id` field in `catalog.json`.
   human `show` output, the text report of `node scripts/diff.mjs`, the exit
   codes of `node scripts/inventory-check.mjs` on a snapshot dated today, and
   drift's empty-catalog issue.
+- `test/profile.test.mjs` binds the profile README to `catalog.json`: every
+  owned project must be linked from the project index, every linked EauDoon
+  repository must be catalogued or an explicit inventory exclusion, the
+  constellation's alt text, `aria-label` and `<title>` must state the number
+  of owned projects in words, and the fork contribution section may link
+  only catalogued forks.
 
 ### Changed
 - The profile README restores the original banner, simplifies the
