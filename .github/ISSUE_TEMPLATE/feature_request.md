@@ -1,3 +1,10 @@
+---
+name: Feature request
+about: Propose a change to the catalog, the discovery CLI or the maintainer scripts.
+title: "[Feature] "
+labels: []
+---
+
 # Feature Request
 
 ## Problem

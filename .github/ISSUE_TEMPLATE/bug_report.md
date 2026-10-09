@@ -1,3 +1,10 @@
+---
+name: Bug report
+about: Report incorrect CLI, script or catalog behaviour. Report security problems privately instead.
+title: "[Bug] "
+labels: []
+---
+
 # Bug Report
 
 ## Repro
@@ -14,4 +21,4 @@
 
 ## Environment
 
-<!-- OS, language or runtime version, repo commit if known -->
+<!-- OS, the output of `node --version`, the output of `node cli.mjs --version`, and the repository commit if known -->

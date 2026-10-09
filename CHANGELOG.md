@@ -119,6 +119,14 @@ match the `id` field in `catalog.json`.
   README. Each `srcset` candidate is checked separately, so a valid
   `1x, 2x` list is no longer reported missing, and `data-src` attributes or
   prose that mentions an `href` outside a tag are no longer read as links.
+- `SECURITY.md` sent reporters to a Security tab button that does not exist
+  while private vulnerability reporting is off. It now links the private
+  advisory form directly and gives a concrete fallback that carries no
+  details: a public `Security contact request` issue, answered with a private
+  channel. It states that the latest release and `main` are supported and
+  asks for `node cli.mjs --version`. The bug and feature issue templates gain
+  the front matter GitHub needs to list them, and the issue chooser links the
+  security policy so vulnerabilities are steered away from public issues.
 
 ## 2026-09-29 (pre-versioning)
 
