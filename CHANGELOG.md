@@ -58,6 +58,12 @@ match the `id` field in `catalog.json`.
 - `node scripts/drift.mjs` rejects an `assessedOn` later than the reference
   date in both text and JSON modes. A future-dated assessment previously
   skipped the age check (26c6a49).
+- The link checker skips fenced code blocks, inline code spans, HTML comments
+  and GitHub footnote definitions, none of which GitHub renders as a link. A
+  documentation example such as `[x](not-a-real-file.md)` in a code block, or
+  any footnote, previously failed `npm run check`. A query string is ignored
+  when resolving a local target, so `docs/CATALOG.md?plain=1` is no longer
+  reported missing. `CONTRIBUTING.md` now describes the full scope.
 
 ### Security
 - The link checker reads HTML `href`, `src` and `srcset` attributes in any
