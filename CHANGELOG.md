@@ -38,6 +38,12 @@ match the `id` field in `catalog.json`.
   `lib/version.mjs` reads it and checks it against the SemVer 2.0.0 grammar.
   Receipts, handoffs and exports are unchanged, so retained digests stay
   valid.
+- The package is packable: `package.json` gains `license`, `repository`,
+  `homepage`, `bugs`, an `eaudoon-catalog` bin and a `files` list limited to
+  the CLI, `lib/`, `scripts/`, the catalog and inventory data, `docs/` and
+  this changelog, so profile artwork, audits and tests stay out. `cli.mjs`
+  starts with a `#!/usr/bin/env node` line. CI runs `npm pack --dry-run`.
+  Nothing is published to npm.
 
 ### Changed
 - The profile README restores the original banner, simplifies the

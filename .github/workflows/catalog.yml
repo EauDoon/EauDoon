@@ -38,4 +38,7 @@ jobs:
       # The threshold flags need Node 22.8 or later.
       - run: npm run coverage
         if: matrix.os == 'ubuntu-latest' && matrix.node == 24
+      # The package must stay valid and bounded to its files list; nothing is
+      # published.
+      - run: npm pack --dry-run
       - run: git diff --exit-code

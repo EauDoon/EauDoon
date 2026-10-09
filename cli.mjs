@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // encoding: utf-8, LF, no BOM
 import { loadCatalog, errorMessage } from './lib/catalog.mjs';
 import { workflows } from './lib/workflows.mjs';
