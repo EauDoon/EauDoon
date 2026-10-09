@@ -1,11 +1,57 @@
 # Changelog
 
 All notable changes to this repository are documented here. The format follows
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Dates come from
-`catalog.json` `assessedOn` and from `git log` for commits that touched
-`catalog.json`. Project identifiers match the `id` field in `catalog.json`.
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). From 1.0.0 the
+repository follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html),
+and the `version` field in `package.json` is the only version source. Sections
+headed `(pre-versioning)` are dated history from before the first release; they
+carry no version and no tag. Dates come from `catalog.json` `assessedOn` and
+from `git log` for commits that touched `catalog.json`. Project identifiers
+match the `id` field in `catalog.json`.
 
-## [Unreleased] - 2026-09-29
+## [Unreleased]
+
+### Added
+- `stable-desk` is catalogued as an owned project (d590d35).
+- `public-inventory.json` records a dated public non-fork inventory (retrieved
+  2026-10-02) with explicit exclusions, and `scripts/inventory-check.mjs`
+  compares the catalog against it. `npm run check` and `drift.yml` run the
+  check, and `docs/DISCOVERY.md` documents the refresh procedure (d590d35).
+- The profile shows a project constellation and three project cards
+  (`mandatebound`, `decision-labs` and `hermes-parallel-followups`), each in
+  light, dark and mobile variants. The constellation animation stops under
+  `prefers-reduced-motion` (eeed045, 0ebebbe).
+
+### Changed
+- The profile README restores the original banner, simplifies the
+  introduction, and adds the constellation and a collapsible project index
+  (efb2b22, eeed045).
+- Profile artwork font sizes are reduced by one-third and the typography is
+  rebalanced (a334c05, 0ebebbe).
+- `docs/CATALOG.md` lists owned projects and forks in separate tables
+  (d590d35).
+- Twelve owned project source pins and the `connect.md` middleware citation in
+  `docs/DISCOVERY.md` are refreshed to reviewed revisions (26c6a49).
+- `agent-team-os` is re-assessed against its slimmed README: its summary,
+  boundary, `lastAudited` and source pin (`39c45d2`) are updated, and
+  `catalog.json` `assessedOn` moves to 2026-10-04 (d067b90).
+- `SECURITY.md` scope describes the offline CLI and lists parser,
+  path-handling, resource-limit and output-overwrite bugs as in scope
+  (d590d35).
+- `CONTRIBUTING.md` records the portfolio license and copyright policy, and the
+  `LICENSE` copyright holder is normalised to match it (914b564).
+
+### Removed
+- The `EauDoon` profile entry in `catalog.json`. The profile is presentation
+  infrastructure, not a project, and is now an exclusion in
+  `public-inventory.json` (d590d35).
+
+### Fixed
+- `node scripts/drift.mjs` rejects an `assessedOn` later than the reference
+  date in both text and JSON modes. A future-dated assessment previously
+  skipped the age check (26c6a49).
+
+## 2026-09-29 (pre-versioning)
 
 ### Added
 - `gauntlet-verify` is catalogued. The repository is featured in the profile
@@ -37,7 +83,7 @@ All notable changes to this repository are documented here. The format follows
   never equalled `undefined`. The report line is still checked exactly when gaps
   exist.
 
-## [Unreleased] - 2026-09-18
+## 2026-09-18 (pre-versioning)
 
 ### Changed
 - `node scripts/links.mjs` now checks every Markdown file in the repository
@@ -122,7 +168,7 @@ All notable changes to this repository are documented here. The format follows
 - `package.json` `private` flag flipped from `true` to `false` so the
   provenance catalog is publishable.
 
-## [2026-09-11] - Catalog refreshed against reviewed public releases
+## 2026-09-11 (pre-versioning) - Catalog refreshed against reviewed public releases
 
 ### Changed
 - Catalog `assessedOn` set to 2026-09-11.
@@ -131,7 +177,7 @@ All notable changes to this repository are documented here. The format follows
 - MandateBound operator validation repair pinned to its final reviewed revision
   (commit 7dcb928).
 
-## [2026-09-10] - Catalog reconciled with reviewed product releases
+## 2026-09-10 (pre-versioning) - Catalog reconciled with reviewed product releases
 
 ### Changed
 - Catalog reconciled with reviewed product releases; site rendering and search
@@ -141,7 +187,7 @@ All notable changes to this repository are documented here. The format follows
 - Public inventory snapshot comparison and discoverable project reconciliation
   (commit 436fc6f).
 
-## [2026-09-09] - Initial provenance-pinned public project catalog
+## 2026-09-09 (pre-versioning) - Initial provenance-pinned public project catalog
 
 ### Added
 - First version of `catalog.json` with 15 provenance-pinned entries
@@ -169,3 +215,4 @@ All notable changes to this repository are documented here. The format follows
 - This changelog tracks the catalog and repository metadata. It does not
   release-version the projects listed in `catalog.json`; those projects track
   their own changes in their own repositories.
+[Unreleased]: https://github.com/EauDoon/EauDoon/commits/main
