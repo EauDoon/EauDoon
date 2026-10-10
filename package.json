@@ -1,12 +1,21 @@
 {
   "name": "eaudoon-project-catalog",
+  "version": "1.0.0",
+  "description": "Provenance-pinned catalog of public EauDoon projects with an offline, zero-dependency discovery CLI.",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/EauDoon/EauDoon.git" },
+  "homepage": "https://github.com/EauDoon/EauDoon#readme",
+  "bugs": { "url": "https://github.com/EauDoon/EauDoon/issues" },
   "private": false,
   "type": "module",
   "engines": { "node": ">=22" },
+  "bin": { "eaudoon-catalog": "cli.mjs" },
+  "files": ["cli.mjs", "lib/", "scripts/", "catalog.json", "public-inventory.json", "docs/", "CHANGELOG.md"],
   "scripts": {
     "test": "node --test",
     "validate": "node cli.mjs validate",
     "drift": "node scripts/drift.mjs --check",
-    "check": "node cli.mjs validate && node --test && node scripts/render.mjs --check && node scripts/links.mjs && node scripts/drift.mjs --check && node scripts/inventory-check.mjs"
+    "coverage": "node --test --experimental-test-coverage --test-coverage-lines=95 --test-coverage-branches=85 --test-coverage-functions=90",
+    "check": "node cli.mjs validate && node --test && node scripts/render.mjs --check && node scripts/links.mjs && node scripts/drift.mjs --check && node scripts/inventory-check.mjs && node scripts/version-check.mjs"
   }
 }

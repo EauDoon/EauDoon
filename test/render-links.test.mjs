@@ -6,7 +6,7 @@ import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
 import { renderCatalog } from '../lib/render.mjs';
-import { checkLinks, markdownFiles } from '../lib/links.mjs';
+import { checkLinks, htmlDestinations, markdownFiles, withoutCode } from '../lib/links.mjs';
 
 test('generated guide is current, complete and source-bound', () => {
   const c = loadCatalog();
@@ -54,6 +54,84 @@ test('reference definitions are checked like inline links', () => {
     '[bad][id]\n\n[id]: https://user:secret@github.com',
     '[id]:\nhttps://user:secret@github.com',
   ]) assert.equal(checkLinks(text, file, root).length, 1, text);
+});
+test('HTML link attributes are checked in any case and quoting', () => {
+  const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
+  const file = fileURLToPath(new URL('../README.md', import.meta.url));
+  for (const text of [
+    "<a href='https://user:secret@github.com'>x</a>",
+    '<a HREF="javascript:alert(1)">x</a>',
+    '<A Href = "../outside.md">x</A>',
+    '<img src=missing.svg>',
+    '<img src="">',
+    '<img src="  ">',
+    '<img src>',
+    '<img\n  alt="banner"\n  src="missing.svg">',
+    '<source srcset="assets/banner-dark.svg 1x, assets/missing.svg 2x">',
+  ]) assert.equal(checkLinks(text, file, root).length, 1, text);
+  assert.deepEqual(checkLinks('<img src="assets/banner-light.svg" alt="banner">', file, root), []);
+  assert.deepEqual(checkLinks("<img src='assets/banner-light.svg'>", file, root), []);
+  assert.deepEqual(checkLinks('<img src=assets/banner-light.svg>', file, root), []);
+  assert.deepEqual(checkLinks('<img srcset="assets/banner-dark.svg 1x, assets/banner-light.svg 2x">', file, root), []);
+  assert.deepEqual(checkLinks('<img srcset="assets/banner-dark.svg 640w, assets/banner-light.svg 1280w,">', file, root), []);
+  assert.deepEqual(checkLinks('<a href=" docs/CATALOG.md ">guide</a>', file, root), []);
+});
+test('only real HTML link attributes are read as links', () => {
+  const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
+  const file = fileURLToPath(new URL('../README.md', import.meta.url));
+  assert.deepEqual(checkLinks('<div data-src="missing.png"></div>', file, root), []);
+  assert.deepEqual(checkLinks('<img data-srcset="missing.png 1x" src="assets/banner-light.svg">', file, root), []);
+  assert.deepEqual(checkLinks('<a title="src=missing.png" href="docs/CATALOG.md">guide</a>', file, root), []);
+  assert.deepEqual(checkLinks('Write href="missing.md" inside an a tag.', file, root), []);
+  // The profile README is mostly raw HTML: every picture, source and img is read.
+  const readme = readFileSync(file, 'utf8');
+  assert.equal(htmlDestinations(readme).length, [...readme.matchAll(/\s(?:href|src|srcset)="/g)].length);
+});
+test('code, comments and footnotes are not read as links', () => {
+  const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
+  const file = fileURLToPath(new URL('../README.md', import.meta.url));
+  for (const text of [
+    '```\n[x](not-a-real-file.md)\n```',
+    '~~~md\n[x](not-a-real-file.md)\n~~~',
+    '   ```\n[x]: not-a-real-file.md\n   ```',
+    '````\n```\n[x](not-a-real-file.md)\n```\n````',
+    '```\r\n[x](not-a-real-file.md)\r\n```\r\n',
+    '```\n[x](not-a-real-file.md)',
+    'Write `[x](not-a-real-file.md)` for a link.',
+    'Write `` a ` [x](not-a-real-file.md) `` for a link.',
+    'Write `<img src="missing.svg">` for an image.',
+    'A span `across\n[x](not-a-real-file.md)` two lines.',
+    '<!-- [x](missing.md) -->',
+    '<!--\n<img src="missing.svg">\n-->',
+    'Text[^1].\n\n[^1]: A footnote.',
+    'Text[^note].\n\n[^note]:\n    A footnote on the next line.',
+  ]) assert.deepEqual(checkLinks(text, file, root), [], text);
+  for (const text of [
+    '```\ncode\n```\n[x](missing.md)',
+    '~~~\ncode\n~~~~\n[x](missing.md)',
+    '[x](missing.md)\n```',
+    '    ```\n[x](missing.md)',
+    '``` a`b\n[x](missing.md)',
+    'An unclosed ` before [x](missing.md).',
+    'An escaped \\`[x](missing.md)\\` is not code.',
+    '<!-- unclosed [x](missing.md)',
+    '<!-- ` --> [x](missing.md) `',
+    'Text[^1].\n\n[^1]: See [x](missing.md).',
+  ]) assert.equal(checkLinks(text, file, root).length, 1, text);
+  const sample = 'a `b`\r\n```\r\nc\r\n```\r\n<!-- d -->';
+  const endings = text => [...text.matchAll(/\r\n/g)].map(match => match.index);
+  assert.equal(withoutCode(sample).length, sample.length);
+  assert.deepEqual(endings(withoutCode(sample)), endings(sample));
+  assert.equal(withoutCode(sample).trim(), 'a');
+});
+test('a query string names the same local file', () => {
+  const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
+  const file = fileURLToPath(new URL('../README.md', import.meta.url));
+  assert.deepEqual(checkLinks('[guide](docs/CATALOG.md?plain=1)', file, root), []);
+  assert.deepEqual(checkLinks('[guide](docs/CATALOG.md?plain=1#browse-projects)', file, root), []);
+  assert.deepEqual(checkLinks('<a href="docs/CATALOG.md?plain=1">guide</a>', file, root), []);
+  assert.equal(checkLinks('[gone](missing.md?plain=1)', file, root).length, 1);
+  assert.equal(checkLinks('[out](../outside.md?plain=1)', file, root).length, 1);
 });
 test('the link check walks every Markdown file, not a fixed list of four', () => {
   const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));

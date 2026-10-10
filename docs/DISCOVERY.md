@@ -18,7 +18,7 @@ List, search and shortlist accept `--category`, `--runtime`, `--privacy`, and `-
 
 Shortlist accepts known task ids from `tasks`. It lists projects that cover at least one requested task, ordered by coverage and then id. Each result states matched and missing tasks. This is a transparent catalog lookup, not a quality ranking, integration compatibility test or deployment recommendation.
 
-Add `--json` to discovery commands for structured output. List, search, show, compare and shortlist include the assessment date. Errors go to stderr and return exit code 1. No matches is a successful empty result with exit code 0. `validate` checks the local catalog and takes no options.
+Add `--json` to discovery commands for structured output. List, search, show, compare and shortlist include the assessment date. Errors go to stderr and return exit code 1. No matches is a successful empty result with exit code 0. `validate` checks the local catalog and takes no options. `node cli.mjs --version` prints the CLI version from `package.json` and needs no catalog; include it in bug reports.
 
 ## Interpret the snapshot
 
@@ -38,9 +38,11 @@ node scripts/inventory-check.mjs
 npm run check
 ```
 
-`npm run check` runs catalog validation, the existing tests, generated-document and link checks, the dated drift check, and the public-inventory coverage check. No command fetches repositories or makes network calls.
+`npm run check` runs catalog validation, the existing tests, generated-document and link checks, the dated drift check, the public-inventory coverage check, and the version and changelog consistency check. No command fetches repositories or makes network calls.
 
 [public-inventory.json](../public-inventory.json) records a dated, complete public non-fork owner inventory and explicit exclusions. The coverage check reuses the CLI's inventory comparison, rejects non-public/fork records, detects missing or archived catalog entries and stale snapshots, and prints held projects separately. A passed check establishes consistency with that saved snapshot, not today's GitHub inventory or project quality.
+
+The drift and inventory checks compare UTC calendar dates. East of UTC the local date can be a day ahead of the UTC date, so write `assessedOn`, `lastAudited` and `retrievedOn` as UTC dates. `node scripts/drift.mjs --today YYYY-MM-DD` pins the drift reference date, `--check` (the default) or `--json` selects the output, and `--help` prints the usage line. A usage error exits 2; an invalid date or maximum age exits 1.
 
 To refresh it, retrieve every page from GitHub's public repository search for `user:EauDoon is:public fork:false`; require `incomplete_results: false` and reconcile the returned total before replacing the snapshot. Preserve public visibility, fork and archive flags, record the retrieval date and source, and review exclusions. An API error or incomplete result is unknown, never an empty successful inventory. Do not query private repositories, infer why a former public entry is absent, automatically advance source pins, or publish an unreviewed project.
 

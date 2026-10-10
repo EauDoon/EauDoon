@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 250" role="img" aria-label="Daniel Oon. Decision infrastructure for agent systems and operators.">
+  <title>Daniel Oon. Decision infrastructure for agent systems and operators.</title>
+  <style>.still{display:none}@media (prefers-reduced-motion:reduce){.motion{display:none}.still{display:inline}}</style>
   <defs>
     <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
       <circle cx="1.5" cy="1.5" r="1.2" fill="#161B22"/>
@@ -23,19 +25,20 @@
   <circle cx="950" cy="78" r="5" fill="#0A0C10" stroke="#2A333F" stroke-width="1.5"/>
   <circle cx="988" cy="196" r="5" fill="#0A0C10" stroke="#2A333F" stroke-width="1.5"/>
   <circle cx="1122" cy="66" r="5" fill="#0A0C10" stroke="#2A333F" stroke-width="1.5"/>
-  <circle cx="1058" cy="132" r="14" fill="none" stroke="#34D399" stroke-width="1">
+  <circle class="motion" cx="1058" cy="132" r="14" fill="none" stroke="#34D399" stroke-width="1">
     <animate attributeName="r" values="6;18" dur="3s" repeatCount="indefinite"/>
     <animate attributeName="opacity" values="0.7;0" dur="3s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="1058" cy="132" r="5.5" fill="#34D399">
+  <circle class="motion" cx="1058" cy="132" r="5.5" fill="#34D399">
     <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/>
   </circle>
+  <circle class="still" cx="1058" cy="132" r="5.5" fill="#34D399"/>
 
   <text x="64" y="118" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="74" letter-spacing="-1" fill="#F2F4F8">Daniel Oon</text>
 
   <rect x="66" y="140" width="336" height="3" rx="1.5" fill="#1F2937"/>
-  <rect x="66" y="140" width="336" height="3" rx="1.5" fill="url(#sweep)"/>
+  <rect class="motion" x="66" y="140" width="336" height="3" rx="1.5" fill="url(#sweep)"/>
 
   <text x="66" y="181" font-family="'SFMono-Regular', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace" font-size="21" fill="#A7B0BC">Decision infrastructure for agent systems and operators.</text>
-  <text x="66" y="212" font-family="'SFMono-Regular', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace" font-size="15" fill="#667085">Singapore&#160;&#160;&#183;&#160;&#160;danieloon.ai</text>
+  <text x="66" y="212" font-family="'SFMono-Regular', 'Cascadia Code', Consolas, 'Liberation Mono', Menlo, monospace" font-size="15" fill="#7D8796">Singapore&#160;&#160;&#183;&#160;&#160;danieloon.ai</text>
 </svg>

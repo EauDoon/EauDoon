@@ -1,0 +1,16 @@
+# The workflows pin every action to a full commit SHA. Dependabot proposes
+# new SHAs, grouped into one weekly pull request, so the pins do not fall
+# behind the runtime GitHub supports. The package has no npm dependencies.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: ci
+    open-pull-requests-limit: 5

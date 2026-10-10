@@ -74,7 +74,9 @@ test('passes when per-project waves equal the top-level set', () => {
       baseProject('fixture-b', { wavesTouched: [1, 2], lastAudited: '2026-09-23' }),
     ]);
     const path = writeCatalog(tmp, 'ok.json', catalog);
-    const result = detectDrift(loadCatalog(path));
+    // An explicit reference date keeps this pass from expiring 45 days after
+    // the fixture's assessedOn.
+    const result = detectDrift(loadCatalog(path), { today: '2026-09-23' });
     assert.deepEqual(result.issues, []);
   } finally { rmSync(tmp, { recursive: true, force: true }); }
 });
@@ -84,7 +86,7 @@ test('passes when a top-level wave has no per-project record (global-only phase)
     baseProject('fixture-a', { wavesTouched: [1, 2], lastAudited: '2026-09-23' }),
     baseProject('fixture-b', { wavesTouched: [1, 2], lastAudited: '2026-09-23' }),
   ], { portfolioWavesCompleted: [1, 2, 9] });
-  const result = detectDrift(catalog);
+  const result = detectDrift(catalog, { today: '2026-09-23' });
   assert.deepEqual(result.issues, []);
 });
 
@@ -188,6 +190,57 @@ test('drift rejects a max age that is not written as a decimal integer', () => {
   assert.match(ok.stdout, /no drift detected/);
 });
 
+test('the drift mode is optional, as its usage line says', () => {
+  const script = fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url));
+  const assessedOn = loadCatalog().assessedOn;
+  const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: 'utf8', timeout: 10000 });
+  for (const args of [['--today', assessedOn], ['--max-age-days', '45', '--today', assessedOn]]) {
+    const result = run(...args);
+    assert.equal(result.status, 0, `${args.join(' ')}: ${result.stderr}`);
+    assert.match(result.stdout, /no drift detected\./);
+  }
+  const json = run('--json', '--today', assessedOn);
+  assert.equal(json.status, 0, json.stderr);
+  assert.equal(JSON.parse(json.stdout).referenceDate, assessedOn);
+  const help = run('--help');
+  assert.equal(help.status, 0, help.stderr);
+  assert.match(help.stdout, /^Usage: node scripts\/drift\.mjs \[--check\|--json\]/);
+  assert.equal(help.stderr, '');
+});
+
+test('drift usage errors exit 2 and never echo the argument', () => {
+  const script = fileURLToPath(new URL('../scripts/drift.mjs', import.meta.url));
+  const assessedOn = loadCatalog().assessedOn;
+  const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: 'utf8', timeout: 10000 });
+  const escape = String.fromCharCode(27);
+  const unknown = run('--bogus', `${escape}[31mX`);
+  assert.equal(unknown.status, 2);
+  assert.match(unknown.stderr, /^drift: Unknown argument\nUsage: /);
+  assert.ok(!unknown.stderr.includes(escape), 'stderr carries a raw terminal escape');
+  assert.doesNotMatch(unknown.stderr, /bogus/);
+  assert.equal(unknown.stdout, '');
+  const hostile = run('--check', '--today', assessedOn, `${escape}]0;title${String.fromCharCode(7)}`);
+  assert.equal(hostile.status, 2);
+  assert.ok(!hostile.stderr.includes(escape), 'stderr carries a raw terminal escape');
+  for (const [args, message] of [
+    [['--check', '--today'], /^drift: Missing value for --today\n/],
+    [['--max-age-days'], /^drift: Missing value for --max-age-days\n/],
+    [['--today', '--json'], /^drift: Missing value for --today\n/],
+    [['--today', 'a', '--today', 'b'], /^drift: Repeated option --today\n/],
+    [['--json', '--max-age-days', '45', '--max-age-days', '46', '--today', assessedOn], /^drift: Repeated option --max-age-days\n/],
+    [['--today', assessedOn, '--json'], /^drift: Unknown argument\n/],
+  ]) {
+    const result = run(...args);
+    assert.equal(result.status, 2, `${args.join(' ')}: ${result.stderr}`);
+    assert.match(result.stderr, message, args.join(' '));
+    assert.doesNotMatch(result.stdout, /no drift detected/, args.join(' '));
+  }
+  // An invalid value is not a usage error: it keeps exit 1 and its own message.
+  const invalid = run('--today', '2026-02-31');
+  assert.equal(invalid.status, 1);
+  assert.match(invalid.stderr, /^drift: --today must be a real YYYY-MM-DD date\n$/);
+});
+
 test('does not flag age when within tolerance', () => {
   const catalog = makeCatalog([
     baseProject('fixture-a', { wavesTouched: [1], lastAudited: '2026-09-23' }),
@@ -195,6 +248,15 @@ test('does not flag age when within tolerance', () => {
   ], { assessedOn: '2026-08-15' });
   const result = detectDrift(catalog, { today: '2026-09-23', maxAgeDays: 60 });
   assert.equal(result.issues.filter(i => i.includes('days old')).length, 0);
+});
+
+test('a catalog with no projects is an issue, not a pass', () => {
+  for (const catalog of [makeCatalog([]), { assessedOn: '2026-09-23' }]) {
+    const result = detectDrift(catalog, { today: '2026-09-23' });
+    assert.deepEqual(result.issues, ['catalog has no projects to check']);
+    assert.equal(result.summary.projects, 0);
+    assert.equal(result.referenceDate, '2026-09-23');
+  }
 });
 
 test('flags duplicate project ids', () => {

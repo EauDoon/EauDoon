@@ -1,11 +1,158 @@
 # Changelog
 
 All notable changes to this repository are documented here. The format follows
-[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Dates come from
-`catalog.json` `assessedOn` and from `git log` for commits that touched
-`catalog.json`. Project identifiers match the `id` field in `catalog.json`.
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0/). From 1.0.0 the
+repository follows [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html),
+and the `version` field in `package.json` is the only version source. Sections
+headed `(pre-versioning)` are dated history from before the first release; they
+carry no version and no tag. Dates come from `catalog.json` `assessedOn` and
+from `git log` for commits that touched `catalog.json`. Project identifiers
+match the `id` field in `catalog.json`.
 
-## [Unreleased] - 2026-09-29
+## [Unreleased]
+
+## [1.0.0] - 2026-10-09
+
+First versioned release. Earlier changes are kept below as dated
+pre-versioning history.
+
+### Added
+- `stable-desk` is catalogued as an owned project (d590d35).
+- `public-inventory.json` records a dated public non-fork inventory (retrieved
+  2026-10-02) with explicit exclusions, and `scripts/inventory-check.mjs`
+  compares the catalog against it. `npm run check` and `drift.yml` run the
+  check, and `docs/DISCOVERY.md` documents the refresh procedure (d590d35).
+- The profile shows a project constellation and three project cards
+  (`mandatebound`, `decision-labs` and `hermes-parallel-followups`), each in
+  light, dark and mobile variants. The constellation animation stops under
+  `prefers-reduced-motion` (eeed045, 0ebebbe).
+- `npm run coverage` runs the test suite with coverage thresholds of 95%
+  lines, 85% branches and 90% functions, and CI runs it on the Ubuntu and
+  Node 24 job. New tests run the documented paths that no test reached: the
+  human `show` output, the text report of `node scripts/diff.mjs`, the exit
+  codes of `node scripts/inventory-check.mjs` on a snapshot dated today, and
+  drift's empty-catalog issue.
+- `test/profile.test.mjs` binds the profile README to `catalog.json`: every
+  owned project must be linked from the project index, every linked EauDoon
+  repository must be catalogued or an explicit inventory exclusion, the
+  constellation's alt text, `aria-label` and `<title>` must state the number
+  of owned projects in words, and the fork contribution section may link
+  only catalogued forks.
+- `node cli.mjs --version` prints the version from `package.json`, the only
+  version source, without reading a catalog; help shows the same version.
+  `lib/version.mjs` reads it and checks it against the SemVer 2.0.0 grammar.
+  Receipts, handoffs and exports are unchanged, so retained digests stay
+  valid.
+- The package is packable: `package.json` gains `license`, `repository`,
+  `homepage`, `bugs`, an `eaudoon-catalog` bin and a `files` list limited to
+  the CLI, `lib/`, `scripts/`, the catalog and inventory data, `docs/` and
+  this changelog, so profile artwork, audits and tests stay out. `cli.mjs`
+  starts with a `#!/usr/bin/env node` line. CI runs `npm pack --dry-run`.
+  Nothing is published to npm.
+- `scripts/version-check.mjs`, run by `npm run check`, requires that the
+  `package.json` version, this changelog and, with `--tag`, a release tag
+  agree; `--notes` prints one release's section. A new release workflow turns
+  a pushed `vX.Y.Z` tag on `main` into a GitHub Release with those notes, the
+  `npm pack` tarball and `SHA256SUMS`, and a manual run dry-runs the same
+  steps. `CONTRIBUTING.md` documents the versioning policy and release steps,
+  and the pull request checklist asks for a changelog entry and an untouched
+  version.
+
+### Changed
+- The profile README restores the original banner, simplifies the
+  introduction, and adds the constellation and a collapsible project index
+  (efb2b22, eeed045).
+- Profile artwork font sizes are reduced by one-third and the typography is
+  rebalanced (a334c05, 0ebebbe).
+- `docs/CATALOG.md` lists owned projects and forks in separate tables
+  (d590d35).
+- Twelve owned project source pins and the `connect.md` middleware citation in
+  `docs/DISCOVERY.md` are refreshed to reviewed revisions (26c6a49).
+- `agent-team-os` is re-assessed against its slimmed README: its summary,
+  boundary, `lastAudited` and source pin (`39c45d2`) are updated, and
+  `catalog.json` `assessedOn` moves to 2026-10-04 (d067b90).
+- `SECURITY.md` scope describes the offline CLI and lists parser,
+  path-handling, resource-limit and output-overwrite bugs as in scope
+  (d590d35).
+- `CONTRIBUTING.md` records the portfolio license and copyright policy, and the
+  `LICENSE` copyright holder is normalised to match it (914b564).
+- `.gitattributes` pins LF line endings for every text file whatever
+  `core.autocrlf` says, and `.gitignore` covers local and CI scratch output.
+  The UTF-8 guard reads the files git tracks instead of every file on disk,
+  so an untracked UTF-16 `drift-report.json` no longer fails `npm test`, and
+  a new test fails on any file committed with CRLF line endings.
+- CI runs on the Node 24 majors of `actions/checkout` (v7.0.1),
+  `actions/setup-node` (v7.0.0) and `actions/upload-artifact` (v7.0.1), still
+  pinned by commit SHA, so jobs no longer warn about the deprecated Node 20
+  action runtime. A newer push to a pull request cancels its superseded runs;
+  runs on `main` are never cancelled. `drift.yml` watches the same paths on
+  push and pull request, including all of `lib/` and the workflow itself, and
+  writes `drift-report.json` through bash on every OS. Dependabot proposes one
+  grouped weekly update to the action pins.
+- `node scripts/drift.mjs` usage errors exit 2 instead of 1 and print the
+  usage line: an unknown argument, an option with no value, and a repeated
+  option. An invalid `--today` or `--max-age-days` value still exits 1.
+  `--help` prints the usage line and exits 0. `docs/DISCOVERY.md` and
+  `CONTRIBUTING.md` state that the drift and inventory checks compare UTC
+  calendar dates.
+- The profile banner honours `prefers-reduced-motion`: the sweep, the pulse
+  ring and the pulsing dot are hidden and a static dot is shown, while default
+  motion is unchanged. Its footer meets WCAG AA contrast (light 2.58:1 to
+  4.97:1, dark 3.93:1 to 5.39:1), and both variants carry a `<title>` equal to
+  their `aria-label`, like the other artworks. A new test pins the accessible
+  name, title, reduced-motion handling, text contrast and dark/light text
+  parity of every `assets/*.svg`.
+
+### Removed
+- The `EauDoon` profile entry in `catalog.json`. The profile is presentation
+  infrastructure, not a project, and is now an exclusion in
+  `public-inventory.json` (d590d35).
+
+### Fixed
+- `node scripts/drift.mjs` rejects an `assessedOn` later than the reference
+  date in both text and JSON modes. A future-dated assessment previously
+  skipped the age check (26c6a49).
+- The link checker skips fenced code blocks, inline code spans, HTML comments
+  and GitHub footnote definitions, none of which GitHub renders as a link. A
+  documentation example such as `[x](not-a-real-file.md)` in a code block, or
+  any footnote, previously failed `npm run check`. A query string is ignored
+  when resolving a local target, so `docs/CATALOG.md?plain=1` is no longer
+  reported missing. `CONTRIBUTING.md` now describes the full scope.
+- `node scripts/drift.mjs --today YYYY-MM-DD` without a mode runs the check,
+  as the usage line always promised; it previously exited with the usage
+  line. `--today` with no value reports a missing value instead of an unknown
+  argument, and a repeated option is rejected instead of the last value
+  silently winning.
+- `node scripts/drift.mjs` no longer echoes an unknown argument, so a terminal
+  escape sequence in an argument cannot reach stderr.
+- Public inventory exclusion reasons reject Unicode line and paragraph
+  separators, as catalog text already did.
+- Two drift tests passed only until 45 days after their fixture's
+  `assessedOn` and would have failed `npm test` from 2026-11-08. They now pin
+  the reference date.
+- `node cli.mjs help COMMAND` no longer prints a trailing space after a
+  command that takes no arguments, and `Invalid --task. Choose:` lists tasks
+  in the same case-insensitive order as `tasks` and facets instead of catalog
+  insertion order.
+
+### Security
+- The link checker reads HTML `href`, `src` and `srcset` attributes in any
+  letter case and with double, single or no quotes. A credentialed or
+  `javascript:` link in a single-quoted or uppercase `HREF` attribute, and an
+  unquoted or empty `src`, previously passed unchecked in the raw-HTML profile
+  README. Each `srcset` candidate is checked separately, so a valid
+  `1x, 2x` list is no longer reported missing, and `data-src` attributes or
+  prose that mentions an `href` outside a tag are no longer read as links.
+- `SECURITY.md` sent reporters to a Security tab button that does not exist
+  while private vulnerability reporting is off. It now links the private
+  advisory form directly and gives a concrete fallback that carries no
+  details: a public `Security contact request` issue, answered with a private
+  channel. It states that the latest release and `main` are supported and
+  asks for `node cli.mjs --version`. The bug and feature issue templates gain
+  the front matter GitHub needs to list them, and the issue chooser links the
+  security policy so vulnerabilities are steered away from public issues.
+
+## 2026-09-29 (pre-versioning)
 
 ### Added
 - `gauntlet-verify` is catalogued. The repository is featured in the profile
@@ -37,7 +184,7 @@ All notable changes to this repository are documented here. The format follows
   never equalled `undefined`. The report line is still checked exactly when gaps
   exist.
 
-## [Unreleased] - 2026-09-18
+## 2026-09-18 (pre-versioning)
 
 ### Changed
 - `node scripts/links.mjs` now checks every Markdown file in the repository
@@ -122,7 +269,7 @@ All notable changes to this repository are documented here. The format follows
 - `package.json` `private` flag flipped from `true` to `false` so the
   provenance catalog is publishable.
 
-## [2026-09-11] - Catalog refreshed against reviewed public releases
+## 2026-09-11 (pre-versioning) - Catalog refreshed against reviewed public releases
 
 ### Changed
 - Catalog `assessedOn` set to 2026-09-11.
@@ -131,7 +278,7 @@ All notable changes to this repository are documented here. The format follows
 - MandateBound operator validation repair pinned to its final reviewed revision
   (commit 7dcb928).
 
-## [2026-09-10] - Catalog reconciled with reviewed product releases
+## 2026-09-10 (pre-versioning) - Catalog reconciled with reviewed product releases
 
 ### Changed
 - Catalog reconciled with reviewed product releases; site rendering and search
@@ -141,7 +288,7 @@ All notable changes to this repository are documented here. The format follows
 - Public inventory snapshot comparison and discoverable project reconciliation
   (commit 436fc6f).
 
-## [2026-09-09] - Initial provenance-pinned public project catalog
+## 2026-09-09 (pre-versioning) - Initial provenance-pinned public project catalog
 
 ### Added
 - First version of `catalog.json` with 15 provenance-pinned entries
@@ -169,3 +316,6 @@ All notable changes to this repository are documented here. The format follows
 - This changelog tracks the catalog and repository metadata. It does not
   release-version the projects listed in `catalog.json`; those projects track
   their own changes in their own repositories.
+
+[Unreleased]: https://github.com/EauDoon/EauDoon/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/EauDoon/EauDoon/releases/tag/v1.0.0
