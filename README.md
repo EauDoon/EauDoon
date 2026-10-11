@@ -21,9 +21,16 @@ I build tools for agent systems and business decisions, with explicit rules, rec
 
 ## Selected work
 
-**[Blitz](https://github.com/EauDoon/blitz)** — Minimum Viable Company kit
+<a href="https://github.com/EauDoon/blitz">
+<picture>
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/blitz-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/blitz-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/blitz-dark.svg">
+  <img src="assets/blitz-light.svg" alt="Blitz. Minimum Viable Company kit. Four evidence gates take one bounded offer through a real test to an accepted result and a feasible next cycle." width="100%">
+</picture>
+</a>
 
-Listen, collect, sprint.<br>Reduce cycle time.
+[Repository](https://github.com/EauDoon/blitz) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/blitz/blob/main/Blitz/examples/company/service-example.md)
 
 <br>
 
