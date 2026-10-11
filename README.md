@@ -34,16 +34,16 @@ I build tools for agent systems and business decisions, with explicit rules, rec
 
 <br>
 
-<a href="https://github.com/EauDoon/mandatebound">
+<a href="https://github.com/EauDoon/gauntlet-verify">
 <picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/mandatebound-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset="assets/mandatebound-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/mandatebound-dark.svg">
-  <img src="assets/mandatebound-light.svg" alt="MandateBound. Experimental evidence review for agentic commerce. The synthetic example distinguishes a complete case, missing evidence, and tampering." width="100%">
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/gauntlet-verify-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/gauntlet-verify-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/gauntlet-verify-dark.svg">
+  <img src="assets/gauntlet-verify-light.svg" alt="Gauntlet Verify. A fork of the Gauntlet Loop that runs in two modes: blind judges hold a build to a shipped reference, and isolated verifiers label each claim verified, reported, or unverified." width="100%">
 </picture>
 </a>
 
-[Repository](https://github.com/EauDoon/mandatebound) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/mandatebound/blob/main/docs/CASE_STUDY.md)
+[Repository](https://github.com/EauDoon/gauntlet-verify) &nbsp;·&nbsp; [Upstream original](https://github.com/robonuggets/gauntlet-loop)
 
 <br>
 
@@ -60,16 +60,16 @@ I build tools for agent systems and business decisions, with explicit rules, rec
 
 <br>
 
-<a href="https://github.com/EauDoon/hermes-parallel-followups">
+<a href="https://github.com/EauDoon/agent-team-os">
 <picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/hermes-followups-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset="assets/hermes-followups-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/hermes-followups-dark.svg">
-  <img src="assets/hermes-followups-light.svg" alt="Hermes Parallel Follow-ups. Reversible patches for a documented source revision, with bounded concurrency and cancellation tests." width="100%">
+  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/agent-team-os-mobile-dark.svg">
+  <source media="(max-width: 600px)" srcset="assets/agent-team-os-mobile-light.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/agent-team-os-dark.svg">
+  <img src="assets/agent-team-os-light.svg" alt="Agent Team OS. A wire format and tool pack for multi-role agent work. Local checks catch missing brief fields, dependency cycles, unsourced claims, and stale audit rechecks." width="100%">
 </picture>
 </a>
 
-[Repository](https://github.com/EauDoon/hermes-parallel-followups) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/hermes-parallel-followups/blob/main/docs/CASE_STUDY.md)
+[Repository](https://github.com/EauDoon/agent-team-os) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/agent-team-os/blob/main/examples/routing-scenarios.md)
 
 <sub>Experimental software and synthetic worked cases. These checks do not establish customer adoption, production reliability, or business impact.</sub>
 
@@ -83,7 +83,8 @@ I build tools for agent systems and business decisions, with explicit rules, rec
 - **[Agent Action Stack](https://github.com/EauDoon/agent-action-stack)** connects policy checks, action recovery, and dispute evidence in a runnable synthetic reference path.
 - **[Consequence Rail](https://github.com/EauDoon/consequence-rail)** provides recourse-gated execution, recovery preflight, and signed settlement receipts.
 - **[Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench)** checks structured agent responses against policy rules with deterministic precedence traces.
-- **[Agent Team](https://github.com/EauDoon/agent-team-os)** is a reusable skill for bounded specialist workflows, evidence handoffs, and independent review.
+- **[MandateBound](https://github.com/EauDoon/mandatebound)** is experimental evidence review for agentic commerce; its synthetic example distinguishes a complete case, missing evidence, and tampering.
+- **[Hermes Parallel Follow-ups](https://github.com/EauDoon/hermes-parallel-followups)** carries reversible patches for a documented source revision, with bounded concurrency and cancellation tests.
 
 ### Decision methods
 
