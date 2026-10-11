@@ -14,6 +14,8 @@ match the `id` field in `catalog.json`.
 - Register Blitz in the pinned public catalog and inventory, feature it first in Selected work, and update the constellation and catalog counts.
 - Give Blitz a project card in light, dark and mobile variants, matching the existing three cards.
 - Add a fourth constellation group, Speed launches, above the other three. Blitz is its only star, drawn in red with a launch trail and a red spark where the other groups run green, and leaves its node in the Decision tools cluster. The tagline names the new group. The animation stops under reduced motion.
+- Feature Gauntlet Verify and Agent Team OS in Selected work in place of MandateBound and Hermes Parallel Follow-ups, with new cards in light, dark and mobile variants. MandateBound and Hermes Parallel Follow-ups move into the project index in place of Agent Team, and their card artwork is removed. The Gauntlet Verify card and link line credit the upstream Gauntlet Loop.
+- Draw the Blitz card's stars and rules in the constellation's red, keeping every text colour.
 
 ## [1.0.0] - 2026-10-09
 
