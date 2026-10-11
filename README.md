@@ -15,11 +15,17 @@ I build tools for agent systems and business decisions, with explicit rules, rec
   <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/constellation-mobile-dark.svg">
   <source media="(max-width: 600px)" srcset="assets/constellation-mobile-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset="assets/constellation-dark.svg">
-  <img src="assets/constellation-light.svg" alt="A constellation of thirteen public projects, grouped into agent systems, decision tools, and practical experiments. Open the project catalog for individual links." width="100%">
+  <img src="assets/constellation-light.svg" alt="A constellation of fourteen public projects, grouped into agent systems, decision tools, and practical experiments. Open the project catalog for individual links." width="100%">
 </picture>
 </a>
 
 ## Selected work
+
+**[Blitz](https://github.com/EauDoon/blitz)** — Minimum Viable Company kit
+
+Listen, collect, sprint.<br>Reduce cycle time.
+
+<br>
 
 <a href="https://github.com/EauDoon/mandatebound">
 <picture>

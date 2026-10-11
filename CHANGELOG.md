@@ -11,6 +11,8 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+- Register Blitz in the pinned public catalog and inventory, feature it first in Selected work, and update the constellation and catalog counts.
+
 ## [1.0.0] - 2026-10-09
 
 First versioned release. Earlier changes are kept below as dated

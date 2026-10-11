@@ -22,7 +22,7 @@ test('a whitespace-only search is rejected instead of matching every project', (
   }
   const listed = run('list', '--json');
   assert.equal(listed.status, 0, listed.stderr);
-  assert.equal(JSON.parse(listed.stdout).projects.length, 16);
+  assert.equal(JSON.parse(listed.stdout).projects.length, 17);
 });
 test('a single-dash flag is rejected instead of searched as a word', () => {
   for (const args of [['search', '-jsno'], ['list', '-json'], ['shortlist', '-replay-evidence'], ['search', '-'], ['search', '--']]) {

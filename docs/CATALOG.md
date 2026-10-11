@@ -5,7 +5,7 @@
 -->
 # Public project catalog
 
-Assessed 04-10-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.
+Assessed 11-10-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.
 
 Generated from [catalog.json](../catalog.json). For search, filters, comparison and task coverage, see the [discovery guide](DISCOVERY.md).
 
@@ -26,6 +26,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | --- | --- | --- | --- |
 | [agent-action-stack](https://github.com/EauDoon/agent-action-stack) | Synthetic agent-action reference path with alternate case stores, saved-case verification and offline review exports\. | node, python, browser | local-after-setup |
 | [agent-team-os](https://github.com/EauDoon/agent-team-os) | Wire-format and tool pack for bounded multi-role work\. Ships the six-field role-brief schema, the connect specification, dependency-light validators, calibrated synthetic evaluation harness, and a deterministic package builder with SHA-256 verification\. | assistant, python | configuration-dependent |
+| [blitz](https://github.com/EauDoon/blitz) | Minimum Viable Company kit with editable operating records, evidence gates, local cash forecasts and scoped handoffs\. | python, markdown, assistant | configuration-dependent |
 | [connect\.md](https://github.com/EauDoon/connect.md) | Browser profile/resume Markdown builder with reviewed source replacements, recovery sessions, section excerpts and local review exports\. | browser, node | configuration-dependent |
 | [consequence-rail](https://github.com/EauDoon/consequence-rail) | Recourse-gated synthetic execution with settlement and drill comparisons, verified review exports and recovery diagnostics\. | node | local-after-setup |
 | [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) | Deterministic policy evaluation with fixture assertions, corpus migration checks and portable replay bundles\. | python | local-after-setup |
@@ -56,18 +57,22 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | compose-agent-actions | [agent-action-stack](https://github.com/EauDoon/agent-action-stack) |
 | coordinate-agents | [agent-team-os](https://github.com/EauDoon/agent-team-os) |
 | export-markdown | [connect\.md](https://github.com/EauDoon/connect.md) |
+| forecast-cash | [blitz](https://github.com/EauDoon/blitz) |
+| frame-offers | [blitz](https://github.com/EauDoon/blitz) |
 | gate-actions | [consequence-rail](https://github.com/EauDoon/consequence-rail) |
 | generate-experiments | [unconventional-moves](https://github.com/EauDoon/unconventional-moves) |
 | manage-followups | [hermes-parallel-followups](https://github.com/EauDoon/hermes-parallel-followups) |
 | match-reference-build | [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) |
 | model-liquidity | [decision-labs](https://github.com/EauDoon/decision-labs) |
 | publish-profile | [llms-txt-personal-site](https://github.com/EauDoon/llms-txt-personal-site) |
+| record-decisions | [blitz](https://github.com/EauDoon/blitz) |
 | reflect | [reflection-engine](https://github.com/EauDoon/reflection-engine) |
 | replay-evidence | [agent-action-stack](https://github.com/EauDoon/agent-action-stack), [consequence-rail](https://github.com/EauDoon/consequence-rail), [mandatebound](https://github.com/EauDoon/mandatebound) |
 | research-crypto | [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk) |
 | research-stablecoins | [stable-desk](https://github.com/EauDoon/stable-desk) |
-| review-evidence | [agent-team-os](https://github.com/EauDoon/agent-team-os), [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench), [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk), [mandatebound](https://github.com/EauDoon/mandatebound), [stable-desk](https://github.com/EauDoon/stable-desk) |
+| review-evidence | [agent-team-os](https://github.com/EauDoon/agent-team-os), [blitz](https://github.com/EauDoon/blitz), [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench), [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk), [mandatebound](https://github.com/EauDoon/mandatebound), [stable-desk](https://github.com/EauDoon/stable-desk) |
 | run-agent | [hermes-agent](https://github.com/EauDoon/hermes-agent) |
+| scope-exports | [blitz](https://github.com/EauDoon/blitz) |
 | validate-policy | [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) |
 | verify-claims | [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) |
 | write-profile | [connect\.md](https://github.com/EauDoon/connect.md) |
@@ -85,6 +90,12 @@ Category: action-systems. [Assessed README](https://github.com/EauDoon/agent-act
 Wire-format and tool pack; does not assert a coordination protocol. Local checks inspect supplied records; the skill is an instruction layer, not a permission or execution boundary. Assistant data handling depends on the provider; native routing and paired model quality remain unverified.
 
 Category: agent-workflows. [Assessed README](https://github.com/EauDoon/agent-team-os/blob/39c45d21b00ff5a9f987de8e79232cad77d14e12/README.md) at 39c45d21b00ff5a9f987de8e79232cad77d14e12. [Current README](https://github.com/EauDoon/agent-team-os/blob/main/README.md).
+
+### blitz
+
+Python 3.12+ helpers and editable records run locally; optional assistant workflows depend on the host, provider and tools. Skills need readable source or separate host installation; automatic routing is unverified. Calculations and synthetic examples do not establish demand, profitability or authority to spend, sign, contact anyone or deploy. Check the repository terms and individual component notices before use or redistribution.
+
+Category: decision-methods. [Assessed README](https://github.com/EauDoon/blitz/blob/eb0fd45c48af0e9bb712011534eab6de9b8111f9/README.md) at eb0fd45c48af0e9bb712011534eab6de9b8111f9. [Current README](https://github.com/EauDoon/blitz/blob/main/README.md).
 
 ### connect.md
 

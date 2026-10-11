@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "assessedOn": "2026-10-04",
+  "assessedOn": "2026-10-11",
   "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.",
   "portfolioWavesCompleted": [1, 2, 3, 5, 6, 7, 9, 10, 12, 13, 14, 15],
   "projects": [
@@ -49,6 +49,32 @@
       "source": {
         "revision": "39c45d21b00ff5a9f987de8e79232cad77d14e12",
         "url": "https://github.com/EauDoon/agent-team-os/blob/39c45d21b00ff5a9f987de8e79232cad77d14e12/README.md"
+      }
+    },
+    {
+      "id": "blitz",
+      "repository": "https://github.com/EauDoon/blitz",
+      "summary": "Minimum Viable Company kit with editable operating records, evidence gates, local cash forecasts and scoped handoffs.",
+      "category": "decision-methods",
+      "runtimes": [
+        "python",
+        "markdown",
+        "assistant"
+      ],
+      "privacy": "configuration-dependent",
+      "tasks": [
+        "frame-offers",
+        "review-evidence",
+        "forecast-cash",
+        "scope-exports",
+        "record-decisions"
+      ],
+      "boundary": "Python 3.12+ helpers and editable records run locally; optional assistant workflows depend on the host, provider and tools. Skills need readable source or separate host installation; automatic routing is unverified. Calculations and synthetic examples do not establish demand, profitability or authority to spend, sign, contact anyone or deploy. Check the repository terms and individual component notices before use or redistribution.",
+      "fork": false,
+      "lastAudited": "2026-10-11",
+      "source": {
+        "revision": "eb0fd45c48af0e9bb712011534eab6de9b8111f9",
+        "url": "https://github.com/EauDoon/blitz/blob/eb0fd45c48af0e9bb712011534eab6de9b8111f9/README.md"
       }
     },
     {
