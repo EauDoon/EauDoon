@@ -13,7 +13,7 @@ match the `id` field in `catalog.json`.
 
 - Register Blitz in the pinned public catalog and inventory, feature it first in Selected work, and update the constellation and catalog counts.
 - Give Blitz a project card in light, dark and mobile variants, matching the existing three cards.
-- Set Blitz apart in its own row under the constellation title and tagline, drawn as its own red constellation through its four gates (Frame, Test, Deliver, Operate), with a red spark where the other clusters run green, in place of its node in the Decision tools cluster. The animation stops under reduced motion.
+- Add a fourth constellation group, Speed launches, above the other three. Blitz is its only star, drawn in red with a launch trail and a red spark where the other groups run green, and leaves its node in the Decision tools cluster. The animation stops under reduced motion.
 
 ## [1.0.0] - 2026-10-09
 
