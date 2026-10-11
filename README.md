@@ -39,11 +39,11 @@ I build tools for agent systems and business decisions, with explicit rules, rec
   <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/gauntlet-verify-mobile-dark.svg">
   <source media="(max-width: 600px)" srcset="assets/gauntlet-verify-mobile-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset="assets/gauntlet-verify-dark.svg">
-  <img src="assets/gauntlet-verify-light.svg" alt="Gauntlet Verify. A fork of the Gauntlet Loop that runs in two modes: blind judges hold a build to a shipped reference, and isolated verifiers label each claim verified, reported, or unverified." width="100%">
+  <img src="assets/gauntlet-verify-light.svg" alt="Gauntlet Verify. Eval the evals, two modes. Blind judges hold a build to a shipped reference, and isolated verifiers label each claim verified, reported, or unverified." width="100%">
 </picture>
 </a>
 
-[Repository](https://github.com/EauDoon/gauntlet-verify) &nbsp;·&nbsp; [Upstream original](https://github.com/robonuggets/gauntlet-loop)
+[Repository](https://github.com/EauDoon/gauntlet-verify)
 
 <br>
 
