@@ -12,6 +12,7 @@ match the `id` field in `catalog.json`.
 ## [Unreleased]
 
 - Register Blitz in the pinned public catalog and inventory, feature it first in Selected work, and update the constellation and catalog counts.
+- Give Blitz a project card in light, dark and mobile variants, matching the existing three cards.
 
 ## [1.0.0] - 2026-10-09
 
