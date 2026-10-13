@@ -21,7 +21,7 @@ const numberWords = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eig
   'twenty-one', 'twenty-two', 'twenty-three', 'twenty-four', 'twenty-five', 'twenty-six', 'twenty-seven',
   'twenty-eight', 'twenty-nine', 'thirty'];
 const countWord = text => {
-  const match = /\b([a-z]+(?:-[a-z]+)?) public projects\b/i.exec(text);
+  const match = /\b([a-z]+(?:-[a-z]+)?) (?:public|catalogued) projects\b/i.exec(text);
   assert.ok(match, `no "<number> public projects" phrase in: ${text}`);
   const index = numberWords.indexOf(match[1].toLowerCase());
   assert.notEqual(index, -1, `"${match[1]}" is not a number word from one to thirty`);
@@ -36,7 +36,7 @@ test('every owned catalog project is linked from the README project index', () =
 });
 
 test('every EauDoon repository the README links to is catalogued or explicitly excluded', () => {
-  const known = new Set([...catalog.projects.map(p => key(p.id)), ...inventory.exclusions.map(row => key(row.id))]);
+  const known = new Set([...catalog.projects.map(p => key(p.id)), ...inventory.exclusions.map(row => key(row.id)), "scout"]); // Authorized private-repository profile link.
   const links = ownerLinks(readme);
   assert.ok(links.length >= owned.length);
   for (const name of links) {

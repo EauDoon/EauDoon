@@ -15,9 +15,11 @@ I build tools for agent systems and business decisions, with explicit rules, rec
   <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/constellation-mobile-dark.svg">
   <source media="(max-width: 600px)" srcset="assets/constellation-mobile-light.svg">
   <source media="(prefers-color-scheme: dark)" srcset="assets/constellation-dark.svg">
-  <img src="assets/constellation-light.svg" alt="A constellation of fourteen public projects, grouped into speed launches, agent systems, decision tools, and practical experiments, with Blitz in red as the only speed launch. Open the project catalog for individual links." width="100%">
+  <img src="assets/constellation-light.svg" alt="A constellation of fourteen catalogued projects and Scout (private), grouped into speed launches, agent systems, decision tools, and practical experiments, with Scout alongside Blitz. Open the project catalog for catalogued project links." width="100%">
 </picture>
 </a>
+
+[Scout (private)](https://github.com/EauDoon/Scout) provides optional investigation and comparison within Thor, alongside Blitz.
 
 ## Selected work
 
