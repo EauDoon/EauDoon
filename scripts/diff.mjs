@@ -3,12 +3,63 @@ import { pathToFileURL } from 'node:url';
 import { loadCatalog, errorMessage } from '../lib/catalog.mjs';
 import { diffSnapshots } from '../lib/snapshot.mjs';
 
+const usage = 'Usage: node scripts/diff.mjs BEFORE.json AFTER.json [--json] [--values]';
+
+// Two snapshot paths, then --json and --values in either order, each at most
+// once. Anything else is a usage error that never echoes the arguments.
+export function parseArgs(args) {
+  const [before, after, ...flags] = args;
+  if (args.length < 2 || args.length > 4 || [before, after].some(x => x.startsWith('--'))
+    || flags.some(flag => !['--json', '--values'].includes(flag)) || new Set(flags).size !== flags.length) throw new Error(usage);
+  return { before, after, json: flags.includes('--json'), values: flags.includes('--values') };
+}
+
+// Catalog text is schema-checked (no control or format characters), so values
+// print as they are. A side without the field prints as (absent). A source
+// pin prints its revision, or its README link when the revision is the same
+// on both sides (an id casing fix moves only the link).
+const shown = (row, value) => {
+  if (value === undefined) return '(absent)';
+  if (row.field === 'source') return row.before?.revision === row.after?.revision ? value.url : value.revision;
+  return Array.isArray(value) ? value.join(', ') : String(value);
+};
+const valueLines = (indent, row, review) => [
+  `${indent}${row.field}:`,
+  `${indent}  before: ${shown(row, row.before)}`,
+  `${indent}  after: ${shown(row, row.after)}`,
+  ...(review ? [`${indent}  review: ${review}`] : []),
+];
+const recordLines = project => [
+  `  ${project.id}${project.fork ? ' (fork)' : ''}`,
+  `    summary: ${project.summary}`,
+  `    boundary: ${project.boundary}`,
+  `    assessed README: ${project.source.url}`,
+];
+
+// The text review. Without values it is the names-only report; with values
+// each change also shows what it was and what it becomes.
+export function renderReview(diff) {
+  const values = Object.hasOwn(diff, 'metadataValues');
+  const lines = [`Snapshot review: ${diff.beforeDate} -> ${diff.afterDate}`, `Metadata: ${diff.metadataChanged.join(', ') || 'unchanged'}`];
+  if (values) for (const row of diff.metadataValues) lines.push(...valueLines('  ', row));
+  lines.push(`Added: ${diff.added.join(', ') || 'none'}`);
+  if (values) for (const project of diff.addedProjects) lines.push(...recordLines(project));
+  lines.push(`Removed: ${diff.removed.join(', ') || 'none'}`);
+  if (values) for (const project of diff.removedProjects) lines.push(...recordLines(project));
+  lines.push('Changed:');
+  if (!diff.changed.length) lines.push('  none');
+  for (const change of diff.changed) {
+    lines.push(`  ${change.id}: ${change.fields.join(', ')}`);
+    if (values) for (const row of change.values) lines.push(...valueLines('    ', row, row.field === 'source' ? change.review : undefined));
+  }
+  lines.push('Source changes require renewed assessment; no updates were applied.');
+  return lines.join('\n');
+}
+
 function main() {
-  const args = process.argv.slice(2);
-  if (args.length < 2 || args.length > 3 || args.slice(0, 2).some(x => x.startsWith('--')) || args.length === 3 && args[2] !== '--json') throw new Error('Usage: node scripts/diff.mjs BEFORE.json AFTER.json [--json]');
-  const diff = diffSnapshots(loadCatalog(args[0]), loadCatalog(args[1]));
-  if (args[2]) console.log(JSON.stringify(diff, null, 2));
-  else console.log(`Snapshot review: ${diff.beforeDate} -> ${diff.afterDate}\nMetadata: ${diff.metadataChanged.join(', ') || 'unchanged'}\nAdded: ${diff.added.join(', ') || 'none'}\nRemoved: ${diff.removed.join(', ') || 'none'}\nChanged:\n${diff.changed.map(x => `  ${x.id}: ${x.fields.join(', ')}`).join('\n') || '  none'}\nSource changes require renewed assessment; no updates were applied.`);
+  const options = parseArgs(process.argv.slice(2));
+  const diff = diffSnapshots(loadCatalog(options.before), loadCatalog(options.after), { values: options.values });
+  console.log(options.json ? JSON.stringify(diff, null, 2) : renderReview(diff));
 }
 
 function invokedAsCli() {

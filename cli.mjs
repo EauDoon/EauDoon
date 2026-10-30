@@ -4,6 +4,7 @@ import { loadCatalog, errorMessage } from './lib/catalog.mjs';
 import { workflows } from './lib/workflows.mjs';
 import { search, summarize, parseOptions, filterProjects, selectProject, detail, renderDetail, compare, renderComparison, taskIndex, shortlist } from './lib/discover.mjs';
 import { packageVersion } from './lib/version.mjs';
+import { searchHints, renderHints } from './lib/suggest.mjs';
 
 // Built on demand inside main(), so a bad package.json is reported as a CLI
 // error instead of throwing at import time.
@@ -18,6 +19,7 @@ const helpText = () => `Offline public project discovery ${packageVersion()} (No
   node cli.mjs shortlist <task-id...> [filters] [--json]
 List/search filters: --category VALUE --runtime VALUE --privacy VALUE --task VALUE --fork yes|no
 Filters intersect. Invalid values print the available choices.
+Search matching is exact; hints suggest close terms and filters without changing results.
 No installs, network calls, telemetry or project execution.`;
 
 const usage = {
@@ -60,7 +62,12 @@ function main() {
   const catalog = loadCatalog(catalogPath);
   const { options, positional } = parseOptions(args, catalog.projects);
   if (['validate', 'list'].includes(command) && positional.length || command === 'validate' && Object.keys(options).length || command === 'search' && !positional.join(' ').trim() || command === 'show' && (positional.length !== 1 || Object.keys(options).some(k => k !== 'json'))) throw new Error(`Invalid arguments.\n${helpText()}`);
-  if (command === 'validate') console.log(`Valid catalog: ${catalog.projects.length} public projects`);
+  if (command === 'validate') {
+    // An owned entry can be catalogued while its repository is private
+    // (public-inventory.json privateEntries), so the count does not say public.
+    const forks = catalog.projects.filter(p => p.fork).length;
+    console.log(`Valid catalog: ${catalog.projects.length} projects (${catalog.projects.length - forks} owned, ${forks} fork${forks === 1 ? '' : 's'})`);
+  }
   else if (command === 'tasks') {
     if (positional.length || Object.keys(options).some(k => k !== 'json')) throw new Error('Tasks accepts only --json');
     const tasks = taskIndex(catalog.projects);
@@ -83,7 +90,9 @@ function main() {
   }
   else {
     const projects = search(filterProjects(catalog.projects, options), positional.join(' '));
-    console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects }, null, 2) : summarize(projects));
+    // Hints never change the results; list keeps its exact output.
+    const hints = command === 'search' ? searchHints(catalog.projects, positional.join(' '), options) : [];
+    console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects, ...(hints.length ? { hints } : {}) }, null, 2) : summarize(projects) + renderHints(hints, options));
   }
 }
 

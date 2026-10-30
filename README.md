@@ -98,7 +98,7 @@ I build tools for agent systems and business decisions, with explicit rules, rec
 - **[Operator Labs](https://github.com/EauDoon/operator-labs)** contains two offline Python tools for synthetic payment-route comparison and OTLP privacy-regression checks.
 - **[llms-txt-personal-site](https://github.com/EauDoon/llms-txt-personal-site)** is a static-site template with Markdown, llms.txt, JSON-LD, and reproducible build checks.
 - **[connect.md](https://github.com/EauDoon/connect.md)** supports local Markdown profile and resume drafting, preview, session recovery, and exports. Optional network services require separate deployment.
-- **[Stable Desk](https://github.com/EauDoon/stable-desk)** is a browser-local stablecoin research workbench with a synthetic baseline and human-reviewed decisions. Exported files are its backups; hosted source identity is unverified. No license has been selected, so public visibility does not grant reuse permission.
+- **[Stable Desk](https://github.com/EauDoon/stable-desk)** is a browser-local stablecoin research workbench with a synthetic baseline and human-reviewed decisions. Exported files are its backups; hosted source identity is unverified. All rights reserved: the source is public for reading only and no reuse permission is granted.
 
 ### Fork contribution
 

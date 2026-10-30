@@ -44,6 +44,22 @@ test('every EauDoon repository the README links to is catalogued or explicitly e
   }
 });
 
+test('licence terms in the README project index match the catalog boundary', () => {
+  const indexLine = id => readme.split('\n').find(text => text.includes(`**[`) && text.includes(`](https://github.com/EauDoon/${id})**`));
+  let checked = 0;
+  for (const project of owned) {
+    const terms = /All rights reserved[^.]*\./.exec(project.boundary)?.[0];
+    if (!terms) continue;
+    const line = indexLine(project.id);
+    assert.ok(line, `${project.id} has no README project index line`);
+    assert.ok(line.includes(terms), `README.md must state ${project.id}'s catalogued terms: ${terms}`);
+    checked += 1;
+  }
+  assert.ok(checked >= 1, 'no catalog boundary states licence terms');
+  // The catalog dropped this phrase on 30-10-2026; the README must not keep it.
+  assert.doesNotMatch(readme, /No license has been selected/);
+});
+
 test('the constellation states the number of owned projects', () => {
   const alt = /<img\b[^>]*\bsrc="assets\/constellation-light\.svg"[^>]*>/.exec(readme)?.[0];
   assert.ok(alt, 'README.md no longer shows the constellation');

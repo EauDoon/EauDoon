@@ -1,14 +1,60 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
+import { search, summarize } from '../lib/discover.mjs';
 export const run = (...args) => spawnSync(process.execPath, [fileURLToPath(new URL('../cli.mjs', import.meta.url)), ...args], { encoding: 'utf8', timeout: 5000 });
 test('search is case-insensitive, intersects words and returns parseable provenance', () => {
   const result = run('search', 'SYNTHETIC', 'payment', '--json');
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(result.stdout).projects.map(p => p.id), ['operator-labs']);
   assert.match(run('search', 'unmatched-value').stdout, /No projects match/);
+});
+test('search hints follow unchanged results in text and JSON', () => {
+  const text = run('search', 'payments');
+  assert.equal(text.status, 0, text.stderr);
+  assert.equal(text.stdout, 'No projects match.\n\nHints (results are unchanged):\n  payments: did you mean payment (1 match)?\n');
+  const json = run('search', 'payments', '--json');
+  assert.equal(json.status, 0, json.stderr);
+  const parsed = JSON.parse(json.stdout);
+  assert.deepEqual(parsed.projects, []);
+  assert.equal(parsed.hints[0].suggestions[0].term, 'payment');
+  assert.deepEqual(Object.keys(parsed), ['assessedOn', 'assessment', 'projects', 'hints']);
+  const python = run('search', 'python');
+  assert.equal(python.status, 0, python.stderr);
+  assert.ok(python.stdout.startsWith(`${summarize(search(loadCatalog().projects, 'python'))}\n\nHints (results are unchanged):\n`), python.stdout);
+  assert.match(python.stdout, /\n {2}python: list --runtime python matches 10 projects\n$/);
+  // The hint is runnable as shown: list reaches the count it names.
+  assert.equal(JSON.parse(run('list', '--runtime', 'python', '--json').stdout).projects.length, 10);
+  assert.match(run('search', 'python', 'synthetic').stdout, /\n {2}python: replacing the word with --runtime python matches \d+ projects?\n$/);
+  assert.doesNotMatch(run('search', 'python', '--runtime', 'python').stdout, /Hints/);
+  // No hint, no key: a search with results keeps its 1.0.0 output.
+  const matched = JSON.parse(run('search', 'SYNTHETIC', 'payment', '--json').stdout);
+  assert.deepEqual(Object.keys(matched), ['assessedOn', 'assessment', 'projects']);
+  assert.equal(run('search', 'unmatched-value').stdout, 'No projects match.\n');
+  assert.doesNotMatch(run('list').stdout, /Hints/);
+  const hostile = run('search', 'pay\u001b[31mments', 'pay‮ments');
+  assert.equal(hostile.stdout, 'No projects match.\n');
+});
+test('validate counts owned entries and forks instead of calling every entry public', () => {
+  const projects = loadCatalog().projects;
+  const forks = projects.filter(p => p.fork).length;
+  const result = run('validate');
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, `Valid catalog: ${projects.length} projects (${projects.length - forks} owned, ${forks} forks)\n`);
+  assert.doesNotMatch(result.stdout, /public/);
+  const dir = mkdtempSync(join(tmpdir(), 'catalog-validate-'));
+  try {
+    const catalog = loadCatalog();
+    catalog.projects = [catalog.projects.find(p => p.fork), catalog.projects.find(p => !p.fork)];
+    const snapshot = join(dir, 'snapshot.json');
+    writeFileSync(snapshot, JSON.stringify(catalog));
+    assert.equal(run('--catalog', snapshot, 'validate').stdout, 'Valid catalog: 2 projects (1 owned, 1 fork)\n');
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 test('CLI fails on misspelled commands and options', () => {
   for (const args of [['seach'], ['list', '--jsno'], ['search'], ['validate', 'extra']]) assert.equal(run(...args).status, 1);
@@ -71,6 +117,26 @@ test('plain show prints the documented human detail', () => {
   assert.match(result.stdout, /\nSource revision: [0-9a-f]{40}\n/);
   assert.ok(result.stdout.includes(`\nLimit: ${project.boundary}\n`));
   assert.match(result.stdout, /\n3\. Review the documented prerequisites/);
+  assert.ok(result.stdout.includes(`\nStatic assessment: ${loadCatalog().assessedOn}\nLast audited: ${project.lastAudited}\nSource revision: `), result.stdout);
+});
+test('show and compare state each entry last audit, or that none is recorded', () => {
+  const catalog = loadCatalog();
+  const compared = run('compare', 'operator-labs', 'connect.md');
+  assert.equal(compared.status, 0, compared.stderr);
+  const rows = compared.stdout.split('\n');
+  const audited = rows.findIndex(line => line.startsWith('| lastAudited |'));
+  assert.equal(rows[audited - 1].startsWith('| fork |'), true);
+  const date = id => catalog.projects.find(p => p.id === id).lastAudited;
+  assert.equal(rows[audited], `| lastAudited | ${date('operator-labs')} | ${date('connect.md')} |`);
+  const dir = mkdtempSync(join(tmpdir(), 'catalog-audit-'));
+  try {
+    delete catalog.projects.find(p => p.id === 'operator-labs').lastAudited;
+    const snapshot = join(dir, 'snapshot.json');
+    writeFileSync(snapshot, JSON.stringify(catalog));
+    assert.match(run('--catalog', snapshot, 'show', 'operator-labs').stdout, /\nLast audited: not recorded\n/);
+    assert.match(run('--catalog', snapshot, 'compare', 'operator-labs', 'connect.md').stdout, /\n\| lastAudited \| not recorded \| /);
+    assert.equal(JSON.parse(run('--catalog', snapshot, 'show', 'operator-labs', '--json').stdout).lastAudited, undefined);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 test('comparison preserves requested order and exposes limits', () => {
   const result = run('compare', 'mandatebound', 'consequence-rail', '--json');

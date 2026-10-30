@@ -16,6 +16,8 @@ Prefix any command with `--catalog SNAPSHOT.json` to use a previously saved, val
 
 Input shape: `{"owner":"EauDoon","repositories":[{"id":"example-project","public":true}]}`. Every row must explicitly be public. Supply a complete public-only inventory for a complete comparison; the tool does not authenticate its completeness or truth. Keep your source inventory outside the repository. Do not supply private records.
 
+The checked-in [public-inventory.json](../public-inventory.json) and candidates from `node scripts/inventory-build.mjs` use the complete snapshot format, with retrieval date, source, archive flags, exclusions and private entries. Check those with `node scripts/inventory-check.mjs FILE`, not with this command, which takes only the minimal shape above. See [the refresh procedure](DISCOVERY.md#check-public-inventory-coverage) for building a candidate from saved search pages.
+
 ## Save a discovery brief
 
 `node cli.mjs save-query NEW-QUERY.json synthetic payment --runtime python` saves the same search and single-value filters used interactively as a normalized brief. Omit words and filters to save an unconstrained brief. It validates before writing, never replaces a file, and returns the saved query for review. Edit the JSON to add multi-value filters or explicit exclusions. The saved brief works with query, facets, page, plan, export and handoff.
@@ -54,7 +56,7 @@ Use `ndjson` to consume an export one JSON record per line. The first record has
 
 ## Record the assessed catalog
 
-`node cli.mjs freshness 2026-09-11 30` compares the catalog's declared assessment date with an explicit UTC calendar date and a maximum age from 0 to 36500 days. The threshold is inclusive. Output reports `within-threshold`, `stale`, or `future-assessment`, elapsed days and catalog digest. All three are successful reports with exit code 0; consumers choose their own acceptance policy. No local clock, network check or per-project maintenance claim is involved. Reusing the same snapshot and arguments reproduces the result.
+`node cli.mjs freshness 2026-09-11 30` compares the catalog's declared assessment date with an explicit UTC calendar date and a maximum age from 0 to 36500 days. The threshold is inclusive. Output reports `within-threshold`, `stale`, or `future-assessment`, elapsed days and catalog digest. All three are successful reports with exit code 0; consumers choose their own acceptance policy. A `projects` array, in catalog id order, gives each entry's `lastAudited` date, its age in days and a status against the same date and inclusive threshold, or `unrecorded` with null age when the entry has no audit date. Entries can be last audited before the catalog assessment, so check the entries you intend to use. Entry ages describe when each catalog entry was last reviewed, not project maintenance. No local clock, network check or per-project maintenance claim is involved. Reusing the same snapshot and arguments reproduces the result.
 
 `node cli.mjs receipt` prints a semantic SHA-256 receipt with the assessment date and every pinned source revision. Save its JSON and retain the digest separately if you need a substitution check. `node cli.mjs verify-receipt RECEIPT.json EXPECTED-DIGEST` verifies it against this checkout and the independently retained digest. Omitting the digest checks only consistency with this checkout and explicitly reports `independentlyPinned: false`.
 
@@ -74,7 +76,7 @@ The digest ignores object-key and project ordering; other array ordering remains
 
 ## Understand an empty result
 
-`node cli.mjs diagnose QUERY.json` reports which constraints each near miss fails and what would match if one text/filter constraint were omitted. It preserves explicit exclusions in every diagnostic and never edits or reruns a broadened request automatically. At most 50 near misses are shown, ordered by failed-constraint count then id, with the total stated. This explains selection mechanics, not project quality or a recommendation to relax your requirements.
+`node cli.mjs diagnose QUERY.json` reports which constraints each near miss fails and what would match if one text/filter constraint were omitted. It preserves explicit exclusions in every diagnostic and never edits or reruns a broadened request automatically. At most 50 near misses are shown, ordered by failed-constraint count then id, with the total stated. `textSuggestions` lists close catalog terms for each text word that no project allowed by the query's filters and exclusions contains, using the same rules as search hints; each count reruns the whole query with that one word replaced, and the list is empty when there is nothing to suggest. This explains selection mechanics, not project quality or a recommendation to relax your requirements.
 
 CLI file errors report a stable reason without disclosing the supplied path. Unknown project ids and options are not echoed, including terminal control characters. Existing output files remain untouched on failure.
 

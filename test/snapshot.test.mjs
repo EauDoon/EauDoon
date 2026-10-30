@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
 import { diffSnapshots } from '../lib/snapshot.mjs';
+import { parseArgs, renderReview } from '../scripts/diff.mjs';
 
 test('importing the snapshot diff does not run the review', () => {
   const result = spawnSync(process.execPath, ['--input-type=module', '--eval', 'await import("./scripts/diff.mjs")'], {
@@ -133,4 +134,165 @@ test('changed field names ignore object key order', () => {
   const expected = [{ id: 'operator-labs', fields: ['summary', 'boundary'] }];
   assert.deepEqual(diffSnapshots(before, after).changed, expected);
   assert.deepEqual(diffSnapshots(reversed, after).changed, expected);
+});
+
+// A re-pin, a summary rewrite, a dropped field, an added and a removed entry,
+// and an assessment date change, all on public ids.
+function reviewFixture() {
+  const before = loadCatalog();
+  const after = structuredClone(before);
+  const operator = after.projects.find(p => p.id === 'operator-labs');
+  operator.summary = 'Public discovery tools';
+  const revision = 'a'.repeat(40);
+  const connect = after.projects.find(p => p.id === 'connect.md');
+  connect.source = { revision, url: `${connect.repository}/blob/${revision}/README.md` };
+  delete after.projects.find(p => p.id === 'consequence-rail').lastAudited;
+  after.projects = after.projects.filter(p => p.id !== 'mandatebound');
+  after.projects.push({ ...structuredClone(operator), id: 'synthetic-new-project', repository: 'https://github.com/EauDoon/synthetic-new-project',
+    source: { revision, url: `https://github.com/EauDoon/synthetic-new-project/blob/${revision}/README.md` } });
+  after.assessedOn = new Date(Date.parse(before.assessedOn) + 86400000).toISOString().slice(0, 10);
+  return { before, after };
+}
+
+test('snapshot review without options keeps the names-only shape', () => {
+  const { before, after } = reviewFixture();
+  const diff = diffSnapshots(before, after);
+  assert.deepEqual(Object.keys(diff), ['beforeDate', 'afterDate', 'metadataChanged', 'added', 'removed', 'changed']);
+  assert.ok(diff.changed.every(row => Object.keys(row).join(',') === 'id,fields'));
+  assert.deepEqual(diffSnapshots(before, after, {}), diff);
+  assert.deepEqual(diffSnapshots(before, after, { values: false }), diff);
+});
+
+test('snapshot review with values shows before and after for every change', () => {
+  const { before, after } = reviewFixture();
+  const plain = diffSnapshots(before, after);
+  const diff = diffSnapshots(before, after, { values: true });
+  // The names-only fields are unchanged; values only add detail.
+  for (const key of Object.keys(plain)) if (key !== 'changed') assert.deepEqual(diff[key], plain[key], key);
+  assert.deepEqual(diff.changed.map(({ id, fields }) => ({ id, fields })), plain.changed);
+  const row = id => diff.changed.find(change => change.id === id);
+  const operator = before.projects.find(p => p.id === 'operator-labs');
+  assert.deepEqual(row('operator-labs').values, [{ field: 'summary', before: operator.summary, after: 'Public discovery tools' }]);
+  assert.equal(Object.hasOwn(row('operator-labs'), 'review'), false);
+  const audited = row('consequence-rail').values;
+  assert.deepEqual(audited, [{ field: 'lastAudited', before: before.projects.find(p => p.id === 'consequence-rail').lastAudited }]);
+  assert.equal(Object.hasOwn(audited[0], 'after'), false);
+  const connect = before.projects.find(p => p.id === 'connect.md');
+  assert.equal(row('connect.md').review, `https://github.com/EauDoon/connect.md/compare/${connect.source.revision}...${'a'.repeat(40)}`);
+  assert.equal(row('connect.md').values[0].before.revision, connect.source.revision);
+  assert.deepEqual(diff.metadataValues, [{ field: 'assessedOn', before: before.assessedOn, after: after.assessedOn }]);
+  assert.deepEqual(diff.addedProjects, [after.projects.find(p => p.id === 'synthetic-new-project')]);
+  assert.deepEqual(diff.removedProjects, [before.projects.find(p => p.id === 'mandatebound')]);
+  const same = diffSnapshots(before, structuredClone(before), { values: true });
+  assert.deepEqual([same.changed, same.metadataValues, same.addedProjects, same.removedProjects], [[], [], [], []]);
+});
+
+test('an id casing fix that keeps the revision shows the moved README link and no compare link', () => {
+  const before = loadCatalog();
+  const after = structuredClone(before);
+  const project = after.projects.find(p => p.id === 'operator-labs');
+  const { revision } = project.source;
+  project.id = 'Operator-Labs';
+  project.repository = 'https://github.com/EauDoon/Operator-Labs';
+  project.source = { revision, url: `${project.repository}/blob/${revision}/README.md` };
+  const diff = diffSnapshots(before, after, { values: true });
+  const row = diff.changed.find(change => change.id === 'Operator-Labs');
+  assert.deepEqual(row.fields, ['id', 'repository', 'source']);
+  assert.equal(Object.hasOwn(row, 'review'), false, 'the revision did not move, so there is nothing to compare');
+  const text = renderReview(diff);
+  assert.ok(text.includes([
+    '    source:',
+    `      before: https://github.com/EauDoon/operator-labs/blob/${revision}/README.md`,
+    `      after: https://github.com/EauDoon/Operator-Labs/blob/${revision}/README.md`,
+  ].join('\n')), text);
+  assert.doesNotMatch(text, /^ +review:/m);
+});
+
+test('metadata values omit the side that lacks a field', () => {
+  const before = loadCatalog();
+  const dropped = structuredClone(before);
+  delete dropped.portfolioWavesCompleted;
+  assert.deepEqual(diffSnapshots(before, dropped, { values: true }).metadataValues, [{ field: 'portfolioWavesCompleted', before: before.portfolioWavesCompleted }]);
+  assert.deepEqual(diffSnapshots(dropped, before, { values: true }).metadataValues, [{ field: 'portfolioWavesCompleted', after: before.portfolioWavesCompleted }]);
+});
+
+test('diff arguments accept --json and --values once each, in any order', () => {
+  assert.deepEqual(parseArgs(['a.json', 'b.json']), { before: 'a.json', after: 'b.json', json: false, values: false });
+  assert.deepEqual(parseArgs(['a.json', 'b.json', '--json']), { before: 'a.json', after: 'b.json', json: true, values: false });
+  assert.deepEqual(parseArgs(['a.json', 'b.json', '--values']), { before: 'a.json', after: 'b.json', json: false, values: true });
+  assert.deepEqual(parseArgs(['a.json', 'b.json', '--values', '--json']), parseArgs(['a.json', 'b.json', '--json', '--values']));
+  for (const args of [[], ['a.json'], ['--json', 'b.json'], ['a.json', '--values'], ['a.json', 'b.json', '--values', '--values'],
+    ['a.json', 'b.json', '--other'], ['a.json', 'b.json', 'c.json'], ['a.json', 'b.json', '--json', '--values', '--json'], ['a.json', 'b.json', '-v']]) {
+    assert.throws(() => parseArgs(args), error => error.message === 'Usage: node scripts/diff.mjs BEFORE.json AFTER.json [--json] [--values]', args.join(' '));
+  }
+});
+
+test('the text review prints values only when they were requested', () => {
+  const { before, after } = reviewFixture();
+  const operator = before.projects.find(p => p.id === 'operator-labs');
+  const connect = before.projects.find(p => p.id === 'connect.md');
+  const removed = before.projects.find(p => p.id === 'mandatebound');
+  const added = after.projects.find(p => p.id === 'synthetic-new-project');
+  const names = [
+    `Snapshot review: ${before.assessedOn} -> ${after.assessedOn}`,
+    'Metadata: assessedOn',
+    'Added: synthetic-new-project',
+    'Removed: mandatebound',
+    'Changed:',
+    '  connect.md: source',
+    '  consequence-rail: lastAudited',
+    '  operator-labs: summary',
+    'Source changes require renewed assessment; no updates were applied.',
+  ];
+  assert.equal(renderReview(diffSnapshots(before, after)), names.join('\n'));
+  assert.equal(renderReview(diffSnapshots(before, after, { values: true })), [
+    names[0], names[1],
+    '  assessedOn:', `    before: ${before.assessedOn}`, `    after: ${after.assessedOn}`,
+    names[2],
+    '  synthetic-new-project', `    summary: ${added.summary}`, `    boundary: ${added.boundary}`, `    assessed README: ${added.source.url}`,
+    names[3],
+    '  mandatebound', `    summary: ${removed.summary}`, `    boundary: ${removed.boundary}`, `    assessed README: ${removed.source.url}`,
+    names[4],
+    names[5], '    source:', `      before: ${connect.source.revision}`, `      after: ${'a'.repeat(40)}`,
+    `      review: https://github.com/EauDoon/connect.md/compare/${connect.source.revision}...${'a'.repeat(40)}`,
+    names[6], '    lastAudited:', `      before: ${before.projects.find(p => p.id === 'consequence-rail').lastAudited}`, '      after: (absent)',
+    names[7], '    summary:', `      before: ${operator.summary}`, '      after: Public discovery tools',
+    names[8],
+  ].join('\n'));
+  const forks = structuredClone(before);
+  forks.projects = forks.projects.filter(p => !p.fork);
+  const tasks = structuredClone(before);
+  tasks.projects.find(p => p.id === 'operator-labs').tasks.push('synthetic-task');
+  const text = renderReview(diffSnapshots(forks, tasks, { values: true }));
+  assert.match(text, /\nAdded: gauntlet-verify, hermes-agent, reflection-engine\n {2}gauntlet-verify \(fork\)\n/);
+  const taskLines = /\n {4}tasks:\n {6}before: (.+)\n {6}after: (.+)\n/.exec(text);
+  assert.ok(taskLines, text);
+  assert.equal(taskLines[2], `${taskLines[1]}, synthetic-task`);
+});
+
+test('the snapshot diff CLI prints values with --values and keeps JSON flags order-free', () => {
+  const script = fileURLToPath(new URL('../scripts/diff.mjs', import.meta.url));
+  const { before, after } = reviewFixture();
+  const dir = mkdtempSync(join(tmpdir(), 'catalog-diff-values-'));
+  try {
+    const beforePath = join(dir, 'before.json');
+    const afterPath = join(dir, 'after.json');
+    writeFileSync(beforePath, JSON.stringify(before));
+    writeFileSync(afterPath, JSON.stringify(after));
+    const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: 'utf8', timeout: 10000 });
+    const text = run(beforePath, afterPath, '--values');
+    assert.equal(text.status, 0, text.stderr);
+    assert.equal(text.stdout, `${renderReview(diffSnapshots(before, after, { values: true }))}\n`);
+    const first = run(beforePath, afterPath, '--json', '--values');
+    const second = run(beforePath, afterPath, '--values', '--json');
+    assert.equal(first.status, 0, first.stderr);
+    assert.equal(first.stdout, second.stdout);
+    assert.deepEqual(JSON.parse(first.stdout), diffSnapshots(before, after, { values: true }));
+    for (const args of [[beforePath, afterPath, '--values', '--values'], [beforePath, afterPath, '--other'], [beforePath, afterPath, afterPath]]) {
+      const failed = run(...args);
+      assert.equal(failed.status, 1);
+      assert.match(failed.stderr, /^catalog diff: Usage: node scripts\/diff\.mjs BEFORE\.json AFTER\.json \[--json\] \[--values\]\r?\n$/);
+      assert.equal(failed.stdout, '');
+    }
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
