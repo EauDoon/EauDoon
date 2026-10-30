@@ -22,6 +22,8 @@ match the `id` field in `catalog.json`.
 - Connect Scout and Blitz in the constellation with matching red stars, and record the connection in the artwork's accessible name.
 - Add a subtle red shooting star that travels from Blitz to Scout in the constellation. The animation stops under reduced motion.
 - Refresh the catalog assessment to 2026-10-30: re-pin the thirteen owned public projects to their current `main` revisions after reviewing the changes since each earlier pin, and set their `lastAudited` to the same date. Blitz and the three historical forks keep their earlier pins. Regenerate `docs/CATALOG.md`.
+- Add an optional `privateEntries` list to `public-inventory.json`. It names owned catalog projects that the owner keeps while their repository is private, each with a public reason, so the coverage check no longer reports them absent. The check flags a private entry that appears in the public snapshot again. Snapshots without the field validate as before.
+- Refresh `public-inventory.json` to 2026-10-30 from the public repository search, which returned 14 of 14 results. Blitz is private, so it moves from `repositories` to `privateEntries`.
 - Replace "No license selected" in the stable-desk boundary with the repository's stated terms: all rights reserved, public for reading only, no reuse permission granted.
 
 ## [1.0.0] - 2026-10-09
