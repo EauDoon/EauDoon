@@ -18,6 +18,9 @@ match the `id` field in `catalog.json`.
 - Draw the Blitz card's stars and rules in the constellation's red, keeping every text colour.
 - Retitle the Gauntlet Verify card tagline to "Eval the evals, two modes".
 - Drop the upstream link and fork wording from the Gauntlet Verify card and its alt text; GitHub marks the repository as a fork and the repository keeps its own attribution.
+- Add Scout, the private repository, beside Blitz in the Speed launches group, with a README line and an alt text that name Scout alongside the fourteen catalogued projects.
+- Connect Scout and Blitz in the constellation with matching red stars, and record the connection in the artwork's accessible name.
+- Add a subtle red shooting star that travels from Blitz to Scout in the constellation. The animation stops under reduced motion.
 
 ## [1.0.0] - 2026-10-09
 
