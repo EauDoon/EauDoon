@@ -27,7 +27,10 @@ test('search hints follow unchanged results in text and JSON', () => {
   const python = run('search', 'python');
   assert.equal(python.status, 0, python.stderr);
   assert.ok(python.stdout.startsWith(`${summarize(search(loadCatalog().projects, 'python'))}\n\nHints (results are unchanged):\n`), python.stdout);
-  assert.match(python.stdout, /\n {2}python: --runtime python matches 10 projects\n$/);
+  assert.match(python.stdout, /\n {2}python: list --runtime python matches 10 projects\n$/);
+  // The hint is runnable as shown: list reaches the count it names.
+  assert.equal(JSON.parse(run('list', '--runtime', 'python', '--json').stdout).projects.length, 10);
+  assert.match(run('search', 'python', 'synthetic').stdout, /\n {2}python: replacing the word with --runtime python matches \d+ projects?\n$/);
   assert.doesNotMatch(run('search', 'python', '--runtime', 'python').stdout, /Hints/);
   // No hint, no key: a search with results keeps its 1.0.0 output.
   const matched = JSON.parse(run('search', 'SYNTHETIC', 'payment', '--json').stdout);

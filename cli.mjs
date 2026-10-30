@@ -92,7 +92,7 @@ function main() {
     const projects = search(filterProjects(catalog.projects, options), positional.join(' '));
     // Hints never change the results; list keeps its exact output.
     const hints = command === 'search' ? searchHints(catalog.projects, positional.join(' '), options) : [];
-    console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects, ...(hints.length ? { hints } : {}) }, null, 2) : summarize(projects) + renderHints(hints));
+    console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects, ...(hints.length ? { hints } : {}) }, null, 2) : summarize(projects) + renderHints(hints, options));
   }
 }
 

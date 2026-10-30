@@ -62,10 +62,10 @@ test('the vocabulary is the searched fields, split into whole and hyphenated ter
 
 test('a word naming a filter value suggests that filter when the count would change', () => {
   const python = filters('python');
-  assert.deepEqual(python, [{ word: 'python', kind: 'filter', option: 'runtime', value: 'python', matches: filterProjects(catalog.projects, { runtime: 'python' }).length }]);
+  assert.deepEqual(python, [{ word: 'python', kind: 'filter', option: 'runtime', value: 'python', command: 'list', matches: filterProjects(catalog.projects, { runtime: 'python' }).length }]);
   assert.equal(python[0].matches, 10);
   assert.equal(search(catalog.projects, 'python').length, 1);
-  assert.deepEqual(filters('local-after-setup'), [{ word: 'local-after-setup', kind: 'filter', option: 'privacy', value: 'local-after-setup', matches: 6 }]);
+  assert.deepEqual(filters('local-after-setup'), [{ word: 'local-after-setup', kind: 'filter', option: 'privacy', value: 'local-after-setup', command: 'list', matches: 6 }]);
   assert.equal(filters('node')[0].matches, filterProjects(catalog.projects, { runtime: 'node' }).length);
   // A word that names a value is not treated as a typo.
   assert.deepEqual(spelling('node'), []);
@@ -80,12 +80,35 @@ test('a word naming a filter value suggests that filter when the count would cha
 test('task and category values get filter hints when their counts differ', () => {
   const found = searchHints(synthetic, 'fixture-task publishing', {});
   assert.deepEqual(found.filter(hint => hint.kind === 'filter'), [
-    { word: 'fixture-task', kind: 'filter', option: 'task', value: 'fixture-task', matches: 1 },
-    { word: 'publishing', kind: 'filter', option: 'category', value: 'publishing', matches: 1 },
+    { word: 'fixture-task', kind: 'filter', option: 'task', value: 'fixture-task', command: 'search', matches: 1 },
+    { word: 'publishing', kind: 'filter', option: 'category', value: 'publishing', command: 'search', matches: 1 },
   ]);
   assert.equal(search(synthetic, 'fixture-task publishing').length, 2);
-  assert.deepEqual(searchHints(synthetic, 'fixture-task', {}).map(({ option, matches }) => ({ option, matches })), [{ option: 'task', matches: 2 }]);
+  assert.deepEqual(searchHints(synthetic, 'fixture-task', {}).map(({ option, command, matches }) => ({ option, command, matches })), [{ option: 'task', command: 'list', matches: 2 }]);
   assert.deepEqual(searchHints(synthetic, 'fixture-task', { task: 'other-task' }), []);
+});
+
+test('following a filter hint as shown reaches the count it states', () => {
+  const [only] = filters('python');
+  assert.equal(only.command, 'list', 'search needs a word, so the only word is replaced by list');
+  assert.equal(filterProjects(catalog.projects, { runtime: 'python' }).length, only.matches);
+  const [withWords] = filters('python synthetic');
+  assert.equal(withWords.command, 'search');
+  assert.equal(search(filterProjects(catalog.projects, { runtime: 'python' }), 'synthetic').length, withWords.matches);
+});
+
+test('counts keep every word, although only the first 20 distinct words get hints', () => {
+  const letters = 'o p e r a t i n d f l y h s c k u m v';
+  // Twenty distinct words: payment would find operator-labs.
+  assert.deepEqual(spelling(`paymnt ${letters}`), [{ word: 'paymnt', kind: 'spelling', suggestions: [{ term: 'payment', matches: 1 }] }]);
+  // A 21st word that rules everything out is still part of every count.
+  assert.deepEqual(search(catalog.projects, `payment ${letters} zzzz`), []);
+  assert.deepEqual(hints(`paymnt ${letters} zzzz`), []);
+  assert.deepEqual(hints(`python ${letters} zzzz`), []);
+  assert.deepEqual(textSuggestions(catalog, normalizeQuery({ version: 1, text: `paymnt ${letters} zzzz` }, catalog)), []);
+  assert.equal(textSuggestions(catalog, normalizeQuery({ version: 1, text: `paymnt ${letters}` }, catalog)).length, 1);
+  // A word after the 20th gets no hint of its own.
+  assert.deepEqual(hints(`${letters} zz yy paymnt`), []);
 });
 
 test('words with control, format or bidirectional characters are never echoed', () => {
@@ -102,15 +125,18 @@ test('the human hints block appends to unchanged results', () => {
   assert.equal(renderHints([
     { word: 'paymnt', kind: 'spelling', suggestions: [{ term: 'payment', matches: 1 }] },
     { word: 'abch', kind: 'spelling', suggestions: [{ term: 'abcd', matches: 2 }, { term: 'abcf', matches: 1 }, { term: 'abcg', matches: 3 }] },
-    { word: 'python', kind: 'filter', option: 'runtime', value: 'python', matches: 10 },
-    { word: 'solo', kind: 'filter', option: 'task', value: 'solo', matches: 1 },
+    { word: 'python', kind: 'filter', option: 'runtime', value: 'python', command: 'list', matches: 10 },
+    { word: 'solo', kind: 'filter', option: 'task', value: 'solo', command: 'search', matches: 1 },
   ]), [
     '', '', 'Hints (results are unchanged):',
     '  paymnt: did you mean payment (1 match)?',
     '  abch: did you mean abcd (2 matches), abcf (1 match) or abcg (3 matches)?',
-    '  python: --runtime python matches 10 projects',
-    '  solo: --task solo matches 1 project',
+    '  python: list --runtime python matches 10 projects',
+    '  solo: replacing the word with --task solo matches 1 project',
   ].join('\n'));
+  // A list hint keeps the filters already supplied, in the help's option order.
+  assert.equal(renderHints([{ word: 'python', kind: 'filter', option: 'runtime', value: 'python', command: 'list', matches: 2 }], { json: true, task: 'trace-privacy', category: 'privacy' }),
+    '\n\nHints (results are unchanged):\n  python: list --category privacy --runtime python --task trace-privacy matches 2 projects');
 });
 
 test('diagnose adds text suggestions without changing any existing field', () => {
