@@ -1,6 +1,6 @@
 {
   "owner": "EauDoon",
-  "retrievedOn": "2026-10-11",
+  "retrievedOn": "2026-10-30",
   "source": "https://api.github.com/search/repositories?q=user%3AEauDoon%20is%3Apublic%20fork%3Afalse",
   "complete": true,
   "repositories": [
@@ -12,12 +12,6 @@
     },
     {
       "id": "agent-team-os",
-      "public": true,
-      "fork": false,
-      "archived": false
-    },
-    {
-      "id": "blitz",
       "public": true,
       "fork": false,
       "archived": false
@@ -99,6 +93,12 @@
     {
       "id": "EauDoon",
       "reason": "Profile presentation infrastructure, not a project."
+    }
+  ],
+  "privateEntries": [
+    {
+      "id": "blitz",
+      "reason": "Kept in the catalog by the owner while the repository is private; its pinned source is not publicly readable."
     }
   ]
 }
