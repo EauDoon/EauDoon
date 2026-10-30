@@ -28,6 +28,7 @@ match the `id` field in `catalog.json`.
 - `node scripts/version-check.mjs --tag vX.Y.Z` now fails when the `## [X.Y.Z]` section is empty, and `--notes` exits 1 instead of printing a blank line, so the release workflow can no longer publish a GitHub Release with empty notes. An empty `[Unreleased]` section stays valid.
 - `node cli.mjs validate` prints `Valid catalog: 17 projects (14 owned, 3 forks)` instead of `17 public projects`, because an owned entry can be catalogued while its repository is private.
 - The README's Stable Desk line now states the same terms as its catalog boundary (all rights reserved, public for reading only, no reuse permission granted) instead of the retired "No license has been selected" wording, and a profile test keeps README licence statements bound to the catalog.
+- `node scripts/diff.mjs BEFORE.json AFTER.json --values` reviews a catalog update in place: every changed field prints its before and after value (`(absent)` for a side without it), each re-pin prints a `review:` compare link from the old to the new revision, metadata changes print both values, and added or removed projects print their summary, boundary and assessed README. `--json --values` adds the same detail as optional fields (`values`, `review`, `metadataValues`, `addedProjects`, `removedProjects`). Flags may come in either order. Without `--values` the text and JSON output are byte-identical to 1.0.0.
 
 ## [1.0.0] - 2026-10-09
 

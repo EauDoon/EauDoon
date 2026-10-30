@@ -53,9 +53,12 @@ Keep a copy of the prior JSON, edit a separate candidate, and compare them witho
 ```text
 node scripts/diff.mjs previous-catalog.json candidate-catalog.json
 node scripts/diff.mjs previous-catalog.json candidate-catalog.json --json
+node scripts/diff.mjs previous-catalog.json candidate-catalog.json --values
 ```
 
 Both inputs must pass the same schema and size checks as the published catalog. The diff lists added and removed ids, changed fields, and assessment metadata changes. Project ordering and object-key ordering do not create false changes. Array ordering remains significant. A new source revision requires a fresh read of its content; the tool does not approve new claims automatically.
+
+Add `--values` (with or without `--json`, in either order) to review each change in place. Every changed field prints its before and after value, and a field missing on one side prints as `(absent)` (in JSON that side's key is omitted). A changed source pin also prints a `review:` link, `https://github.com/EauDoon/<id>/compare/<old>...<new>`, for reading the changes since the pinned revision. Metadata changes print both values, and each added or removed project prints its summary, boundary and assessed README. In JSON, each changed entry gains `values` (`{field, before, after}` rows) and, for a re-pin, `review`; the top level gains `metadataValues`, `addedProjects` and `removedProjects`. Without `--values` the text and JSON output are unchanged.
 
 See [the maintainer workflow](../CONTRIBUTING.md) for source review, regeneration and acceptance checks.
 
