@@ -60,6 +60,49 @@ test('missing, archived, duplicate and self entries cannot silently pass', () =>
   assert.match(check(catalog, absent).issues.join('\n'), /absent from the supplied/);
 });
 
+test('an owned project catalogued while private is named in privateEntries, not reported absent', () => {
+  const catalog = loadCatalog();
+  const owned = catalog.projects.find(p => !p.fork);
+  const value = snapshot();
+  value.repositories = value.repositories.filter(row => row.id.toLowerCase() !== owned.id.toLowerCase());
+  delete value.privateEntries;
+  assert.match(check(catalog, value).issues.join('\n'), new RegExp(`${owned.id}: absent from the supplied`));
+  value.privateEntries = [{ id: owned.id, reason: 'Catalogued while the repository is private.' }];
+  const result = check(catalog, value);
+  assert.deepEqual(result.issues, []);
+  assert.deepEqual(result.privateEntries, value.privateEntries);
+});
+
+test('a private entry that is public again must leave privateEntries', () => {
+  const catalog = loadCatalog();
+  const owned = catalog.projects.find(p => !p.fork);
+  const value = snapshot();
+  if (!value.repositories.some(row => row.id.toLowerCase() === owned.id.toLowerCase())) {
+    value.repositories.push({ id: owned.id, public: true, fork: false, archived: false });
+  }
+  value.privateEntries = [{ id: owned.id, reason: 'Catalogued while the repository is private.' }];
+  assert.match(check(catalog, value).issues.join('\n'), new RegExp(`${owned.id}: listed as private but present in the public snapshot`));
+});
+
+test('private entries must name unique owned catalog projects with a public reason', () => {
+  const catalog = loadCatalog();
+  const owned = catalog.projects.find(p => !p.fork).id;
+  const fork = catalog.projects.find(p => p.fork).id;
+  const reason = 'Catalogued while the repository is private.';
+  for (const entries of [{}, 'blitz', [{ id: 'not-in-catalog', reason }], [{ id: fork, reason }],
+    [{ id: owned, reason }, { id: owned.toUpperCase(), reason }], [{ id: owned, reason: ' ' }],
+    [{ id: owned, reason: `held${String.fromCharCode(0x2028)}back` }], [{ id: owned, reason: 'a <b>' }],
+    [{ id: owned, reason, extra: true }], [{ id: owned }]]) {
+    const value = snapshot();
+    value.repositories = value.repositories.filter(row => row.id.toLowerCase() !== owned.toLowerCase());
+    value.privateEntries = entries;
+    assert.throws(() => check(catalog, value), /Private entries must name/, JSON.stringify(entries));
+  }
+  const misspelt = snapshot();
+  misspelt.privateEntry = [];
+  assert.throws(() => check(catalog, misspelt), /complete dated public owner inventory/);
+});
+
 test('incomplete, private, fork, stale and invalid snapshots cannot become passes', () => {
   const catalog = loadCatalog();
   for (const change of [s => { s.complete = false; }, s => { s.repositories[0].public = false; },

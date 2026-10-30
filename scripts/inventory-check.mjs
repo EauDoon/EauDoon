@@ -6,7 +6,9 @@ import { inventoryDiff } from '../lib/workflows.mjs';
 export function checkInventory(catalog, snapshot, today = new Date().toISOString().slice(0, 10)) {
   const exact = (value, keys) => value !== null && typeof value === 'object' && !Array.isArray(value)
     && Object.keys(value).sort().join(',') === keys;
-  if (!exact(snapshot, 'complete,exclusions,owner,repositories,retrievedOn,source')
+  // privateEntries is optional, so a snapshot written before it existed still validates.
+  if (!(exact(snapshot, 'complete,exclusions,owner,repositories,retrievedOn,source')
+      || exact(snapshot, 'complete,exclusions,owner,privateEntries,repositories,retrievedOn,source'))
     || snapshot.owner !== 'EauDoon' || snapshot.complete !== true
     || snapshot.source !== 'https://api.github.com/search/repositories?q=user%3AEauDoon%20is%3Apublic%20fork%3Afalse'
     || !validDate(snapshot.retrievedOn) || !validDate(today)
@@ -33,11 +35,33 @@ export function checkInventory(catalog, snapshot, today = new Date().toISOString
     }
     excluded.add(row.id.toLowerCase());
   }
+  // An owned project the owner keeps in the catalog while its repository is
+  // not public. A public search cannot return it, so it is named here with a
+  // public reason instead of being reported as absent.
+  const privateEntries = snapshot.privateEntries ?? [];
+  const ownedIds = new Set(owned.projects.map(project => project.id.toLowerCase()));
+  const privateIds = new Map();
+  if (!Array.isArray(privateEntries) || privateEntries.length > 1000) {
+    throw new Error('Private entries must name unique owned catalog projects with a public reason');
+  }
+  for (const row of privateEntries) {
+    if (!exact(row, 'id,reason') || typeof row.id !== 'string' || !ownedIds.has(row.id.toLowerCase())
+      || privateIds.has(row.id.toLowerCase()) || typeof row.reason !== 'string' || !row.reason.trim()
+      || row.reason.length > 500 || /[\p{Cc}\p{Cf}\p{Zl}\p{Zp}<>]/u.test(row.reason)) {
+      throw new Error('Private entries must name unique owned catalog projects with a public reason');
+    }
+    privateIds.set(row.id.toLowerCase(), row.id);
+  }
   const issues = [];
   const age = (Date.parse(today) - Date.parse(snapshot.retrievedOn)) / 86400000;
   if (age < 0 || age > 45) issues.push('Public inventory snapshot is future-dated or older than 45 days; refresh required');
   for (const id of compared.unassessed) if (!excluded.has(id.toLowerCase())) issues.push(`${id}: needs assessment or an explicit exclusion`);
-  for (const id of compared.absentFromSnapshot) issues.push(`${id}: absent from the supplied public non-fork snapshot; review required`);
+  for (const id of compared.absentFromSnapshot) {
+    if (!privateIds.has(id.toLowerCase())) issues.push(`${id}: absent from the supplied public non-fork snapshot; review required`);
+  }
+  for (const [key, id] of privateIds) {
+    if (ids.has(key)) issues.push(`${id}: listed as private but present in the public snapshot; remove it from privateEntries`);
+  }
   for (const project of owned.projects) {
     if (project.id.toLowerCase() === snapshot.owner.toLowerCase()) issues.push('The profile is presentation infrastructure, not a project entry');
     if (excluded.has(project.id.toLowerCase())) issues.push(`${project.id}: cannot be both assessed and excluded`);
@@ -45,7 +69,7 @@ export function checkInventory(catalog, snapshot, today = new Date().toISOString
       issues.push(`${project.id}: archived in the snapshot; remove from the current assessed set`);
     }
   }
-  return { issues, exclusions: snapshot.exclusions, retrievedOn: snapshot.retrievedOn,
+  return { issues, exclusions: snapshot.exclusions, privateEntries, retrievedOn: snapshot.retrievedOn,
     matched: compared.matched, note: 'Offline coverage of a supplied public snapshot, not a live GitHub or project-quality check.' };
 }
 
