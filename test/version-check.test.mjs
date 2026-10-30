@@ -75,6 +75,20 @@ test('release notes are exactly the section body', () => {
   assert.throws(() => releaseNotes(released, '9.9.9'), /no release heading/);
 });
 
+test('a tagged release with an empty section is refused instead of publishing blank notes', () => {
+  const empty = released.replace('## [1.1.0] - 2026-11-02\n\n### Added\n- A new flag.\n', '## [1.1.0] - 2026-11-02\n\n');
+  const blank = released.replace('### Added\n- A new flag.\n', '   \n\t\n');
+  for (const changelog of [empty, blank, empty.replace(/\n/g, '\r\n')]) {
+    assert.match(errors('1.1.0', changelog, 'v1.1.0').join('\n'), /"## \[1\.1\.0\]" has no release notes/);
+    assert.throws(() => releaseNotes(changelog, '1.1.0'), /has no release notes/);
+    // Without a tag the structure is still consistent: only a release needs notes.
+    assert.deepEqual(errors('1.1.0', changelog), []);
+  }
+  // An empty [Unreleased] section stays valid, with or without a tag.
+  assert.deepEqual(errors('1.1.0', released, 'v1.1.0'), []);
+  assert.equal(releaseNotes(released, '1.1.0'), '### Added\n- A new flag.\n');
+});
+
 test('versions sort by SemVer 2.0.0 precedence', () => {
   const ordered = ['1.0.0-alpha', '1.0.0-alpha.1', '1.0.0-alpha.beta', '1.0.0-beta', '1.0.0-beta.2', '1.0.0-beta.11', '1.0.0-rc.1', '1.0.0', '1.0.1', '1.1.0', '2.0.0', '10.0.0'];
   for (let i = 1; i < ordered.length; i += 1) {

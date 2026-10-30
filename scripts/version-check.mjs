@@ -84,22 +84,35 @@ export function checkVersion({ pkg, changelog, tag }) {
       if (tag !== `v${version}`) errors.push(`The tag does not match package.json version ${version}; tag v${version} instead`);
       if (prerelease) errors.push(`package.json version ${version} is a prerelease and cannot be tagged for release`);
       if (!releases.some(release => release.version === version)) errors.push(`CHANGELOG.md has no "## [${version}]" release heading`);
+      // A tagged release publishes its section as the GitHub Release notes.
+      else if (!sectionBody(changelog, version)?.length) errors.push(`CHANGELOG.md "## [${version}]" has no release notes`);
     }
   }
   return { version, releases: releases.map(release => release.version), errors };
 }
 
-// The body of one release section: everything between its heading and the
-// next level-2 heading or the closing link references, without blank edges.
-export function releaseNotes(changelog, version) {
+// The body lines of one release section: everything between its heading and
+// the next level-2 heading or the closing link references, without blank
+// edges. Undefined when the version has no release heading.
+function sectionBody(changelog, version) {
   const lines = changelog.replace(/\r\n/g, '\n').split('\n');
   const start = lines.findIndex(text => text.startsWith(`## [${version}] - `));
-  if (start === -1) throw new Error('CHANGELOG.md has no release heading for that version');
+  if (start === -1) return undefined;
   let end = lines.findIndex((text, index) => index > start && (text.startsWith('## ') || /^\[[^\]]+\]: \S+$/.test(text)));
   if (end === -1) end = lines.length;
   const body = lines.slice(start + 1, end);
   while (body.length && !body[0].trim()) body.shift();
   while (body.length && !body.at(-1).trim()) body.pop();
+  return body;
+}
+
+// The release notes for one version. An empty section is refused, so a
+// release is never published with blank notes.
+export function releaseNotes(changelog, version) {
+  const body = sectionBody(changelog, version);
+  if (body === undefined) throw new Error('CHANGELOG.md has no release heading for that version');
+  // Like the missing-heading error, this never echoes the requested version.
+  if (!body.length) throw new Error('CHANGELOG.md release section for that version has no release notes');
   return `${body.join('\n')}\n`;
 }
 
