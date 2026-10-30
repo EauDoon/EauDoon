@@ -44,7 +44,18 @@ npm run check
 
 The drift and inventory checks compare UTC calendar dates. East of UTC the local date can be a day ahead of the UTC date, so write `assessedOn`, `lastAudited` and `retrievedOn` as UTC dates. `node scripts/drift.mjs --today YYYY-MM-DD` pins the drift reference date, `--check` (the default) or `--json` selects the output, and `--help` prints the usage line. A usage error exits 2; an invalid date or maximum age exits 1.
 
-To refresh it, retrieve every page from GitHub's public repository search for `user:EauDoon is:public fork:false`; require `incomplete_results: false` and reconcile the returned total before replacing the snapshot. Preserve public visibility, fork and archive flags, record the retrieval date and source, and review exclusions and private entries. A private entry never goes in `repositories`, which holds only what the public search returned. An API error or incomplete result is unknown, never an empty successful inventory. Do not query private repositories, infer why a former public entry is absent, automatically advance source pins, or publish an unreviewed project.
+To refresh it, save every page of GitHub's public repository search for `user:EauDoon is:public fork:false` outside the repository, then build a candidate from the saved pages:
+
+```text
+gh api -X GET search/repositories -f q="user:EauDoon is:public fork:false" -f per_page=100 -f page=1 > page-1.json
+curl -s "https://api.github.com/search/repositories?q=user%3AEauDoon%20is%3Apublic%20fork%3Afalse&per_page=100&page=1" > page-1.json
+node scripts/inventory-build.mjs --output candidate-inventory.json page-1.json
+node scripts/inventory-check.mjs candidate-inventory.json
+```
+
+Save one file per page (`page=2` and so on while results remain), or one file of every page from `gh api --paginate --slurp`. Bash and PowerShell 7 write these files as UTF-8; in Windows PowerShell 5.1, `>` writes UTF-16, which the builder rejects, so pipe to `Set-Content -Encoding utf8 page-1.json` instead. Each file shares the 1 MiB JSON limit, and at most 100 pages are accepted. `node scripts/inventory-build.mjs` reads only the files you supply and makes no network call. It rejects the whole build, and writes nothing, when any page lacks `incomplete_results: false`, the pages disagree on `total_count`, `total_count` exceeds the 1,000 results the search can return, the distinct repositories differ from `total_count`, or any item is not an explicitly public, non-fork repository owned by EauDoon with an archive flag. A rejected build means the inventory is unknown, never an empty successful inventory.
+
+The candidate keeps the checked-in format: public visibility, fork and archive flags, the retrieval date (`--retrieved-on`, default today's UTC date) and the fixed source. Exclusions and private entries are carried from the base snapshot (`--base`, default `public-inventory.json`). An exclusion the search no longer returns is dropped, and a private entry the search now returns is kept so the check flags it. The printed review lists added and removed repositories, archive changes, dropped exclusions, carried private entries and the coverage check's issues; it exits 0 when the candidate has no issues and 1 when it has issues or was rejected, and a usage error exits 2. The candidate is written only to a new file and never replaces `public-inventory.json`: review it, then copy it over yourself. A private entry never goes in `repositories`, which holds only what the public search returned. Do not query private repositories, infer why a former public entry is absent, automatically advance source pins, or publish an unreviewed project.
 
 ## Review a catalog update
 

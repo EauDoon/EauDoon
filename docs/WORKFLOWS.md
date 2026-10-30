@@ -16,6 +16,8 @@ Prefix any command with `--catalog SNAPSHOT.json` to use a previously saved, val
 
 Input shape: `{"owner":"EauDoon","repositories":[{"id":"example-project","public":true}]}`. Every row must explicitly be public. Supply a complete public-only inventory for a complete comparison; the tool does not authenticate its completeness or truth. Keep your source inventory outside the repository. Do not supply private records.
 
+The checked-in [public-inventory.json](../public-inventory.json) and candidates from `node scripts/inventory-build.mjs` use the complete snapshot format, with retrieval date, source, archive flags, exclusions and private entries. Check those with `node scripts/inventory-check.mjs FILE`, not with this command, which takes only the minimal shape above. See [the refresh procedure](DISCOVERY.md#check-public-inventory-coverage) for building a candidate from saved search pages.
+
 ## Save a discovery brief
 
 `node cli.mjs save-query NEW-QUERY.json synthetic payment --runtime python` saves the same search and single-value filters used interactively as a normalized brief. Omit words and filters to save an unconstrained brief. It validates before writing, never replaces a file, and returns the saved query for review. Edit the JSON to add multi-value filters or explicit exclusions. The saved brief works with query, facets, page, plan, export and handoff.
