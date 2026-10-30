@@ -61,6 +61,39 @@ test('heading slugs follow GitHub for the forms these documents use', () => {
   assert.deepEqual([...markdownAnchors('- item\n---\n\n| a |\n---\n')], []);
 });
 
+test('code spans in headings count as their literal text, as GitHub renders them', () => {
+  // GitHub's own anchors: nodejs/node doc/api/fs.md renders
+  // "#### `filehandle.appendFile(data[, options])`" as #filehandleappendfiledata-options.
+  for (const [heading, slug] of [
+    ['`filehandle.appendFile(data[, options])`', 'filehandleappendfiledata-options'],
+    ['`freshness`', 'freshness'],
+    ['`node cli.mjs diagnose` output', 'node-climjs-diagnose-output'],
+    ['Usage of `show <id>`', 'usage-of-show-id'],
+    ['Run `show <project-id>` now', 'run-show-project-id-now'],
+    ['`__init__` hooks', '__init__-hooks'],
+    ['Bold __end__', 'bold-end'],
+    ['a _ b', 'a-_-b'],
+    ['Escaped \\_x\\_ and \\<tag\\>', 'escaped-_x_-and-tag'],
+    ['Pad ` b ` here', 'pad-b-here'],
+    ['[link `code`](https://example.com) text', 'link-code-text'],
+  ]) assert.equal(headingSlug(heading), slug, heading);
+  const source = '## `freshness`\n\n### `node cli.mjs diagnose` output\n\n## Usage of `show <id>`\n\n##`not-a-heading`\n\n`x`# not a heading either\n';
+  assert.deepEqual([...markdownAnchors(source)], ['freshness', 'node-climjs-diagnose-output', 'usage-of-show-id']);
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'catalog-code-anchors-')));
+  try {
+    const file = join(dir, 'guide.md');
+    const links = '[a](#freshness) [b](#node-climjs-diagnose-output) [c](#output)';
+    assert.deepEqual(checkLinks(`${source}\n${links}\n`, file, dir), ['Missing anchor: #output']);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});
+
+test('headings inside block quotes and list items get anchors', () => {
+  const source = '> ## Quoted heading\n\n- ## Listed heading\n\n1. ## Ordered heading\n\n> - ## Quote list heading\n\n- item\n\n  ## Indented continuation\n\n* * *\n\n<!--\n> ## Hidden\n-->\n';
+  assert.deepEqual([...markdownAnchors(source)].sort(), ['indented-continuation', 'listed-heading', 'ordered-heading', 'quote-list-heading', 'quoted-heading']);
+});
+
 test('a shared anchor cache is optional and a fresh call re-reads the file', () => {
   const dir = realpathSync(mkdtempSync(join(tmpdir(), 'catalog-anchors-')));
   try {
