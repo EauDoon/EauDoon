@@ -141,7 +141,8 @@ test('freshness reports each entry audit age against the same date and threshold
   // The catalog-wide fields are what 1.0.0 printed.
   assert.deepEqual({ ...result, projects: undefined, note: undefined }, { assessedOn: '2024-02-28', asOf: '2024-03-01', maximumDays: 30, ageDays: 2, status: 'within-threshold', catalogDigest: result.catalogDigest, projects: undefined, note: undefined });
   assert.equal(result.catalogDigest, parsed('--catalog', snapshot, 'receipt').digest);
-  assert.match(result.note, /^Age of the declared catalog assessment only\. .*Entry ages describe when each catalog entry was last reviewed, not project maintenance\.$/);
+  assert.match(result.note, /^Ages of the declared catalog assessment and of each entry's last audit\. .*Entry ages describe when each catalog entry was last reviewed, not project maintenance\.$/);
+  assert.doesNotMatch(result.note, /assessment only/, 'the report covers each entry too');
   assert.deepEqual(result.projects.map(p => p.id), ids, 'catalog id order');
   const entry = id => result.projects.find(p => p.id === id);
   assert.deepEqual(entry(inside), { id: inside, lastAudited: '2024-02-27', ageDays: 3, status: 'within-threshold' });
