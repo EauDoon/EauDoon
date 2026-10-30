@@ -15,16 +15,18 @@ export function parseArgs(args) {
 }
 
 // Catalog text is schema-checked (no control or format characters), so values
-// print as they are. A side without the field prints as (absent).
-const shown = (field, value) => {
+// print as they are. A side without the field prints as (absent). A source
+// pin prints its revision, or its README link when the revision is the same
+// on both sides (an id casing fix moves only the link).
+const shown = (row, value) => {
   if (value === undefined) return '(absent)';
-  if (field === 'source') return value.revision;
+  if (row.field === 'source') return row.before?.revision === row.after?.revision ? value.url : value.revision;
   return Array.isArray(value) ? value.join(', ') : String(value);
 };
 const valueLines = (indent, row, review) => [
   `${indent}${row.field}:`,
-  `${indent}  before: ${shown(row.field, row.before)}`,
-  `${indent}  after: ${shown(row.field, row.after)}`,
+  `${indent}  before: ${shown(row, row.before)}`,
+  `${indent}  after: ${shown(row, row.after)}`,
   ...(review ? [`${indent}  review: ${review}`] : []),
 ];
 const recordLines = project => [

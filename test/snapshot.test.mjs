@@ -187,6 +187,27 @@ test('snapshot review with values shows before and after for every change', () =
   assert.deepEqual([same.changed, same.metadataValues, same.addedProjects, same.removedProjects], [[], [], [], []]);
 });
 
+test('an id casing fix that keeps the revision shows the moved README link and no compare link', () => {
+  const before = loadCatalog();
+  const after = structuredClone(before);
+  const project = after.projects.find(p => p.id === 'operator-labs');
+  const { revision } = project.source;
+  project.id = 'Operator-Labs';
+  project.repository = 'https://github.com/EauDoon/Operator-Labs';
+  project.source = { revision, url: `${project.repository}/blob/${revision}/README.md` };
+  const diff = diffSnapshots(before, after, { values: true });
+  const row = diff.changed.find(change => change.id === 'Operator-Labs');
+  assert.deepEqual(row.fields, ['id', 'repository', 'source']);
+  assert.equal(Object.hasOwn(row, 'review'), false, 'the revision did not move, so there is nothing to compare');
+  const text = renderReview(diff);
+  assert.ok(text.includes([
+    '    source:',
+    `      before: https://github.com/EauDoon/operator-labs/blob/${revision}/README.md`,
+    `      after: https://github.com/EauDoon/Operator-Labs/blob/${revision}/README.md`,
+  ].join('\n')), text);
+  assert.doesNotMatch(text, /^ +review:/m);
+});
+
 test('metadata values omit the side that lacks a field', () => {
   const before = loadCatalog();
   const dropped = structuredClone(before);
