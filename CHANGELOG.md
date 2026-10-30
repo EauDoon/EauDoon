@@ -21,6 +21,8 @@ match the `id` field in `catalog.json`.
 - Add Scout, the private repository, beside Blitz in the Speed launches group, with a README line and an alt text that name Scout alongside the fourteen catalogued projects.
 - Connect Scout and Blitz in the constellation with matching red stars, and record the connection in the artwork's accessible name.
 - Add a subtle red shooting star that travels from Blitz to Scout in the constellation. The animation stops under reduced motion.
+- Refresh the catalog assessment to 2026-10-30: re-pin the thirteen owned public projects to their current `main` revisions after reviewing the changes since each earlier pin, and set their `lastAudited` to the same date. Blitz and the three historical forks keep their earlier pins. Regenerate `docs/CATALOG.md`.
+- Replace "No license selected" in the stable-desk boundary with the repository's stated terms: all rights reserved, public for reading only, no reuse permission granted.
 
 ## [1.0.0] - 2026-10-09
 
