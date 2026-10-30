@@ -4,6 +4,7 @@ import { loadCatalog, errorMessage } from './lib/catalog.mjs';
 import { workflows } from './lib/workflows.mjs';
 import { search, summarize, parseOptions, filterProjects, selectProject, detail, renderDetail, compare, renderComparison, taskIndex, shortlist } from './lib/discover.mjs';
 import { packageVersion } from './lib/version.mjs';
+import { searchHints, renderHints } from './lib/suggest.mjs';
 
 // Built on demand inside main(), so a bad package.json is reported as a CLI
 // error instead of throwing at import time.
@@ -18,6 +19,7 @@ const helpText = () => `Offline public project discovery ${packageVersion()} (No
   node cli.mjs shortlist <task-id...> [filters] [--json]
 List/search filters: --category VALUE --runtime VALUE --privacy VALUE --task VALUE --fork yes|no
 Filters intersect. Invalid values print the available choices.
+Search matching is exact; hints suggest close terms and filters without changing results.
 No installs, network calls, telemetry or project execution.`;
 
 const usage = {
@@ -88,7 +90,9 @@ function main() {
   }
   else {
     const projects = search(filterProjects(catalog.projects, options), positional.join(' '));
-    console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects }, null, 2) : summarize(projects));
+    // Hints never change the results; list keeps its exact output.
+    const hints = command === 'search' ? searchHints(catalog.projects, positional.join(' '), options) : [];
+    console.log(options.json ? JSON.stringify({ assessedOn: catalog.assessedOn, assessment: catalog.assessment, projects, ...(hints.length ? { hints } : {}) }, null, 2) : summarize(projects) + renderHints(hints));
   }
 }
 

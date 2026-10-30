@@ -76,7 +76,7 @@ The digest ignores object-key and project ordering; other array ordering remains
 
 ## Understand an empty result
 
-`node cli.mjs diagnose QUERY.json` reports which constraints each near miss fails and what would match if one text/filter constraint were omitted. It preserves explicit exclusions in every diagnostic and never edits or reruns a broadened request automatically. At most 50 near misses are shown, ordered by failed-constraint count then id, with the total stated. This explains selection mechanics, not project quality or a recommendation to relax your requirements.
+`node cli.mjs diagnose QUERY.json` reports which constraints each near miss fails and what would match if one text/filter constraint were omitted. It preserves explicit exclusions in every diagnostic and never edits or reruns a broadened request automatically. At most 50 near misses are shown, ordered by failed-constraint count then id, with the total stated. `textSuggestions` lists close catalog terms for each text word that no project allowed by the query's filters and exclusions contains, using the same rules as search hints; each count reruns the whole query with that one word replaced, and the list is empty when there is nothing to suggest. This explains selection mechanics, not project quality or a recommendation to relax your requirements.
 
 CLI file errors report a stable reason without disclosing the supplied path. Unknown project ids and options are not echoed, including terminal control characters. Existing output files remain untouched on failure.
 

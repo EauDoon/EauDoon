@@ -6,12 +6,36 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
+import { search, summarize } from '../lib/discover.mjs';
 export const run = (...args) => spawnSync(process.execPath, [fileURLToPath(new URL('../cli.mjs', import.meta.url)), ...args], { encoding: 'utf8', timeout: 5000 });
 test('search is case-insensitive, intersects words and returns parseable provenance', () => {
   const result = run('search', 'SYNTHETIC', 'payment', '--json');
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(result.stdout).projects.map(p => p.id), ['operator-labs']);
   assert.match(run('search', 'unmatched-value').stdout, /No projects match/);
+});
+test('search hints follow unchanged results in text and JSON', () => {
+  const text = run('search', 'payments');
+  assert.equal(text.status, 0, text.stderr);
+  assert.equal(text.stdout, 'No projects match.\n\nHints (results are unchanged):\n  payments: did you mean payment (1 match)?\n');
+  const json = run('search', 'payments', '--json');
+  assert.equal(json.status, 0, json.stderr);
+  const parsed = JSON.parse(json.stdout);
+  assert.deepEqual(parsed.projects, []);
+  assert.equal(parsed.hints[0].suggestions[0].term, 'payment');
+  assert.deepEqual(Object.keys(parsed), ['assessedOn', 'assessment', 'projects', 'hints']);
+  const python = run('search', 'python');
+  assert.equal(python.status, 0, python.stderr);
+  assert.ok(python.stdout.startsWith(`${summarize(search(loadCatalog().projects, 'python'))}\n\nHints (results are unchanged):\n`), python.stdout);
+  assert.match(python.stdout, /\n {2}python: --runtime python matches 10 projects\n$/);
+  assert.doesNotMatch(run('search', 'python', '--runtime', 'python').stdout, /Hints/);
+  // No hint, no key: a search with results keeps its 1.0.0 output.
+  const matched = JSON.parse(run('search', 'SYNTHETIC', 'payment', '--json').stdout);
+  assert.deepEqual(Object.keys(matched), ['assessedOn', 'assessment', 'projects']);
+  assert.equal(run('search', 'unmatched-value').stdout, 'No projects match.\n');
+  assert.doesNotMatch(run('list').stdout, /Hints/);
+  const hostile = run('search', 'pay\u001b[31mments', 'pay‮ments');
+  assert.equal(hostile.stdout, 'No projects match.\n');
 });
 test('validate counts owned entries and forks instead of calling every entry public', () => {
   const projects = loadCatalog().projects;
