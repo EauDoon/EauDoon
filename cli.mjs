@@ -60,7 +60,12 @@ function main() {
   const catalog = loadCatalog(catalogPath);
   const { options, positional } = parseOptions(args, catalog.projects);
   if (['validate', 'list'].includes(command) && positional.length || command === 'validate' && Object.keys(options).length || command === 'search' && !positional.join(' ').trim() || command === 'show' && (positional.length !== 1 || Object.keys(options).some(k => k !== 'json'))) throw new Error(`Invalid arguments.\n${helpText()}`);
-  if (command === 'validate') console.log(`Valid catalog: ${catalog.projects.length} public projects`);
+  if (command === 'validate') {
+    // An owned entry can be catalogued while its repository is private
+    // (public-inventory.json privateEntries), so the count does not say public.
+    const forks = catalog.projects.filter(p => p.fork).length;
+    console.log(`Valid catalog: ${catalog.projects.length} projects (${catalog.projects.length - forks} owned, ${forks} fork${forks === 1 ? '' : 's'})`);
+  }
   else if (command === 'tasks') {
     if (positional.length || Object.keys(options).some(k => k !== 'json')) throw new Error('Tasks accepts only --json');
     const tasks = taskIndex(catalog.projects);

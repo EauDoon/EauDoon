@@ -1,6 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
 export const run = (...args) => spawnSync(process.execPath, [fileURLToPath(new URL('../cli.mjs', import.meta.url)), ...args], { encoding: 'utf8', timeout: 5000 });
@@ -9,6 +12,22 @@ test('search is case-insensitive, intersects words and returns parseable provena
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(result.stdout).projects.map(p => p.id), ['operator-labs']);
   assert.match(run('search', 'unmatched-value').stdout, /No projects match/);
+});
+test('validate counts owned entries and forks instead of calling every entry public', () => {
+  const projects = loadCatalog().projects;
+  const forks = projects.filter(p => p.fork).length;
+  const result = run('validate');
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(result.stdout, `Valid catalog: ${projects.length} projects (${projects.length - forks} owned, ${forks} forks)\n`);
+  assert.doesNotMatch(result.stdout, /public/);
+  const dir = mkdtempSync(join(tmpdir(), 'catalog-validate-'));
+  try {
+    const catalog = loadCatalog();
+    catalog.projects = [catalog.projects.find(p => p.fork), catalog.projects.find(p => !p.fork)];
+    const snapshot = join(dir, 'snapshot.json');
+    writeFileSync(snapshot, JSON.stringify(catalog));
+    assert.equal(run('--catalog', snapshot, 'validate').stdout, 'Valid catalog: 2 projects (1 owned, 1 fork)\n');
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 test('CLI fails on misspelled commands and options', () => {
   for (const args of [['seach'], ['list', '--jsno'], ['search'], ['validate', 'extra']]) assert.equal(run(...args).status, 1);

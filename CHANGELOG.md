@@ -26,6 +26,7 @@ match the `id` field in `catalog.json`.
 - Refresh `public-inventory.json` to 2026-10-30 from the public repository search, which returned 14 of 14 results. Blitz is private, so it moves from `repositories` to `privateEntries`.
 - Replace "No license selected" in the stable-desk boundary with the repository's stated terms: all rights reserved, public for reading only, no reuse permission granted.
 - `node scripts/version-check.mjs --tag vX.Y.Z` now fails when the `## [X.Y.Z]` section is empty, and `--notes` exits 1 instead of printing a blank line, so the release workflow can no longer publish a GitHub Release with empty notes. An empty `[Unreleased]` section stays valid.
+- `node cli.mjs validate` prints `Valid catalog: 17 projects (14 owned, 3 forks)` instead of `17 public projects`, because an owned entry can be catalogued while its repository is private.
 
 ## [1.0.0] - 2026-10-09
 
