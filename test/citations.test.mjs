@@ -13,7 +13,9 @@ const documents = ['README.md', 'CONTRIBUTING.md', 'SECURITY.md', 'docs/DISCOVER
 export function staleCitations(text, catalog) {
   const pins = new Map(catalog.projects.map(p => [p.id.toLowerCase(), p]));
   const problems = [];
-  for (const match of text.matchAll(/https:\/\/github\.com\/EauDoon\/([^/\s"'<>()#?]+)\/(?:blob|tree)\/([0-9a-f]{40})\//g)) {
+  // The revision may end the link (a pinned repository root), or be followed
+  // by a path, fragment, query or the link's closing punctuation.
+  for (const match of text.matchAll(/https:\/\/github\.com\/EauDoon\/([^/\s"'<>()#?]+)\/(?:blob|tree)\/([0-9a-f]{40})(?![\w.-])/g)) {
     const project = pins.get(match[1].toLowerCase());
     if (project && match[2] !== project.source.revision) problems.push(`${project.id}: cites ${match[2].slice(0, 7)}, but the catalog pins ${project.source.revision.slice(0, 7)}`);
   }
@@ -39,4 +41,18 @@ test('a citation pinned to another revision of a catalog project is reported by 
     '[branch](https://github.com/EauDoon/operator-labs/blob/main/README.md)',
   ].join('\n');
   assert.deepEqual(staleCitations(text, catalog), [`operator-labs: cites bbbbbbb, but the catalog pins ${project.source.revision.slice(0, 7)}`]);
+});
+
+test('a citation of a pinned repository root, with no path after the revision, is checked too', () => {
+  const catalog = loadCatalog();
+  const project = catalog.projects.find(p => p.id === 'operator-labs');
+  const other = 'b'.repeat(40);
+  const stale = `operator-labs: cites bbbbbbb, but the catalog pins ${project.source.revision.slice(0, 7)}`;
+  for (const link of [`tree/${other}`, `[root](https://github.com/EauDoon/operator-labs/tree/${other})`, `tree/${other}#readme`, `tree/${other}?plain=1`, `blob/${other}/README.md`]) {
+    const text = link.startsWith('[') ? link : `https://github.com/EauDoon/operator-labs/${link}`;
+    assert.deepEqual(staleCitations(text, catalog), [stale], text);
+  }
+  assert.deepEqual(staleCitations(`https://github.com/EauDoon/operator-labs/tree/${project.source.revision}`, catalog), []);
+  // A longer hex run is a branch name, not a 40-character revision.
+  assert.deepEqual(staleCitations(`https://github.com/EauDoon/operator-labs/tree/${other}ff`, catalog), []);
 });
