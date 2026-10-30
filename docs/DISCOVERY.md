@@ -12,7 +12,7 @@ node cli.mjs tasks
 node cli.mjs shortlist replay-evidence gate-actions
 ```
 
-`show` prints prerequisites categories, authority limits, the assessed README and current setup instructions. Follow those repository-specific instructions after reviewing their requirements. The discovery CLI never clones, installs, launches or executes a catalog entry.
+`show` prints prerequisites categories, authority limits, the entry's last audit date, the assessed README and current setup instructions; `compare` adds a `lastAudited` row. Follow those repository-specific instructions after reviewing their requirements. The discovery CLI never clones, installs, launches or executes a catalog entry.
 
 List, search and shortlist accept `--category`, `--runtime`, `--privacy`, and `--fork yes|no`. List and search also accept `--task`. Filters intersect. Each option can appear once. An invalid value prints the available choices. Search requires every supplied word to appear in the project's id, summary, category or task tags. Matching stays exact: no fuzzy matching is performed, and hints never change the results.
 

@@ -114,6 +114,26 @@ test('plain show prints the documented human detail', () => {
   assert.match(result.stdout, /\nSource revision: [0-9a-f]{40}\n/);
   assert.ok(result.stdout.includes(`\nLimit: ${project.boundary}\n`));
   assert.match(result.stdout, /\n3\. Review the documented prerequisites/);
+  assert.ok(result.stdout.includes(`\nStatic assessment: ${loadCatalog().assessedOn}\nLast audited: ${project.lastAudited}\nSource revision: `), result.stdout);
+});
+test('show and compare state each entry last audit, or that none is recorded', () => {
+  const catalog = loadCatalog();
+  const compared = run('compare', 'operator-labs', 'connect.md');
+  assert.equal(compared.status, 0, compared.stderr);
+  const rows = compared.stdout.split('\n');
+  const audited = rows.findIndex(line => line.startsWith('| lastAudited |'));
+  assert.equal(rows[audited - 1].startsWith('| fork |'), true);
+  const date = id => catalog.projects.find(p => p.id === id).lastAudited;
+  assert.equal(rows[audited], `| lastAudited | ${date('operator-labs')} | ${date('connect.md')} |`);
+  const dir = mkdtempSync(join(tmpdir(), 'catalog-audit-'));
+  try {
+    delete catalog.projects.find(p => p.id === 'operator-labs').lastAudited;
+    const snapshot = join(dir, 'snapshot.json');
+    writeFileSync(snapshot, JSON.stringify(catalog));
+    assert.match(run('--catalog', snapshot, 'show', 'operator-labs').stdout, /\nLast audited: not recorded\n/);
+    assert.match(run('--catalog', snapshot, 'compare', 'operator-labs', 'connect.md').stdout, /\n\| lastAudited \| not recorded \| /);
+    assert.equal(JSON.parse(run('--catalog', snapshot, 'show', 'operator-labs', '--json').stdout).lastAudited, undefined);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 test('comparison preserves requested order and exposes limits', () => {
   const result = run('compare', 'mandatebound', 'consequence-rail', '--json');

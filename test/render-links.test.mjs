@@ -18,6 +18,21 @@ test('generated guide is current, complete and source-bound', () => {
   assert.equal(tables.length, 3);
   for (const { line, i } of tables) assert.equal(line.split('|').length, lines[i - 1].split('|').length, 'GFM table separator must match header width');
 });
+test('the generated guide states each entry last audit date', () => {
+  const c = loadCatalog();
+  const text = renderCatalog(c);
+  assert.match(text, /\nEach entry under \[Limits and assessed instructions\]\(#limits-and-assessed-instructions\) states its own last audit date, which can be earlier than the catalog assessment\.\n/);
+  for (const p of c.projects) {
+    const line = text.split('\n').find(row => row.startsWith(`Category: ${p.category}. [Assessed README](${p.source.url})`));
+    assert.ok(line, p.id);
+    assert.ok(line.endsWith(`. Last audited ${p.lastAudited.split('-').reverse().join('-')}.`), line);
+  }
+  const unrecorded = structuredClone(c);
+  delete unrecorded.projects.find(p => p.id === 'operator-labs').lastAudited;
+  const guide = renderCatalog(unrecorded);
+  assert.match(guide, /\n### operator-labs\n\n[^\n]+\n\nCategory: [^\n]+\. Last audit not recorded\.\n/);
+  assert.equal(guide.split('\n').filter(line => /^\| ---/.test(line)).length, 3);
+});
 test('local link checker rejects traversal, active schemes, credentials and missing targets', () => {
   const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
   const file = fileURLToPath(new URL('../README.md', import.meta.url));

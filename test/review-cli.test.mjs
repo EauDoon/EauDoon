@@ -129,6 +129,29 @@ test('freshness uses explicit calendar dates with inclusive thresholds and futur
   for (const [date, max] of [['2024-02-30', '1'], ['today', '1'], ['2024-03-01', '-1'], ['2024-03-01', '1.5'], ['2024-03-01', '36501']]) assert.equal(run('--catalog', snapshot, 'freshness', date, max).status, 1);
 }));
 
+test('freshness reports each entry audit age against the same date and threshold', () => workspace(file => {
+  const catalog = loadCatalog(); catalog.assessedOn = '2024-02-28';
+  const ids = catalog.projects.map(p => p.id).sort((a, b) => a.toLowerCase() < b.toLowerCase() ? -1 : 1);
+  const set = (id, date) => { const p = catalog.projects.find(x => x.id === id); if (date === undefined) delete p.lastAudited; else p.lastAudited = date; };
+  for (const id of ids) set(id, '2024-02-28');
+  const [inside, edge, stale, future, missing] = ids;
+  set(inside, '2024-02-27'); set(edge, '2024-01-31'); set(stale, '2024-01-30'); set(future, '2024-03-02'); set(missing, undefined);
+  const snapshot = file('snapshot.json', catalog);
+  const result = parsed('--catalog', snapshot, 'freshness', '2024-03-01', '30');
+  // The catalog-wide fields are what 1.0.0 printed.
+  assert.deepEqual({ ...result, projects: undefined, note: undefined }, { assessedOn: '2024-02-28', asOf: '2024-03-01', maximumDays: 30, ageDays: 2, status: 'within-threshold', catalogDigest: result.catalogDigest, projects: undefined, note: undefined });
+  assert.equal(result.catalogDigest, parsed('--catalog', snapshot, 'receipt').digest);
+  assert.match(result.note, /^Age of the declared catalog assessment only\. .*Entry ages describe when each catalog entry was last reviewed, not project maintenance\.$/);
+  assert.deepEqual(result.projects.map(p => p.id), ids, 'catalog id order');
+  const entry = id => result.projects.find(p => p.id === id);
+  assert.deepEqual(entry(inside), { id: inside, lastAudited: '2024-02-27', ageDays: 3, status: 'within-threshold' });
+  assert.deepEqual(entry(edge), { id: edge, lastAudited: '2024-01-31', ageDays: 30, status: 'within-threshold' }, 'the threshold is inclusive');
+  assert.deepEqual(entry(stale), { id: stale, lastAudited: '2024-01-30', ageDays: 31, status: 'stale' });
+  assert.deepEqual(entry(future), { id: future, lastAudited: '2024-03-02', ageDays: -1, status: 'future-assessment' });
+  assert.deepEqual(entry(missing), { id: missing, lastAudited: null, ageDays: null, status: 'unrecorded' });
+  assert.ok(result.projects.every(p => p.ageDays === null || Number.isInteger(p.ageDays)));
+}));
+
 test('large piped receipts and batch reports remain complete JSON', () => workspace(file => {
   const catalog = loadCatalog(); const prototype = catalog.projects.find(p => p.id === 'operator-labs');
   catalog.projects = Array.from({ length: 1000 }, (_, i) => {
