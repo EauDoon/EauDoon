@@ -1,12 +1,82 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync, realpathSync } from 'node:fs';
-import { relative, sep } from 'node:path';
+import { mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, relative, sep } from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { loadCatalog } from '../lib/catalog.mjs';
 import { renderCatalog } from '../lib/render.mjs';
-import { checkLinks, htmlDestinations, markdownFiles, withoutCode } from '../lib/links.mjs';
+import { checkLinks, headingSlug, htmlDestinations, markdownAnchors, markdownFiles, withoutCode } from '../lib/links.mjs';
+
+test('fragments must name a heading or HTML anchor in the target Markdown file', () => {
+  const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
+  const file = fileURLToPath(new URL('../README.md', import.meta.url));
+  const check = text => checkLinks(text, file, root);
+  assert.deepEqual(check('[x](#missing)'), ['Missing anchor: #missing']);
+  assert.deepEqual(check('# Public project catalog\n\n[x](#public-project-catalog)'), []);
+  assert.deepEqual(check('## Notes\n\n## Notes\n\n## Notes\n\n[a](#notes) [b](#notes-1) [c](#notes-2)'), []);
+  assert.deepEqual(check('## Notes\n\n## Notes\n\n[x](#notes-2)'), ['Missing anchor: #notes-2']);
+  assert.deepEqual(check('## The `node cli.mjs` CLI\n\n[x](#the-node-climjs-cli)'), []);
+  assert.deepEqual(check('Setext title\n============\n\nSecond one\n---\n\n[a](#setext-title) [b](#second-one)'), []);
+  assert.deepEqual(check('```\n# Not a heading\n```\n\n[x](#not-a-heading)'), ['Missing anchor: #not-a-heading']);
+  assert.deepEqual(check('<!--\n# Hidden\n-->\n\n[x](#hidden)'), ['Missing anchor: #hidden']);
+  assert.deepEqual(check('<a id="Custom-Spot"></a> <a name="named"></a>\n\n[a](#custom-spot) [b](#named)'), []);
+  assert.deepEqual(check('# Mixed Case\n\n[a](#MIXED-CASE) [b](#mixed%2Dcase) [c](#user-content-mixed-case) [d](<#Mixed-Case>)'), []);
+  assert.deepEqual(check('[x](#%E0%A4%A)'), ['Malformed local link: #%E0%A4%A']);
+  // The top of the page and GitHub line anchors are left alone.
+  assert.deepEqual(check('[top](#) [line](#L12) [range](#L3-L9)'), []);
+  assert.deepEqual(check('<a href="#gone">x</a>\n\n[ref]: #also-gone'), ['Missing anchor: #also-gone', 'Missing anchor: #gone']);
+});
+
+test('fragments on other Markdown files are read from that file', () => {
+  const root = realpathSync(fileURLToPath(new URL('..', import.meta.url)));
+  const file = fileURLToPath(new URL('../README.md', import.meta.url));
+  assert.deepEqual(checkLinks('[x](docs/CATALOG.md#connectmd)', file, root), []);
+  assert.deepEqual(checkLinks('[x](docs/CATALOG.md#browse-projects)', file, root), []);
+  assert.deepEqual(checkLinks('[x](docs/CATALOG.md#nope)', file, root), ['Missing anchor: docs/CATALOG.md#nope']);
+  assert.deepEqual(checkLinks('[x](docs/DISCOVERY.md#check-public-inventory-coverage)', file, root), []);
+  // Not checked: other file types, ?plain=1 source views and remote pages.
+  for (const text of ['[x](catalog.json#x)', '[x](docs/CATALOG.md?plain=1#L5)', '[x](https://github.com/EauDoon/EauDoon#nothing-here)', '[x](docs/CATALOG.md?plain=1#nope)']) {
+    assert.deepEqual(checkLinks(text, file, root), [], text);
+  }
+  assert.equal(checkLinks('[x](missing.md#x)', file, root).length, 1);
+});
+
+test('heading slugs follow GitHub for the forms these documents use', () => {
+  for (const [heading, slug] of [
+    ['Public project catalog', 'public-project-catalog'],
+    ['connect.md', 'connectmd'],
+    ['[1.0.0] - 2026-10-09', '100---2026-10-09'],
+    ['2026-09-29 (pre-versioning)', '2026-09-29-pre-versioning'],
+    ['The `node cli.mjs` CLI', 'the-node-climjs-cli'],
+    ['See [the guide](docs/CATALOG.md) *now*', 'see-the-guide-now'],
+    ['Keep snake_case and _emphasis_', 'keep-snake_case-and-emphasis'],
+    ['Zürich & co', 'zürich--co'],
+    ['<span>Tagged</span> heading', 'tagged-heading'],
+  ]) assert.equal(headingSlug(heading), slug, heading);
+  const front = markdownAnchors('---\nname: Bug report\nabout: x\n---\n\n## Repro\n');
+  assert.deepEqual([...front], ['repro']);
+  assert.deepEqual([...markdownAnchors('# Title #\n\nPara one\npara two\n---\n')], ['title', 'para-one-para-two']);
+  assert.deepEqual([...markdownAnchors('- item\n---\n\n| a |\n---\n')], []);
+});
+
+test('a shared anchor cache is optional and a fresh call re-reads the file', () => {
+  const dir = realpathSync(mkdtempSync(join(tmpdir(), 'catalog-anchors-')));
+  try {
+    const file = join(dir, 'index.md');
+    const target = join(dir, 'target.md');
+    writeFileSync(target, '# First heading\n');
+    const link = '[x](target.md#first-heading) [y](target.md#second-heading)';
+    assert.deepEqual(checkLinks(link, file, dir), ['Missing anchor: target.md#second-heading']);
+    const cache = new Map();
+    assert.equal(checkLinks(link, file, dir, cache).length, 1);
+    writeFileSync(target, '# First heading\n\n## Second heading\n');
+    assert.deepEqual(checkLinks(link, file, dir), [], 'a call without a cache reads the rewritten file');
+    assert.equal(checkLinks(link, file, dir, cache).length, 1, 'a shared cache keeps the first read for its run');
+    assert.deepEqual([...cache.keys()], [realpathSync(target)]);
+  } finally { rmSync(dir, { recursive: true, force: true }); }
+});
 
 test('generated guide is current, complete and source-bound', () => {
   const c = loadCatalog();
