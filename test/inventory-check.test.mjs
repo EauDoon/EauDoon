@@ -65,9 +65,10 @@ test('an owned project catalogued while private is named in privateEntries, not 
   const owned = catalog.projects.find(p => !p.fork);
   const value = snapshot();
   value.repositories = value.repositories.filter(row => row.id.toLowerCase() !== owned.id.toLowerCase());
+  const existing = value.privateEntries ?? [];
   delete value.privateEntries;
   assert.match(check(catalog, value).issues.join('\n'), new RegExp(`${owned.id}: absent from the supplied`));
-  value.privateEntries = [{ id: owned.id, reason: 'Catalogued while the repository is private.' }];
+  value.privateEntries = [...existing, { id: owned.id, reason: 'Catalogued while the repository is private.' }];
   const result = check(catalog, value);
   assert.deepEqual(result.issues, []);
   assert.deepEqual(result.privateEntries, value.privateEntries);
@@ -80,8 +81,9 @@ test('a private entry that is public again must leave privateEntries', () => {
   if (!value.repositories.some(row => row.id.toLowerCase() === owned.id.toLowerCase())) {
     value.repositories.push({ id: owned.id, public: true, fork: false, archived: false });
   }
-  value.privateEntries = [{ id: owned.id, reason: 'Catalogued while the repository is private.' }];
-  assert.match(check(catalog, value).issues.join('\n'), new RegExp(`${owned.id}: listed as private but present in the public snapshot`));
+  value.privateEntries = [...(value.privateEntries ?? []), { id: owned.id, reason: 'Catalogued while the repository is private.' }];
+  const issues = check(catalog, value).issues;
+  assert.deepEqual(issues, [`${owned.id}: listed as private but present in the public snapshot; remove it from privateEntries`]);
 });
 
 test('private entries must name unique owned catalog projects with a public reason', () => {
