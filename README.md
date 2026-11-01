@@ -1,14 +1,25 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
-  <source media="(prefers-color-scheme: light)" srcset="assets/banner-light.svg">
-  <img src="assets/banner-light.svg" alt="Daniel Oon. Decision infrastructure for agent systems and operators." width="100%">
+  <source media="(max-width: 600px)" srcset="assets/hero-mobile.svg">
+  <img src="assets/hero.svg" width="100%" alt="Daniel Oon, Singapore, @EauDoon, danieloon.ai. Decision infrastructure for agent systems and operators: explicit rules, recoverable actions, evidence you can inspect. Focus: stablecoins, payments and agent systems. Stack: Python, Node, browser-local tools and Claude skills. A synthetic agent action passes intent, policy, action and receipt checks, and a command bar types queries to this profile's offline catalog CLI.">
 </picture>
 
+<p align="center"><a href="https://danieloon.ai">danieloon.ai</a> &nbsp;·&nbsp; <a href="https://x.com/EauDoon">@EauDoon</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a> &nbsp;·&nbsp; <a href="docs/CATALOG.md">Project catalog</a></p>
+
 <p align="center">
-  <a href="https://danieloon.ai">Website</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a> &nbsp;·&nbsp; <a href="https://x.com/EauDoon">@EauDoon</a>
+<a href="https://github.com/EauDoon/blitz"><img src="assets/tile-blitz.svg" width="416" alt="Blitz. Minimum Viable Company kit: four evidence gates take one bounded offer through a real test to an accepted result and a feasible next cycle."></a>
+<a href="https://github.com/EauDoon/gauntlet-verify"><img src="assets/tile-gauntlet-verify.svg" width="416" alt="Gauntlet Verify. Eval the evals, two modes: blind judges hold a build to a shipped reference, and isolated verifiers label each claim verified, reported, or unverified."></a>
+<a href="https://github.com/EauDoon/stable-desk"><img src="assets/tile-stable-desk.svg" width="206" alt="Stable Desk. Browser-local stablecoin research workbench with a synthetic baseline and human-reviewed decisions."></a>
+<a href="https://github.com/EauDoon/consequence-rail"><img src="assets/tile-consequence-rail.svg" width="206" alt="Consequence Rail. Recourse-gated execution with recovery preflight and signed settlement receipts."></a>
+<a href="https://github.com/EauDoon/decision-labs"><img src="assets/tile-decision-labs.svg" width="206" alt="Decision Labs. Four local browser workbenches for partnerships, pooled buying, structured agreements, and weekend liquidity."></a>
+<a href="https://github.com/EauDoon/agent-team-os"><img src="assets/tile-agent-team-os.svg" width="206" alt="Agent Team OS. A wire format and tool pack for multi-role agent work. Local checks catch missing brief fields, dependency cycles, unsourced claims, and stale audit rechecks."></a>
 </p>
 
-I build tools for agent systems and business decisions, with explicit rules, recoverable actions, and evidence you can inspect.
+<p align="center"><sub>Worked examples: <a href="https://github.com/EauDoon/blitz/blob/main/Blitz/examples/company/service-example.md">Blitz</a> &nbsp;·&nbsp; <a href="https://github.com/EauDoon/decision-labs/blob/main/docs/CASE_STUDY.md">Decision Labs</a> &nbsp;·&nbsp; <a href="https://github.com/EauDoon/agent-team-os/blob/main/examples/routing-scenarios.md">Agent Team OS</a></sub></p>
+
+<p align="center"><sub>Experimental software and synthetic worked cases. These checks do not establish customer adoption, production reliability, or business impact.</sub></p>
+
+<details>
+<summary><strong>Browse the project index</strong></summary>
 
 <a href="docs/CATALOG.md">
 <picture>
@@ -20,65 +31,6 @@ I build tools for agent systems and business decisions, with explicit rules, rec
 </a>
 
 [Scout (private)](https://github.com/EauDoon/Scout) provides optional investigation and comparison within Thor, alongside Blitz.
-
-## Selected work
-
-<a href="https://github.com/EauDoon/blitz">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/blitz-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset="assets/blitz-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/blitz-dark.svg">
-  <img src="assets/blitz-light.svg" alt="Blitz. Minimum Viable Company kit. Four evidence gates take one bounded offer through a real test to an accepted result and a feasible next cycle." width="100%">
-</picture>
-</a>
-
-[Repository](https://github.com/EauDoon/blitz) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/blitz/blob/main/Blitz/examples/company/service-example.md)
-
-<br>
-
-<a href="https://github.com/EauDoon/gauntlet-verify">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/gauntlet-verify-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset="assets/gauntlet-verify-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/gauntlet-verify-dark.svg">
-  <img src="assets/gauntlet-verify-light.svg" alt="Gauntlet Verify. Eval the evals, two modes. Blind judges hold a build to a shipped reference, and isolated verifiers label each claim verified, reported, or unverified." width="100%">
-</picture>
-</a>
-
-[Repository](https://github.com/EauDoon/gauntlet-verify)
-
-<br>
-
-<a href="https://github.com/EauDoon/decision-labs">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/decision-labs-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset="assets/decision-labs-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/decision-labs-dark.svg">
-  <img src="assets/decision-labs-light.svg" alt="Decision Labs. Four local browser workbenches for partnerships, pooled buying, structured agreements, and weekend liquidity." width="100%">
-</picture>
-</a>
-
-[Repository](https://github.com/EauDoon/decision-labs) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/decision-labs/blob/main/docs/CASE_STUDY.md)
-
-<br>
-
-<a href="https://github.com/EauDoon/agent-team-os">
-<picture>
-  <source media="(max-width: 600px) and (prefers-color-scheme: dark)" srcset="assets/agent-team-os-mobile-dark.svg">
-  <source media="(max-width: 600px)" srcset="assets/agent-team-os-mobile-light.svg">
-  <source media="(prefers-color-scheme: dark)" srcset="assets/agent-team-os-dark.svg">
-  <img src="assets/agent-team-os-light.svg" alt="Agent Team OS. A wire format and tool pack for multi-role agent work. Local checks catch missing brief fields, dependency cycles, unsourced claims, and stale audit rechecks." width="100%">
-</picture>
-</a>
-
-[Repository](https://github.com/EauDoon/agent-team-os) &nbsp;·&nbsp; [Worked example](https://github.com/EauDoon/agent-team-os/blob/main/examples/routing-scenarios.md)
-
-<sub>Experimental software and synthetic worked cases. These checks do not establish customer adoption, production reliability, or business impact.</sub>
-
-<br>
-
-<details>
-<summary><strong>Browse the project index</strong></summary>
 
 ### Agent infrastructure
 
