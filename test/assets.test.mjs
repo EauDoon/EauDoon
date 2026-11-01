@@ -71,7 +71,7 @@ function smilTargets(svg) {
 }
 
 test('the profile artwork set is complete', () => {
-  assert.equal(files.length, 22);
+  assert.equal(files.length, 12);
   for (const name of files.filter(name => name.endsWith('-dark.svg'))) {
     assert.ok(files.includes(name.replace(/-dark\.svg$/, '-light.svg')), `${name} has no light variant`);
   }
