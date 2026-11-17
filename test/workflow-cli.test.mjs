@@ -87,3 +87,15 @@ test('snapshot and CLI impact retain repository identity across casing changes',
     assert.deepEqual(parsed('impact', beforeFile, afterFile, discovery).left, ['operator-labs']);
   }
 }));
+
+test('plan --alternatives is optional, discoverable, and refuses unknown or repeated flags', () => workspace(file => {
+  const query = file('query.json', { version: 1 });
+  const tasks = file('tasks.json', { tasks: ['gate-actions'] });
+  const args = ['plan', query, tasks, '2'];
+  const { alternativeCount, alternatives, ...base } = parsed(...args, '--alternatives');
+  assert.deepEqual(base, parsed(...args));
+  assert.ok(alternativeCount >= alternatives.length);
+  assert.match(run('plan', '--help').stdout, /\[--alternatives\]/);
+  assert.equal(run(...args, '--wrong').status, 1);
+  assert.equal(run(...args, '--alternatives', '--alternatives').status, 1);
+}));
