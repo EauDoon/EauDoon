@@ -44,6 +44,8 @@ Filters accept arrays: `runtime`, `category`, `privacy`, `task`, and `fork` (`ye
 
 `node cli.mjs plan QUERY.json docs/examples/evidence.tasks.json 3` searches combinations of up to three matching projects for the [requested task set](examples/evidence.tasks.json). It prefers the most declared task coverage, then fewer projects, then stable id order. Missing tasks stay explicit. Unlike `shortlist`, it considers coverage across a group rather than ranking projects individually.
 
+Append `--alternatives` to see whether id order broke a tie. `alternativeCount` counts other groups that cover as many requested tasks with as few projects as the chosen group; `alternatives` lists the first five in stable id order. Each includes project ids, covered tasks and missing tasks: two groups can tie on count but leave different gaps. Larger or lower-coverage groups do not count. Without the flag, the original output is unchanged.
+
 The search is bounded to 25 relevant candidates, 10 known tasks and a maximum of 1 to 4 projects. Narrow the query if too many candidates remain. This is catalog set coverage, not proof that packages integrate, are compatible, or are appropriate to deploy. No code is executed and no task is authorized by a plan.
 
 ## Export a selection
