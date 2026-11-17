@@ -165,3 +165,15 @@ test('large piped receipts and batch reports remain complete JSON', () => worksp
   const result = parsed('--catalog', snapshot, 'batch', briefs);
   assert.equal(result.results.length, 20); assert.ok(result.results.every(row => row.ids.length === 1000));
 }));
+
+test('resilience CLI preserves exclusions, baseline gaps and its help contract', () => workspace(file => {
+  const query = file('query.json', { version: 1, text: 'mandatebound' });
+  const tasks = file('tasks.json', { tasks: ['replay-evidence', 'gate-actions'] });
+  const result = parsed('resilience', query, tasks);
+  assert.deepEqual(result.missingTasks, ['gate-actions']);
+  assert.deepEqual(result.criticalProjects, ['mandatebound']);
+  assert.deepEqual(result.removals, [{ id: 'mandatebound', newlyMissingTasks: ['replay-evidence'], missingTasks: ['replay-evidence', 'gate-actions'] }]);
+  assert.match(run('resilience', '--help').stdout, /resilience QUERY.json TASKS.json/);
+  assert.equal(run('resilience', query).status, 1);
+  assert.equal(run('resilience', query, tasks, 'extra').status, 1);
+}));

@@ -81,3 +81,22 @@ The digest ignores object-key and project ordering; other array ordering remains
 CLI file errors report a stable reason without disclosing the supplied path. Unknown project ids and options are not echoed, including terminal control characters. Existing output files remain untouched on failure.
 
 CLI output drains normally before process exit, including large JSON receipts and batch reports redirected through pipes. The catalog remains limited to 1000 entries; batch output is limited to 20 briefs.
+
+## Review single-source coverage risks
+
+```sh
+node cli.mjs resilience QUERY.json TASKS.json
+```
+
+Uses the same saved query and task request as `coverage`. The report retains
+provenance, project boundaries and existing gaps, then simulates removing each
+selected project once. `singleSourceTasks` names tasks with exactly one source;
+`redundantTasks` names tasks with multiple tagged sources; `criticalProjects`
+identifies removals that create a new gap. Each `removals` row distinguishes
+`newlyMissingTasks` from all `missingTasks`, including pre-existing gaps.
+
+Filters and exclusions remain unchanged. Empty selections report all requested
+tasks as missing, not as redundant. The existing limit of 100 selected projects
+and 1 to 10 distinct known tasks applies. The command is read-only and offline.
+Overlapping tags are not evidence that projects are interchangeable or that a
+working integration has failover support.
