@@ -32,6 +32,7 @@ const usage = {
   'save-query': 'NEW-QUERY.json [words...] [filters]',
   batch: 'BRIEFS.json',
   coverage: 'QUERY.json TASKS.json',
+  resilience: 'QUERY.json TASKS.json',
   'compare-queries': 'BEFORE-QUERY.json AFTER-QUERY.json',
   freshness: 'AS-OF-DATE MAXIMUM-DAYS',
 };

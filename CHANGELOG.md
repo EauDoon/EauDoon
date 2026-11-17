@@ -11,6 +11,8 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+- Add `resilience QUERY.json TASKS.json`, an offline single-project-removal review that distinguishes existing gaps, unique task sources and overlapping declared coverage without claiming runtime failover or interchangeability.
+
 - Redesign the profile README around a 3D hero and a grid of linked 3D project tiles. The hero shows a gimbal whose three rails turn around a core that never moves, beside the profile line, focus, stack and links; a stacked variant serves narrow screens. Six tiles (Blitz, Gauntlet Verify, Stable Desk, Consequence Rail, Decision Labs, Agent Team OS) each show the project's own mechanism as a small 3D loop. The scenes are rendered offline with three.js and embedded as animated WebP; every word stays vector text in subset JetBrains Mono and Inter (SIL OFL 1.1). Under reduced motion each artwork shows a still frame.
 - Move the constellation and the Scout line into the collapsed project index, and keep the worked example links and the synthetic-cases note under the tiles.
 - Remove the banner and the four Selected work cards in light, dark and mobile variants (18 files), which the new hero and tiles replace. The artwork test now expects 12 files, and the link-check fixtures point at the constellation instead of the removed banner.
