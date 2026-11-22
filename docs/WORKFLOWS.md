@@ -74,7 +74,11 @@ The digest ignores object-key and project ordering; other array ordering remains
 
 `node cli.mjs handoff QUERY.json NEW-PACKET.json` creates a self-contained readable packet with the normalized query, complete matching project records, pinned source links, review steps and an explicit no-execution authority boundary. Keep the reported digest separately. The packet must contain 1 to 100 projects and uses the same exclusive-output rules as exports.
 
+`handoff` reads the checkout's [saved public inventory](../public-inventory.json), including when using `--catalog`. If any selected source lacks a public listing, the packet includes `sourceAccess.retrievedOn` and a status for each selected project. `public` means the inventory listed the repository as public on that date. `private` means the owner documented that the pinned source was private. `unlisted` means the inventory records neither status, as can happen for forks outside its scope. Each project keeps its original pin and workflow privacy label.
+
 `node cli.mjs verify-handoff PACKET.json EXPECTED-DIGEST` checks that retained digest, the entire packet and the selection reconstructed from this checkout's catalog. It rejects stale catalogs, omitted matches and changed instructions even if an internal digest was recomputed. Verification needs the matching catalog snapshot; reading the packet does not. A digest taken from the same untrusted packet is not an independent trust anchor. No signer identity, factual claim or external action is authenticated.
+
+Verification also reconstructs the access labels from the bundled inventory. A packet with `sourceAccess` needs the matching retrieval date and selected statuses. Regenerate older packets that described a private or unlisted source as public and retain the new digest. Selections containing only explicitly public sources keep their existing packet and digest.
 
 ## Understand an empty result
 

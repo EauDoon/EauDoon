@@ -11,6 +11,8 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+- Handoffs label private and unlisted sources using the saved public inventory. Selections containing only explicitly public sources keep their previous digests.
+
 - Add optional `plan --alternatives` reporting for equally small, equally covering project groups. It counts every tie and shows the first five with their individual task gaps.
 
 - Add `resilience QUERY.json TASKS.json`, an offline single-project-removal review that distinguishes existing gaps, unique task sources and overlapping declared coverage without claiming runtime failover or interchangeability.
