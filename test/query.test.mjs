@@ -63,3 +63,16 @@ test('explicit null fields cannot silently broaden an authored brief', () => {
   const c = loadCatalog();
   for (const field of ['text','filters','exclude']) assert.throws(() => normalizeQuery({ version: 1, [field]: null }, c));
 });
+
+test('facet counts agree with independent replacements without re-reading every summary for every choice', () => {
+  const c = loadCatalog();
+  const q = normalizeQuery({ version: 1, text: 'a', filters: { runtime: ['node','python'], category: ['publishing'] }, exclude: ['stable-desk'] }, c);
+  let reads = 0;
+  const observed = { ...c, projects: c.projects.map(p => ({ ...p, get summary() { reads++; return p.summary; } })) };
+  const result = facets(observed, q);
+  assert.equal(result.total, runQuery(c, q).length);
+  for (const [key, rows] of Object.entries(result.facets)) {
+    for (const row of rows) assert.equal(row.count, runQuery(c, { ...q, filters: { ...q.filters, [key]: [row.value] } }).length);
+  }
+  assert.ok(reads <= c.projects.length, 'search the catalog at most once across all facet choices');
+});
