@@ -11,6 +11,8 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+- Next catalog patch: compute all replacement facet counts from a single text search. The offline CLI keeps its original output contract, including counts for unselected alternatives and zero-result choices. Release gate: compare every count against an independent saved-query run and confirm each searchable summary is read at most once. No catalog or profile claims change.
+
 - Handoffs label private and unlisted sources using the saved public inventory. Selections containing only explicitly public sources keep their previous digests.
 
 - Add optional `plan --alternatives` reporting for equally small, equally covering project groups. It counts every tie and shows the first five with their individual task gaps.
