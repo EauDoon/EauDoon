@@ -291,8 +291,14 @@ svg.addEventListener('pointerdown',e => {
 });
 svg.addEventListener('pointermove',e => {
   if (!gesture || !e.isPrimary) return;
-  rotate((e.clientX-gesture.x)*.008,(e.clientY-gesture.y)*.004);
-  gesture = {x:e.clientX,y:e.clientY};
+  const dx = e.clientX-gesture.x, dy = e.clientY-gesture.y;
+  if (e.pointerType === 'touch' && !gesture.orbit) {
+    if (Math.abs(dx) <= 5 || Math.abs(dx) <= Math.abs(dy)) return;
+    gesture.orbit = true;
+  }
+  rotate(dx*.008,dy*.004);
+  gesture.x = e.clientX;
+  gesture.y = e.clientY;
 });
 svg.addEventListener('lostpointercapture',() => {gesture = null});
 window.addEventListener('hashchange',show);
