@@ -1,6 +1,6 @@
 <picture>
   <source media="(max-width: 600px)" srcset="assets/hero-mobile.svg">
-  <img src="assets/hero.svg" width="100%" alt="Daniel Oon, Singapore, @EauDoon, danieloon.ai. Decision infrastructure for agent systems and operators: explicit rules, recoverable actions, evidence you can inspect. Focus: stablecoins, payments and agent systems. Stack: Python, Node, browser-local tools and Claude skills. A synthetic agent action passes intent, policy, action and receipt checks, and a command bar types queries to this profile's offline catalog CLI.">
+  <img src="assets/hero.svg" width="100%" alt="Daniel Oon, Singapore, @EauDoon, danieloon.ai. Decision infrastructure for agent systems and operators: explicit rules, recoverable actions, evidence you can inspect. Focus: stablecoins, payments and agent systems. Stack: Python, Node, browser-local tools and LLM skills. A synthetic agent action passes intent, policy, action and receipt checks, and a command bar types queries to this profile's offline catalog CLI.">
 </picture>
 
 <p align="center"><a href="https://danieloon.ai">danieloon.ai</a> &nbsp;·&nbsp; <a href="https://x.com/EauDoon">@EauDoon</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a> &nbsp;·&nbsp; <a href="docs/CATALOG.md">Project catalog</a></p>
@@ -8,7 +8,7 @@
 <p align="center">
 <a href="https://github.com/EauDoon/blitz"><img src="assets/tile-blitz.svg" width="416" alt="Blitz. Minimum Viable Company kit: four evidence gates take one bounded offer through a real test to an accepted result and a feasible next cycle."></a>
 <a href="https://github.com/EauDoon/gauntlet-verify"><img src="assets/tile-gauntlet-verify.svg" width="416" alt="Gauntlet Verify. Eval the evals, two modes: blind judges hold a build to a shipped reference, and isolated verifiers label each claim verified, reported, or unverified."></a>
-<a href="https://github.com/EauDoon/cold-read"><img src="assets/tile-cold-read.svg" width="206" alt="Cold Read. A Claude skill that reads finished work blind before it ships: one isolated reader per lens, and any quoted fail blocks it."></a>
+<a href="https://github.com/EauDoon/cold-read"><img src="assets/tile-cold-read.svg" width="206" alt="Cold Read. An LLM skill that reads finished work blind before it ships: one isolated reader per lens, and any quoted fail blocks it."></a>
 <a href="https://github.com/EauDoon/consequence-rail"><img src="assets/tile-consequence-rail.svg" width="206" alt="Consequence Rail. Recourse-gated execution with recovery preflight and signed settlement receipts."></a>
 <a href="https://github.com/EauDoon/decision-labs"><img src="assets/tile-decision-labs.svg" width="206" alt="Decision Labs. Four local browser workbenches for partnerships, pooled buying, structured agreements, and weekend liquidity."></a>
 <a href="https://github.com/EauDoon/agent-team-os"><img src="assets/tile-agent-team-os.svg" width="206" alt="Agent Team OS. A wire format and tool pack for multi-role agent work. Local checks catch missing brief fields, dependency cycles, unsourced claims, and stale audit rechecks."></a>
@@ -38,7 +38,7 @@
 - **[Consequence Rail](https://github.com/EauDoon/consequence-rail)** provides recourse-gated execution, recovery preflight, and signed settlement receipts.
 - **[Constitutional Agent Testbench](https://github.com/EauDoon/constitutional-agent-testbench)** checks structured agent responses against policy rules with deterministic precedence traces.
 - **[MandateBound](https://github.com/EauDoon/mandatebound)** is experimental evidence review for agentic commerce; its synthetic example distinguishes a complete case, missing evidence, and tampering.
-- **[cold-read](https://github.com/EauDoon/cold-read)** is a Claude skill that reads finished work blind before it ships: the rubric comes first, one isolated reader per lens, and any quoted fail blocks it.
+- **[cold-read](https://github.com/EauDoon/cold-read)** is an LLM skill that reads finished work blind before it ships: the rubric comes first, one isolated reader per lens, and any quoted fail blocks it.
 - **[Hermes Parallel Follow-ups](https://github.com/EauDoon/hermes-parallel-followups)** carries reversible patches for a documented source revision, with bounded concurrency and cancellation tests.
 
 ### Decision methods

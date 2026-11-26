@@ -29,7 +29,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | [agent-action-stack](https://github.com/EauDoon/agent-action-stack) | Synthetic agent-action reference path with alternate case stores, saved-case verification and offline review exports\. | node, python, browser | local-after-setup |
 | [agent-team-os](https://github.com/EauDoon/agent-team-os) | Wire-format and tool pack for bounded multi-role work\. Ships the six-field role-brief schema, the connect specification, dependency-light validators, calibrated synthetic evaluation harness, and a deterministic package builder with SHA-256 verification\. | assistant, python | configuration-dependent |
 | [blitz](https://github.com/EauDoon/blitz) | Minimum Viable Company kit with editable operating records, evidence gates, local cash forecasts and scoped handoffs\. | python, markdown, assistant | configuration-dependent |
-| [cold-read](https://github.com/EauDoon/cold-read) | Claude skill that reads finished work blind before it ships: a rubric written first, one isolated reader per lens, any quoted fail blocks, and a hard stop after two revision rounds\. | assistant | provider-dependent |
+| [cold-read](https://github.com/EauDoon/cold-read) | LLM skill that reads finished work blind before it ships: a rubric written first, one isolated reader per lens, any quoted fail blocks, and a hard stop after two revision rounds\. | assistant | provider-dependent |
 | [connect\.md](https://github.com/EauDoon/connect.md) | Browser profile/resume Markdown builder with reviewed source replacements, recovery sessions, section excerpts and local review exports\. | browser, node | configuration-dependent |
 | [consequence-rail](https://github.com/EauDoon/consequence-rail) | Recourse-gated synthetic execution with settlement and drill comparisons, verified review exports and recovery diagnostics\. | node | local-after-setup |
 | [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) | Deterministic policy evaluation with fixture assertions, corpus migration checks and portable replay bundles\. | python | local-after-setup |
@@ -46,7 +46,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 
 | Project | Purpose | Runtime | Data boundary |
 | --- | --- | --- | --- |
-| [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) (fork) | Claude skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims\. | assistant, node, python | provider-dependent |
+| [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) (fork) | LLM skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims\. | assistant, node, python | provider-dependent |
 | [hermes-agent](https://github.com/EauDoon/hermes-agent) (fork) | Fork of Nous Research Hermes Agent with terminal and gateway workflows\. | python, node | provider-dependent |
 | [reflection-engine](https://github.com/EauDoon/reflection-engine) (fork) | Fork of Kevin Rose's reflection prompt with offline source preparation, accepted-excerpt exports and stop-preserving experiment records\. | assistant, node | configuration-dependent |
 

@@ -80,7 +80,7 @@
     {
       "id": "cold-read",
       "repository": "https://github.com/EauDoon/cold-read",
-      "summary": "Claude skill that reads finished work blind before it ships: a rubric written first, one isolated reader per lens, any quoted fail blocks, and a hard stop after two revision rounds.",
+      "summary": "LLM skill that reads finished work blind before it ships: a rubric written first, one isolated reader per lens, any quoted fail blocks, and a hard stop after two revision rounds.",
       "category": "agent-workflows",
       "runtimes": ["assistant"],
       "privacy": "provider-dependent",
@@ -210,7 +210,7 @@
     {
       "id": "gauntlet-verify",
       "repository": "https://github.com/EauDoon/gauntlet-verify",
-      "summary": "Claude skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims.",
+      "summary": "LLM skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims.",
       "category": "agent-workflows",
       "runtimes": [
         "assistant",
