@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "assessedOn": "2026-10-30",
+  "assessedOn": "2026-11-26",
   "assessment": "Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.",
   "portfolioWavesCompleted": [1, 2, 3, 5, 6, 7, 9, 10, 12, 13, 14, 15],
   "projects": [
@@ -75,6 +75,22 @@
       "source": {
         "revision": "eb0fd45c48af0e9bb712011534eab6de9b8111f9",
         "url": "https://github.com/EauDoon/blitz/blob/eb0fd45c48af0e9bb712011534eab6de9b8111f9/README.md"
+      }
+    },
+    {
+      "id": "cold-read",
+      "repository": "https://github.com/EauDoon/cold-read",
+      "summary": "Claude skill that reads finished work blind before it ships: a rubric written first, one isolated reader per lens, any quoted fail blocks, and a hard stop after two revision rounds.",
+      "category": "agent-workflows",
+      "runtimes": ["assistant"],
+      "privacy": "provider-dependent",
+      "tasks": ["review-evidence", "verify-claims"],
+      "boundary": "Instruction layer for an agent that can run isolated subagents or fresh sessions; it does not send, sign or certify anything. Readers see the artifact through the assistant provider. One measured FULL run on a three-page site used about 645k evaluator output tokens.",
+      "fork": false,
+      "lastAudited": "2026-11-26",
+      "source": {
+        "revision": "2f210b991ba3e007a6db5659ee765c922cec196a",
+        "url": "https://github.com/EauDoon/cold-read/blob/2f210b991ba3e007a6db5659ee765c922cec196a/README.md"
       }
     },
     {

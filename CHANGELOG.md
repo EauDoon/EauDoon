@@ -11,6 +11,9 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+- Replace the Stable Desk tile with a Cold Read tile that links to the new public `cold-read` repository. The tile shows a document in a glass chamber read by three orbiting lenses; one beam turns red on the flawed line. Stable Desk stays in the project index and the catalog.
+- Register `cold-read` in the pinned public catalog and inventory, add it to the project index, and add its star to the constellation in light, dark and mobile variants (fourteen to fifteen catalogued projects). The catalog `assessedOn` moves to 2026-11-26, the date of this entry; every other entry keeps its own `lastAudited`. Tests that pin the project count move from 17 to 18.
+
 - Add a downloadable, offline 3D map of the discovery CLI, with module links, directed import neighborhoods, shortest paths from the entry point and JSON exports. The static table and command-line query use the same parsed source.
 - Find related projects by shared tasks and pinned sources with `related PROJECT-ID`. Review a module change from the terminal with transitive importer paths, shortest routes between two files and an external-module inventory.
 - Correct CLI help and discovery instructions to describe the existing case-insensitive substring search.
