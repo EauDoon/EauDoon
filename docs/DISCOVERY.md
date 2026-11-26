@@ -22,6 +22,10 @@ Shortlist accepts known task ids from `tasks`. It lists projects that cover at l
 
 Add `--json` to discovery commands for structured output. List, search, show, compare and shortlist include the assessment date. Errors go to stderr and return exit code 1. No matches is a successful empty result with exit code 0. `validate` checks the local catalog, prints the number of owned and fork entries, and takes no options. `node cli.mjs --version` prints the CLI version from `package.json` and needs no catalog; include it in bug reports.
 
+## Find projects with a shared task
+
+`node cli.mjs related PROJECT-ID` lists other assessed projects that declare at least one of the same tasks. Each row includes the shared task names, shared runtimes and a pinned README. The order uses the number of shared tasks, with ties sorted by project ID. For example, `node cli.mjs related consequence-rail` shows other projects assessed for replaying evidence. A shared task is a starting point for comparing the documents.
+
 ## Explore the CLI source map
 
 [Download the standalone source map](https://github.com/EauDoon/EauDoon/raw/refs/heads/main/docs/source-map.html) and open the HTML file in a browser. In a checkout, open [docs/source-map.html](source-map.html) directly. The table works with JavaScript disabled.
@@ -32,6 +36,8 @@ Choose a module to see its direct imports, the modules that import it and a shor
 npm run --silent graph -- --json
 npm run --silent graph -- --json lib/query.mjs
 ```
+
+For change review, `npm run --silent graph -- --impact lib/query.mjs` lists direct and transitive importers with their shortest paths to the changed file. To trace one pair, use `--path cli.mjs lib/query.mjs`; a `null` path means the second file is unreachable from the first by static imports. Use `--external` to see each external specifier and its direct importers.
 
 The response uses `data.repository.modules` for the full graph or `data.repository.module` for one exact path. Node parses the installed modules without executing them. The map covers reachable static module imports. Runtime file reads, dynamic loading and development tools fall outside that scope. Source links open main. Regenerate after changing an import with `npm run graph -- --write`. The repository check compares the generated file against source.
 

@@ -32,3 +32,23 @@ test('graph query agrees with the shipped offline page in both directions', () =
   assert.equal(run('--json', 'missing.mjs').status, 1);
   assert.equal(run('--check', 'cli.mjs').status, 1);
 });
+
+test('module change review follows import direction, including empty and identity paths', () => {
+  const query = (...args) => {
+    const result = run(...args);
+    assert.equal(result.status, 0, result.stderr);
+    return JSON.parse(result.stdout).data.repository;
+  };
+  const impact = query('--impact', 'lib/query.mjs');
+  const consumer = impact.consumers.find(row => row.id === 'cli.mjs');
+  assert.equal(consumer.distance, 2);
+  assert.equal(consumer.importPath[0], 'cli.mjs');
+  assert.equal(consumer.importPath.at(-1), 'lib/query.mjs');
+  assert.deepEqual(query('--impact', 'cli.mjs').consumers, []);
+  assert.equal(query('--path', 'lib/query.mjs', 'cli.mjs').path, null);
+  assert.deepEqual(query('--path', 'cli.mjs', 'cli.mjs').path, ['cli.mjs']);
+  assert.equal(query('--path', 'cli.mjs', 'lib/query.mjs').path.length, 3);
+  const fs = query('--external').external.find(row => row.specifier === 'node:fs');
+  assert.ok(fs.importedBy.includes('lib/catalog.mjs'));
+  assert.equal(run('--path', 'cli.mjs', 'missing.mjs').status, 1);
+});

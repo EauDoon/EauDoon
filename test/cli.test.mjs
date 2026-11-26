@@ -157,3 +157,19 @@ test('shortlist explains coverage and gaps without implying readiness', () => {
   assert.equal(run('shortlist', 'replay-evidence', 'replay-evidence').status, 1);
   assert.ok(JSON.parse(run('tasks', '--json').stdout).some(x => x.task === 'reflect'));
 });
+
+test('related projects share declared tasks, retain source pins and exclude themselves', () => {
+  const catalog = loadCatalog();
+  const report = JSON.parse(run('related', 'CONSEQUENCE-RAIL').stdout);
+  const selected = catalog.projects.find(project => project.id === report.id);
+  const expected = catalog.projects.filter(project => project !== selected && project.tasks.some(t => selected.tasks.includes(t)));
+  assert.deepEqual(report.matches.map(row => row.id).sort(), expected.map(project => project.id).sort());
+  assert.ok(report.matches.length);
+  for (const row of report.matches) {
+    const project = expected.find(p => p.id === row.id);
+    assert.deepEqual(row.sharedTasks, selected.tasks.filter(t => project.tasks.includes(t)));
+    assert.equal(row.source, project.source.url);
+  }
+  assert.equal(run('related', 'missing-project').status, 1);
+  assert.equal(run('related').status, 1);
+});

@@ -28,6 +28,44 @@ function architecture() {
   return { name: 'EauDoon/EauDoon', entry, modules };
 }
 
+// Follow one direction breadth-first so cycles terminate and paths contain the fewest edges.
+function routes(repo, origin, direction) {
+  const modules = new Map(repo.modules.map(m => [m.id, m]));
+  const found = new Map([[origin, [origin]]]);
+  for (const [id, route] of found) {
+    for (const next of modules.get(id)[direction]) {
+      if (!found.has(next)) found.set(next, [...route, next]);
+    }
+  }
+  return found;
+}
+
+function query(repo, mode, args) {
+  const module = id => {
+    const found = repo.modules.find(row => row.id === id);
+    if (!found) throw new Error('Unknown module. Run with --json to list the installed CLI modules.');
+    return found;
+  };
+  const identity = { name: repo.name, entry: repo.entry };
+  if (mode === '--json') return args.length ? { ...identity, module: module(args[0]) } : repo;
+  if (mode === '--external') {
+    const external = [...new Set(repo.modules.flatMap(m => m.external))].sort().map(specifier => ({
+      specifier, importedBy: repo.modules.filter(m => m.external.includes(specifier)).map(m => m.id).sort(),
+    }));
+    return { ...identity, external };
+  }
+  const from = module(args[0]).id;
+  if (mode === '--path') {
+    const to = module(args[1]).id;
+    return { ...identity, from, to, path: routes(repo, from, 'imports').get(to) ?? null };
+  }
+  const consumers = routes(repo, from, 'importedBy');
+  consumers.delete(from);
+  return { ...identity, changed: from, consumers: [...consumers].map(([id, route]) => ({
+    id, distance: route.length - 1, importPath: [...route].reverse(),
+  })) };
+}
+
 const escape = value => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const sourceLink = path => 'https://github.com/EauDoon/EauDoon/blob/main/' + path.split('/').map(encodeURIComponent).join('/');
 function render(repo) {
@@ -41,15 +79,14 @@ function render(repo) {
     .replace('<!-- DATA -->', () => json);
 }
 try {
-  const [mode, id, ...extra] = process.argv.slice(2);
-  if (!['--json', '--check', '--write'].includes(mode) || extra.length || (id !== undefined && mode !== '--json')) {
-    throw new Error('Usage: npm run graph -- --check | --write | --json [MODULE]');
+  const [mode, ...args] = process.argv.slice(2);
+  const arity = new Map([['--json', [0, 1]], ['--impact', [1]], ['--path', [2]], ['--external', [0]], ['--check', [0]], ['--write', [0]]]);
+  if (!arity.get(mode)?.includes(args.length)) {
+    throw new Error('Usage: npm run graph -- --check | --write | --json [MODULE] | --impact MODULE | --path FROM TO | --external');
   }
   const repo = architecture();
-  if (mode === '--json') {
-    const module = repo.modules.find(row => row.id === id);
-    if (id !== undefined && !module) throw new Error('Unknown module. Run with --json to list the installed CLI modules.');
-    const repository = id === undefined ? repo : {name: repo.name, entry: repo.entry, module};
+  if (mode !== '--write' && mode !== '--check') {
+    const repository = query(repo, mode, args);
     console.log(JSON.stringify({data: {repository}}, null, 2));
   } else {
     const path = 'docs/source-map.html';
