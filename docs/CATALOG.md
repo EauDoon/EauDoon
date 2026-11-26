@@ -104,7 +104,7 @@ Category: decision-methods. [Assessed README](https://github.com/EauDoon/blitz/b
 
 Instruction layer for an agent that can run isolated subagents or fresh sessions; it does not send, sign or certify anything. Readers see the artifact through the assistant provider. One measured FULL run on a three-page site used about 645k evaluator output tokens.
 
-Category: agent-workflows. [Assessed README](https://github.com/EauDoon/cold-read/blob/2f210b991ba3e007a6db5659ee765c922cec196a/README.md) at 2f210b991ba3e007a6db5659ee765c922cec196a. [Current README](https://github.com/EauDoon/cold-read/blob/main/README.md). Last audited 26-11-2026.
+Category: agent-workflows. [Assessed README](https://github.com/EauDoon/cold-read/blob/f523e6d9086f2bb90db5b0e2338c72be7810fd85/README.md) at f523e6d9086f2bb90db5b0e2338c72be7810fd85. [Current README](https://github.com/EauDoon/cold-read/blob/main/README.md). Last audited 26-11-2026.
 
 ### connect.md
 
