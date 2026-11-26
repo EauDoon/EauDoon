@@ -1,6 +1,6 @@
 <picture>
   <source media="(max-width: 600px)" srcset="assets/hero-mobile.svg">
-  <img src="assets/hero.svg" width="100%" alt="Daniel Oon, Singapore, @EauDoon, danieloon.ai. Decision infrastructure for agent systems and operators: explicit rules, recoverable actions, evidence you can inspect. Focus: stablecoins, payments and agent systems. Stack: Python, Node, browser-local tools and LLM skills. A synthetic agent action passes intent, policy, action and receipt checks, and a command bar types queries to this profile's offline catalog CLI.">
+  <img src="assets/hero.svg" width="100%" alt="Daniel Oon, Singapore, @EauDoon, danieloon.ai. Decision trees, drawn for operators: rules you can read, actions with a way back, evidence you can check. Focus: stablecoins, payments and agent systems. Stack: Python, Node, browser-local tools and LLM skills. A synthetic agent action passes intent, policy, action and receipt checks, and a command bar types queries to this profile's offline catalog CLI.">
 </picture>
 
 <p align="center"><a href="https://danieloon.ai">danieloon.ai</a> &nbsp;·&nbsp; <a href="https://x.com/EauDoon">@EauDoon</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a> &nbsp;·&nbsp; <a href="docs/CATALOG.md">Project catalog</a></p>
@@ -16,7 +16,7 @@
 
 <p align="center"><sub>Worked examples: <a href="https://github.com/EauDoon/blitz/blob/main/Blitz/examples/company/service-example.md">Blitz</a> &nbsp;·&nbsp; <a href="https://github.com/EauDoon/decision-labs/blob/main/docs/CASE_STUDY.md">Decision Labs</a> &nbsp;·&nbsp; <a href="https://github.com/EauDoon/agent-team-os/blob/main/examples/routing-scenarios.md">Agent Team OS</a></sub></p>
 
-<p align="center"><sub>Experimental software and synthetic worked cases. These checks do not establish customer adoption, production reliability, or business impact.</sub></p>
+<p align="center"><sub>Experimental software, shown on synthetic worked cases. None of it claims customer adoption, production reliability, or business impact.</sub></p>
 
 <details>
 <summary><strong>Browse the project index</strong></summary>
