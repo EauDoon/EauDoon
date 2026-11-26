@@ -43,10 +43,12 @@ button:hover,select:hover { border-color:var(--mint) }
 #camera { gap:4px }
 #camera button { padding:0 .65rem; min-width:44px }
 #graph-help { font-size:.8rem; margin:0; padding:7px 14px; border-top:1px solid var(--line) }
-#scene { display:block; width:100%; height:auto; touch-action:pan-y; cursor:grab; background:radial-gradient(ellipse at 50% 46%,#17202c,#10151c 60%,#10141a 90%) }
+#scene { display:block; width:100%; height:auto; touch-action:pan-y pinch-zoom; cursor:grab; background:radial-gradient(ellipse at 50% 46%,#17202c,#10151c 60%,#10141a 90%) }
 #scene:active { cursor:grabbing }
 #scene text { font-family:var(--mono) }
 #focus-name { paint-order:stroke; stroke:#141b24; stroke-width:4px; stroke-linejoin:round }
+/* Route drags on redrawn decoration to the stable SVG. Links keep their own hit areas. */
+#scene > :not(a) { pointer-events:none }
 .target { cursor:pointer }
 .target rect { fill:#141e26; stroke:#3c4c59 }
 .target:hover rect,.target:focus rect { stroke:var(--ink); fill:#24313f; stroke-width:2 }
@@ -285,14 +287,34 @@ svg.addEventListener('keydown',e => {
   const step = {ArrowLeft:[-.12,0],ArrowRight:[.12,0],ArrowUp:[0,-.1],ArrowDown:[0,.1]}[e.key];
   if (step) {e.preventDefault(); rotate(...step)}
 });
+// Keep native scrolling from treating a horizontal orbit as a fling that
+// consumes the next tap on a module or camera control.
+let touchOrigin;
+svg.addEventListener('touchstart',e => {
+  const touch = e.touches.length === 1 && !e.target.closest('.target') ? e.touches[0] : null;
+  touchOrigin = touch && {x:touch.clientX,y:touch.clientY};
+},{passive:true});
+svg.addEventListener('touchmove',e => {
+  if (!touchOrigin || e.touches.length !== 1 || !e.cancelable) return;
+  const touch = e.touches[0];
+  const dx = Math.abs(touch.clientX - touchOrigin.x);
+  const dy = Math.abs(touch.clientY - touchOrigin.y);
+  if (dx > 5 && dx > dy) e.preventDefault();
+},{passive:false});
 svg.addEventListener('pointerdown',e => {
   if (e.target.closest('.target') || !e.isPrimary) return;
   gesture = {x:e.clientX,y:e.clientY}; svg.setPointerCapture(e.pointerId);
 });
 svg.addEventListener('pointermove',e => {
   if (!gesture || !e.isPrimary) return;
-  rotate((e.clientX-gesture.x)*.008,(e.clientY-gesture.y)*.004);
-  gesture = {x:e.clientX,y:e.clientY};
+  const dx = e.clientX-gesture.x, dy = e.clientY-gesture.y;
+  if (e.pointerType === 'touch' && !gesture.orbit) {
+    if (Math.abs(dx) <= 5 || Math.abs(dx) <= Math.abs(dy)) return;
+    gesture.orbit = true;
+  }
+  rotate(dx*.008,dy*.004);
+  gesture.x = e.clientX;
+  gesture.y = e.clientY;
 });
 svg.addEventListener('lostpointercapture',() => {gesture = null});
 window.addEventListener('hashchange',show);
