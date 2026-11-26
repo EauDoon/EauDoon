@@ -11,6 +11,10 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+- Add a downloadable, offline 3D map of the discovery CLI, with module links, directed import neighborhoods, shortest paths from the entry point and JSON exports. The static table and command-line query use the same parsed source.
+- Find related projects by shared tasks and pinned sources with `related PROJECT-ID`. Review a module change from the terminal with transitive importer paths, shortest routes between two files and an external-module inventory.
+- Correct CLI help and discovery instructions to describe the existing case-insensitive substring search.
+
 - Next catalog patch: compute all replacement facet counts from a single text search. The offline CLI keeps its original output contract, including counts for unselected alternatives and zero-result choices. Release gate: compare every count against an independent saved-query run and confirm each searchable summary is read at most once. No catalog or profile claims change.
 
 - Handoffs label private and unlisted sources using the saved public inventory. Selections containing only explicitly public sources keep their previous digests.

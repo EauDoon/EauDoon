@@ -58,6 +58,6 @@
 
 </details>
 
-[Full project catalog](docs/CATALOG.md) &nbsp;·&nbsp; [Search and setup](docs/DISCOVERY.md) &nbsp;·&nbsp; [Review workflows](docs/WORKFLOWS.md)
+[Explore the CLI source map](docs/DISCOVERY.md#explore-the-cli-source-map) &nbsp;·&nbsp; [Full project catalog](docs/CATALOG.md) &nbsp;·&nbsp; [Search and setup](docs/DISCOVERY.md) &nbsp;·&nbsp; [Review workflows](docs/WORKFLOWS.md)
 
 <sub>The catalog is a dated source snapshot. Repository licenses and upstream attribution define reuse.</sub>

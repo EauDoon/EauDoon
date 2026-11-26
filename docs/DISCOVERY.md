@@ -14,13 +14,32 @@ node cli.mjs shortlist replay-evidence gate-actions
 
 `show` prints prerequisites categories, authority limits, the entry's last audit date, the assessed README and current setup instructions; `compare` adds a `lastAudited` row. Follow those repository-specific instructions after reviewing their requirements. The discovery CLI never clones, installs, launches or executes a catalog entry.
 
-List, search and shortlist accept `--category`, `--runtime`, `--privacy`, and `--fork yes|no`. List and search also accept `--task`. Filters intersect. Each option can appear once. An invalid value prints the available choices. Search requires every supplied word to appear in the project's id, summary, category or task tags. Matching stays exact: no fuzzy matching is performed, and hints never change the results.
+List, search and shortlist accept `--category`, `--runtime`, `--privacy`, and `--fork yes|no`. List and search also accept `--task`. Filters intersect. Each option can appear once. An invalid value prints the available choices. Search requires every supplied word to appear in the project's id, summary, category or task tags. Matching uses case-insensitive substrings. For example, `vidence` matches `evidence`. Hints leave the results unchanged.
 
 When a word of four or more characters finds no project, search suggests up to three close catalog terms (one edit away up to five characters, two from six, where swapping two adjacent letters counts as one edit), each with the number of projects it would find, so `search payments` suggests `payment`. When a word names a runtime, category, privacy or task value whose option you did not supply, and that filter would change the result count, search names the option instead, because runtimes and the other filter values are not searched text. The count replaces the word with that filter, and the hint says how to follow it: `search python` points to `list --runtime python` (search needs at least one word, so list carries your other filters), and `search python synthetic` points to replacing `python` with `--runtime python`. Every count keeps all your other words and filters, including words past the 20th. Hints follow the results under `Hints (results are unchanged):`, and `--json` adds a `hints` array only when there are hints, where each filter hint's `command` (`list` or `search`) says how to reach its count. Only plain words (letters, digits, `.`, `+` and `-`, at most 40 characters) are echoed, and only the first 20 distinct words are considered. Exit codes are unchanged.
 
 Shortlist accepts known task ids from `tasks`. It lists projects that cover at least one requested task, ordered by coverage and then id. Each result states matched and missing tasks. This is a transparent catalog lookup, not a quality ranking, integration compatibility test or deployment recommendation.
 
 Add `--json` to discovery commands for structured output. List, search, show, compare and shortlist include the assessment date. Errors go to stderr and return exit code 1. No matches is a successful empty result with exit code 0. `validate` checks the local catalog, prints the number of owned and fork entries, and takes no options. `node cli.mjs --version` prints the CLI version from `package.json` and needs no catalog; include it in bug reports.
+
+## Find projects with a shared task
+
+`node cli.mjs related PROJECT-ID` lists other assessed projects that declare at least one of the same tasks. Each row includes the shared task names, shared runtimes and a pinned README. The order uses the number of shared tasks, with ties sorted by project ID. For example, `node cli.mjs related consequence-rail` shows other projects assessed for replaying evidence. A shared task is a starting point for comparing the documents.
+
+## Explore the CLI source map
+
+[Download the standalone source map](https://github.com/EauDoon/EauDoon/raw/refs/heads/main/docs/source-map.html) and open the HTML file in a browser. In a checkout, open [docs/source-map.html](source-map.html) directly. The table works with JavaScript disabled.
+
+Choose a module to see its direct imports, the modules that import it and a shortest path from `cli.mjs`. Arrows point from importer to dependency. Drag or use the arrow keys to rotate the view. The camera moves only on input. A module link stores its selection in the URL fragment, which works for readers with the same copy or base URL. Download the selected neighborhood as JSON or query the same compiled import declarations locally.
+
+```sh
+npm run --silent graph -- --json
+npm run --silent graph -- --json lib/query.mjs
+```
+
+For change review, `npm run --silent graph -- --impact lib/query.mjs` lists direct and transitive importers with their shortest paths to the changed file. To trace one pair, use `--path cli.mjs lib/query.mjs`; a `null` path means the second file is unreachable from the first by static imports. Use `--external` to see each external specifier and its direct importers.
+
+The response uses `data.repository.modules` for the full graph or `data.repository.module` for one exact path. Node parses the installed modules without executing them. The map covers reachable static module imports. Runtime file reads, dynamic loading and development tools fall outside that scope. Source links open main. Regenerate after changing an import with `npm run graph -- --write`. The repository check compares the generated file against source.
 
 ## Interpret the snapshot
 

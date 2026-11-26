@@ -19,7 +19,7 @@ const helpText = () => `Offline public project discovery ${packageVersion()} (No
   node cli.mjs shortlist <task-id...> [filters] [--json]
 List/search filters: --category VALUE --runtime VALUE --privacy VALUE --task VALUE --fork yes|no
 Filters intersect. Invalid values print the available choices.
-Search matching is exact; hints suggest close terms and filters without changing results.
+Search matches each term as a case-insensitive substring. Hints suggest close terms and filters.
 No installs, network calls, telemetry or project execution.`;
 
 const usage = {
@@ -28,7 +28,7 @@ const usage = {
   diagnose: 'QUERY.json', handoff: 'QUERY.json NEW-PACKET.json', 'verify-handoff': 'PACKET.json EXPECTED-DIGEST',
   impact: 'BEFORE.json AFTER.json QUERY.json', receipt: '', 'verify-receipt': 'RECEIPT.json [EXPECTED-DIGEST]',
   export: 'QUERY.json FORMAT NEW-OUTPUT', plan: 'QUERY.json TASKS.json MAX-PROJECTS [--alternatives]', page: 'QUERY.json SIZE [CURSOR]',
-  facets: 'QUERY.json', query: 'QUERY.json', inventory: 'PUBLIC-INVENTORY.json',
+  related: 'PROJECT-ID', facets: 'QUERY.json', query: 'QUERY.json', inventory: 'PUBLIC-INVENTORY.json',
   'save-query': 'NEW-QUERY.json [words...] [filters]',
   batch: 'BRIEFS.json',
   coverage: 'QUERY.json TASKS.json',
