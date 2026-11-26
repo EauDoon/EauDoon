@@ -1,6 +1,6 @@
 <picture>
   <source media="(max-width: 600px)" srcset="assets/hero-mobile.svg">
-  <img src="assets/hero.svg" width="100%" alt="Daniel Oon, Singapore, @EauDoon, danieloon.ai. Stable money, accountable agents: rules you can read, actions with a way back, evidence you can check. Focus: stablecoins, payments and agent systems. Stack: Python, Node, browser-local tools and LLM skills. A synthetic agent action passes intent, policy, action and receipt checks, and a command bar types queries to this profile's offline catalog CLI.">
+  <img src="assets/hero.svg" width="100%" alt="Daniel Oon, Singapore, @EauDoon, danieloon.ai. Decision trees, drawn for operators: rules you can read, actions with a way back, evidence you can check. Focus: stablecoins, payments and agent systems. Stack: Python, Node, browser-local tools and LLM skills. A synthetic agent action passes intent, policy, action and receipt checks, and a command bar types queries to this profile's offline catalog CLI.">
 </picture>
 
 <p align="center"><a href="https://danieloon.ai">danieloon.ai</a> &nbsp;·&nbsp; <a href="https://x.com/EauDoon">@EauDoon</a> &nbsp;·&nbsp; <a href="https://www.linkedin.com/in/danieloon">LinkedIn</a> &nbsp;·&nbsp; <a href="docs/CATALOG.md">Project catalog</a></p>
