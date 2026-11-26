@@ -5,7 +5,7 @@
 -->
 # Public project catalog
 
-Assessed 30-10-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.
+Assessed 26-11-2026. Static public-source assessment. Runtime and privacy labels describe documented workflows, not a security certification or verified deployment. Owned pins identify reviewed merged source; historical forks retain earlier assessments.
 
 Each entry under [Limits and assessed instructions](#limits-and-assessed-instructions) states its own last audit date, which can be earlier than the catalog assessment.
 
@@ -29,6 +29,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | [agent-action-stack](https://github.com/EauDoon/agent-action-stack) | Synthetic agent-action reference path with alternate case stores, saved-case verification and offline review exports\. | node, python, browser | local-after-setup |
 | [agent-team-os](https://github.com/EauDoon/agent-team-os) | Wire-format and tool pack for bounded multi-role work\. Ships the six-field role-brief schema, the connect specification, dependency-light validators, calibrated synthetic evaluation harness, and a deterministic package builder with SHA-256 verification\. | assistant, python | configuration-dependent |
 | [blitz](https://github.com/EauDoon/blitz) | Minimum Viable Company kit with editable operating records, evidence gates, local cash forecasts and scoped handoffs\. | python, markdown, assistant | configuration-dependent |
+| [cold-read](https://github.com/EauDoon/cold-read) | LLM skill that reads finished work blind before it ships: a rubric written first, one isolated reader per lens, any quoted fail blocks, and a hard stop after two revision rounds\. | assistant | provider-dependent |
 | [connect\.md](https://github.com/EauDoon/connect.md) | Browser profile/resume Markdown builder with reviewed source replacements, recovery sessions, section excerpts and local review exports\. | browser, node | configuration-dependent |
 | [consequence-rail](https://github.com/EauDoon/consequence-rail) | Recourse-gated synthetic execution with settlement and drill comparisons, verified review exports and recovery diagnostics\. | node | local-after-setup |
 | [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) | Deterministic policy evaluation with fixture assertions, corpus migration checks and portable replay bundles\. | python | local-after-setup |
@@ -45,7 +46,7 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 
 | Project | Purpose | Runtime | Data boundary |
 | --- | --- | --- | --- |
-| [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) (fork) | Claude skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims\. | assistant, node, python | provider-dependent |
+| [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) (fork) | LLM skill that runs the gauntlet loop in two modes: reference mode drives a build to a shipped bar, verification mode seats isolated agents on load-bearing claims\. | assistant, node, python | provider-dependent |
 | [hermes-agent](https://github.com/EauDoon/hermes-agent) (fork) | Fork of Nous Research Hermes Agent with terminal and gateway workflows\. | python, node | provider-dependent |
 | [reflection-engine](https://github.com/EauDoon/reflection-engine) (fork) | Fork of Kevin Rose's reflection prompt with offline source preparation, accepted-excerpt exports and stop-preserving experiment records\. | assistant, node | configuration-dependent |
 
@@ -72,11 +73,11 @@ Runtime labels list supported workflows or prerequisites, not interchangeable ru
 | replay-evidence | [agent-action-stack](https://github.com/EauDoon/agent-action-stack), [consequence-rail](https://github.com/EauDoon/consequence-rail), [mandatebound](https://github.com/EauDoon/mandatebound) |
 | research-crypto | [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk) |
 | research-stablecoins | [stable-desk](https://github.com/EauDoon/stable-desk) |
-| review-evidence | [agent-team-os](https://github.com/EauDoon/agent-team-os), [blitz](https://github.com/EauDoon/blitz), [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench), [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk), [mandatebound](https://github.com/EauDoon/mandatebound), [stable-desk](https://github.com/EauDoon/stable-desk) |
+| review-evidence | [agent-team-os](https://github.com/EauDoon/agent-team-os), [blitz](https://github.com/EauDoon/blitz), [cold-read](https://github.com/EauDoon/cold-read), [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench), [crypto-research-desk](https://github.com/EauDoon/crypto-research-desk), [mandatebound](https://github.com/EauDoon/mandatebound), [stable-desk](https://github.com/EauDoon/stable-desk) |
 | run-agent | [hermes-agent](https://github.com/EauDoon/hermes-agent) |
 | scope-exports | [blitz](https://github.com/EauDoon/blitz) |
 | validate-policy | [constitutional-agent-testbench](https://github.com/EauDoon/constitutional-agent-testbench) |
-| verify-claims | [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) |
+| verify-claims | [cold-read](https://github.com/EauDoon/cold-read), [gauntlet-verify](https://github.com/EauDoon/gauntlet-verify) |
 | write-profile | [connect\.md](https://github.com/EauDoon/connect.md) |
 
 ## Limits and assessed instructions
@@ -98,6 +99,12 @@ Category: agent-workflows. [Assessed README](https://github.com/EauDoon/agent-te
 Python 3.12+ helpers and editable records run locally; optional assistant workflows depend on the host, provider and tools. Skills need readable source or separate host installation; automatic routing is unverified. Calculations and synthetic examples do not establish demand, profitability or authority to spend, sign, contact anyone or deploy. Check the repository terms and individual component notices before use or redistribution.
 
 Category: decision-methods. [Assessed README](https://github.com/EauDoon/blitz/blob/eb0fd45c48af0e9bb712011534eab6de9b8111f9/README.md) at eb0fd45c48af0e9bb712011534eab6de9b8111f9. [Current README](https://github.com/EauDoon/blitz/blob/main/README.md). Last audited 11-10-2026.
+
+### cold-read
+
+Instruction layer for an agent that can run isolated subagents or fresh sessions; it does not send, sign or certify anything. Readers see the artifact through the assistant provider. One measured FULL run on a three-page site used about 645k evaluator output tokens.
+
+Category: agent-workflows. [Assessed README](https://github.com/EauDoon/cold-read/blob/f523e6d9086f2bb90db5b0e2338c72be7810fd85/README.md) at f523e6d9086f2bb90db5b0e2338c72be7810fd85. [Current README](https://github.com/EauDoon/cold-read/blob/main/README.md). Last audited 26-11-2026.
 
 ### connect.md
 

@@ -17,6 +17,12 @@
       "archived": false
     },
     {
+      "id": "cold-read",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
       "id": "connect.md",
       "public": true,
       "fork": false,
