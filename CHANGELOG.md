@@ -11,6 +11,10 @@ match the `id` field in `catalog.json`.
 
 ## [Unreleased]
 
+- Refresh `public-inventory.json` from the public repository search retrieved on 2026-11-27 (18 public non-fork repositories). `blitz` is public again, so it moves from `privateEntries` into the repository list. `DelayedBuy` and `Vision` are new public repositories that have no catalog entry; each is recorded as an explicit exclusion until it is assessed. No catalog entry or pin changes.
+- Fix `node cli.mjs --help COMMAND`, which exited 1 with "Help accepts at most one command". It now prints the same usage line as `help COMMAND` and `COMMAND --help`.
+- `node scripts/inventory-check.mjs --help` prints the usage line and exits 0. It used to open `--help` as a snapshot file and report a missing input. Any other option is a usage error that is not echoed.
+
 - Replace the Stable Desk tile with a Cold Read tile that links to the new public `cold-read` repository. The tile shows a document in a glass chamber read by three orbiting lenses; one beam turns red on the flawed line. Stable Desk stays in the project index and the catalog.
 - Register `cold-read` in the pinned public catalog and inventory, add it to the project index, and add its star to the constellation in light, dark and mobile variants (fourteen to fifteen catalogued projects). The catalog `assessedOn` moves to 2026-11-26, the date of this entry; every other entry keeps its own `lastAudited`. Tests that pin the project count move from 17 to 18.
 
