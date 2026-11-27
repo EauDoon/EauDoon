@@ -80,7 +80,11 @@ function invokedAsCli() {
 
 if (invokedAsCli()) {
   try {
-    if (process.argv.length > 3) throw new Error('Usage: node scripts/inventory-check.mjs [PUBLIC-SNAPSHOT.json]');
+    const usage = 'Usage: node scripts/inventory-check.mjs [PUBLIC-SNAPSHOT.json]';
+    const args = process.argv.slice(2);
+    // An option is never read as a snapshot path, and is never echoed.
+    if (args.length === 1 && args[0] === '--help') { console.log(usage); process.exit(0); }
+    if (args.length > 1 || args[0]?.startsWith('-')) throw new Error(usage);
     const result = checkInventory(loadCatalog(), readJson(process.argv[2] ?? new URL('../public-inventory.json', import.meta.url)));
     console.log(JSON.stringify(result, null, 2));
     process.exitCode = result.issues.length ? 1 : 0;

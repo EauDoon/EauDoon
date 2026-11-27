@@ -2,7 +2,7 @@
 
 These offline commands print JSON for inspection or redirection. They never query accounts or run a project. All input files use UTF-8 JSON, reject duplicate object members and share the regular-file 1 MiB limit. Existing discovery commands are unchanged.
 
-Use `node cli.mjs help export` or `node cli.mjs export --help` for a command's argument order. Command help performs no catalog reads or output writes, so it remains available when a supplied snapshot is missing or invalid.
+Use `node cli.mjs help export`, `node cli.mjs --help export` or `node cli.mjs export --help` for a command's argument order. Command help performs no catalog reads or output writes, so it remains available when a supplied snapshot is missing or invalid.
 
 Malformed JSON errors do not echo source text. Output artifacts may include the normalized query you supplied, so review them before sharing.
 

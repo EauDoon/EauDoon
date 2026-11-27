@@ -1,6 +1,6 @@
 {
   "owner": "EauDoon",
-  "retrievedOn": "2026-10-30",
+  "retrievedOn": "2026-11-27",
   "source": "https://api.github.com/search/repositories?q=user%3AEauDoon%20is%3Apublic%20fork%3Afalse",
   "complete": true,
   "repositories": [
@@ -12,6 +12,12 @@
     },
     {
       "id": "agent-team-os",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "blitz",
       "public": true,
       "fork": false,
       "archived": false
@@ -48,6 +54,12 @@
     },
     {
       "id": "decision-labs",
+      "public": true,
+      "fork": false,
+      "archived": false
+    },
+    {
+      "id": "DelayedBuy",
       "public": true,
       "fork": false,
       "archived": false
@@ -93,18 +105,27 @@
       "public": true,
       "fork": false,
       "archived": false
+    },
+    {
+      "id": "Vision",
+      "public": true,
+      "fork": false,
+      "archived": false
     }
   ],
   "exclusions": [
     {
+      "id": "DelayedBuy",
+      "reason": "Public repository not yet assessed for the catalog; held out until the owner reviews it."
+    },
+    {
       "id": "EauDoon",
       "reason": "Profile presentation infrastructure, not a project."
+    },
+    {
+      "id": "Vision",
+      "reason": "Public repository not yet assessed for the catalog; held out until the owner reviews it."
     }
   ],
-  "privateEntries": [
-    {
-      "id": "blitz",
-      "reason": "Kept in the catalog by the owner while the repository is private; its pinned source is not publicly readable."
-    }
-  ]
+  "privateEntries": []
 }

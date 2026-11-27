@@ -39,6 +39,23 @@ test('the inventory CLI exits 0 on a clean snapshot and 1 on an issue or bad usa
   } finally { rmSync(dir, { recursive: true, force: true }); }
 });
 
+// --help used to be opened as a snapshot file and reported as a missing input.
+test('the inventory CLI prints its usage for --help and rejects other options without echoing them', () => {
+  const script = fileURLToPath(new URL('../scripts/inventory-check.mjs', import.meta.url));
+  const run = (...args) => spawnSync(process.execPath, [script, ...args], { encoding: 'utf8', timeout: 10000 });
+  const help = run('--help');
+  assert.equal(help.status, 0, help.stderr);
+  assert.match(help.stdout, /^Usage: node scripts\/inventory-check\.mjs \[PUBLIC-SNAPSHOT\.json\]\n$/);
+  assert.equal(help.stderr, '');
+  for (const option of ['--PRIVATE_MARKER', '-x', '--json']) {
+    const result = run(option);
+    assert.equal(result.status, 1, option);
+    assert.match(result.stderr, /^inventory: unknown: Usage: node scripts\/inventory-check\.mjs/);
+    assert.doesNotMatch(result.stderr, /PRIVATE_MARKER/);
+    assert.equal(result.stdout, '');
+  }
+});
+
 test('public non-fork inventory is covered by assessed projects and explicit exclusions', () => {
   const result = check(loadCatalog(), snapshot());
   assert.deepEqual(result.issues, []);
