@@ -50,7 +50,8 @@ function main() {
     if (args.length) throw new Error('--version takes no arguments');
     console.log(packageVersion()); return;
   }
-  const helpCommand = command === 'help' && args.length === 1 ? args[0] : args.length === 1 && args[0] === '--help' ? command : undefined;
+  // help COMMAND, --help COMMAND and COMMAND --help all print one command's usage.
+  const helpCommand = ['help', '--help'].includes(command) && args.length === 1 ? args[0] : args.length === 1 && args[0] === '--help' ? command : undefined;
   if (helpCommand !== undefined) {
     if (!Object.hasOwn(usage, helpCommand)) throw new Error('Unknown help command');
     const line = ['Usage: node cli.mjs [--catalog SNAPSHOT.json]', helpCommand, usage[helpCommand]].filter(Boolean).join(' ');

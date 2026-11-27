@@ -36,6 +36,22 @@ test('workflow help is command-specific and needs no readable catalog or output'
   assert.equal(run('export', '--help', 'extra').status, 1);
 }));
 
+// `--help export` used to exit 1 with "Help accepts at most one command",
+// although `help export` and `export --help` both printed the usage line.
+test('--help before a command prints the same usage as help and COMMAND --help', () => {
+  const expected = run('help', 'export');
+  for (const args of [['--help', 'export'], ['--help', 'list'], ['--help', 'validate']]) {
+    const result = run(...args);
+    assert.equal(result.status, 0, result.stderr);
+    assert.equal(result.stdout, run('help', args[1]).stdout);
+    assert.equal(result.stderr, '');
+  }
+  assert.equal(run('--help', 'export').stdout, expected.stdout);
+  assert.equal(run('--help', 'unknown').status, 1);
+  assert.equal(run('--help', 'export', 'extra').status, 1);
+  assert.doesNotMatch(run('--help', 'PRIVATE_MARKER').stderr, /PRIVATE_MARKER/);
+});
+
 test('CLI diagnostics do not reveal paths or terminal control arguments', () => workspace(file => {
   for (const args of [['query', file('PRIVATE_MARKER.json')], ['show', '\u001b[31mPRIVATE_MARKER'], ['list', '--PRIVATE_MARKER']]) {
     const result = run(...args); assert.equal(result.status, 1);
